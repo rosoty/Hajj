@@ -1,0 +1,30 @@
+<template name="categoryadd">
+	<div id="content-wrapper">
+	    <form  class="panel form-horizontal form-bordered">
+			    <div class="panel-heading">
+			        <span class="panel-title">USER_FORM</span>
+			    </div>
+			    <div class="panel-body">
+
+			        <div class="row form-group">
+			                        <label class="col-sm-2 control-label">Category:</label>
+			            <div class="col-sm-10">
+			                <input required type="text" name="name" id="catname" value="" class="form-control">
+			            </div>
+			        </div>
+			       
+			        <div class="row form-group">
+			            <label class="col-sm-2 control-label">Image Url:</label>
+			            <div class="col-sm-10 btn btn-default image-preview-input">
+			            	<input required type="text" name="imageurl" id="imageurl" class="form-control">
+			            </div>
+			        </div>
+			       
+			    </div>
+		    <div class="panel-footer text-right">
+		        <button class="btn btn-primary" id="btnaddcategory">SUBMIT</button>
+		    </div>
+		</form>
+    </div>
+    <div id="main-menu-bg"></div>
+</template>

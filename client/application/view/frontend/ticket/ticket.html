@@ -1,0 +1,84 @@
+<template name="ticket">
+    <div class="container">
+        <div class="row profile">
+            {{>profilemenu}}
+            <div class="col-md-9 order-content">              
+                <div class="form_main col-md-4 col-sm-5 col-xs-7">
+                    <h4 class="heading"><strong>My </strong> Ticket <span></span></h4>
+                    {{#if isInRole 'agency'}}
+                        <table class="table table-hover">
+                            <thead>
+                                <tr class="btn-primary">
+                                    <th>No</th>
+                                    <th>Ticket_ID</th>
+                                    <th>Name</th>
+                                    <th>Product</th>
+                                    <th>date</th>
+                                    <th>Invoice</th>
+                                    <th>Status</th>
+                                    <th>action</th>
+                                </tr>
+                            </thead>
+                         
+                            <tbody>
+                                {{#if getallTicket}}
+                                    {{#each getallTicket}}
+                                        <tr>
+                                            <td>{{index}}</td>
+                                            <td>{{_id}}</td>
+                                            <td>{{getUsername customer}}</td>
+                                            <td>{{getProductname product}}</td>
+                                            <td>{{getHumanDate date}}</td>
+                                            {{#if checkInvoice invoice}}
+                                            <td><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-eye-open"></span></a>
+                                             <!--MODAL POPUP-->
+                                                 <div class="modal fade" id="myModal" role="dialog">
+                                                    <div class="modal-dialog modal-lg">
+                                                      <div class="modal-content">
+                                                        <div class="modal-header">
+                                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                          <h4 class="modal-title">YOUR INVOICE</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                          <embed src="{{invoice}}" width="850px" height="2000px" />
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                            <!--END MODAL-->
+
+                                            </td>
+                                            {{else}}
+                                                <td>
+                                                    <a href="#" title="No Invoice"><span class="glyphicon glyphicon-remove"></span></a>
+                                                </td>
+                                            {{/if}}
+
+                                            <td>{{status}}</td>
+                                            <td>
+                                               <!--  <a class="btn btn-xs btn-labeled btn-success" id="btnstatus" href=""><span class="btn-label icon fa fa-edit"></span>U</a> -->
+                                                <a class="btn btn-xs btn-labeled btn-success" id="uploadinvoice" href=""><span class="glyphicon glyphicon-upload"></span>upload invoice</a>
+                                            </td>
+                                        
+                                        </tr>
+                                    {{/each}}
+                                {{else}}
+                                    <tr>
+                                        <div class="alert alert-danger">
+                                            <strong>No Ticket !!!</strong>
+                                        </div>
+                                    </tr>
+                                {{/if}}
+                            </tbody>
+                            
+                        </table>
+                    {{/if}}
+                </div>      
+            </div>  
+        </div>
+    </div>
+   
+</template>

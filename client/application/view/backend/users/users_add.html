@@ -1,0 +1,106 @@
+<template name="adduser">
+	<div id="content-wrapper">
+	    <form  class="panel form-horizontal form-bordered">
+			    <div class="panel-heading">
+			        <span class="panel-title">USER_FORM</span>
+			    </div>
+			    <div class="panel-body">
+			    	<div class="row form-group">
+			            <label class="col-sm-2 control-label">Select Roles:</label>
+			            <div class="col-sm-10">
+			            	<select class="form-control" id="roles" name="roles">
+			            		<option value="none">Select Roles</option>
+			            		<option value="agency">Agency</option>
+			            		<option value="affiliate">Affiliate</option>
+			            	</select>
+			            </div>
+			        </div>
+			        <div class="row form-group">
+		                <label class="col-sm-2 control-label">Username:</label>
+			            <div class="col-sm-10">
+			                <input required type="text" name="name" value="" class="form-control">
+			            </div>
+			        </div>
+			        <div class="row form-group">
+			            <label class="col-sm-2 control-label">Email:</label>
+			            <div class="col-sm-10">
+			                <input required type="text" name="email" value="" class="form-control">
+			            </div>
+			        </div>
+			        <div class="row form-group">
+			            <label class="col-sm-2 control-label">Phone:</label>
+			            <div class="col-sm-10">
+			                <input required type="text" name="phone" value="" class="form-control">
+			            </div>
+			        </div>
+			        {{#if CheckRoles}}
+			        	<div class="row form-group">
+				            <label class="col-sm-2 control-label">Siret Number:</label>
+				            <div class="col-sm-10">
+				                <input required type="text" name="siretnum" value="" class="form-control">
+				            </div>
+				        </div>
+				        <div class="row form-group">
+				            <label class="col-sm-2 control-label">Contact Name:</label>
+				            <div class="col-sm-10">
+				                <input required type="text" name="contactname" value="" class="form-control">
+				            </div>
+				        </div>
+				        <div class="row form-group">
+				            <label class="col-sm-2 control-label">Address:</label>
+				            <div class="col-sm-10">
+				                <input required type="text" name="address" value="" class="form-control">
+				            </div>
+				        </div>
+			        {{else}}
+			        	 <div class="row form-group">
+				            <label class="col-sm-2 control-label">Family Name:</label>
+				            <div class="col-sm-10">
+				                <input required type="text" name="familyname" value="" class="form-control">
+				            </div>
+				        </div>
+				        <div class="row form-group">
+				            <label class="col-sm-2 control-label">DOB:</label>
+				            <div class="col-sm-10">
+				                <div class="input-group datetimepicker">
+								    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+								    <input class="set-due-date form-control" id="dob" type="text" name="dob" value="{{GetOne.profile.dob}}" />
+								</div>
+				            </div>
+				        </div>
+				        <div class="row form-group">
+				            <label class="col-sm-2 control-label">Select Type:</label>
+				            <div class="col-sm-10">
+				            	<select class="form-control" name="usertype">
+				            		<option value="hajj">Hajj</option>
+				            		<option value="omrah">Omrah</option>
+				            	</select>
+				            </div>
+				        </div>
+				        <div class="row form-group">
+				            <label class="col-sm-2 control-label">Payment Amount:</label>
+				            <div class="col-sm-10">
+				                <input required type="text" name="numpayment" value="" class="form-control">
+				            </div>
+				        </div>
+				        <div class="row form-group">
+				            <label class="col-sm-2 control-label">Affiliate:</label>
+				            <div class="col-sm-10">
+				                <input required type="text" name="affiliate" value="" class="form-control">
+				            </div>
+				        </div>
+			        {{/if}}
+			        <div class="row form-group">
+			            <label class="col-sm-2 control-label">Password:</label>
+			            <div class="col-sm-10 btn btn-default image-preview-input">
+			            	<input required type="password" name="password" value="" class="form-control">
+			            </div>
+			        </div>
+			    </div>
+		    <div class="panel-footer text-right">
+		        <button class="btn btn-primary" id="btn-save">SUBMIT</button>
+		    </div>
+		</form>
+    </div>
+    <div id="main-menu-bg"></div>
+</template>

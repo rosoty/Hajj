@@ -1,0 +1,59 @@
+<template name="category">
+	<div id="content-wrapper">
+        <div class="panel-body">
+		    <div class="row">
+		        <div class="col-sm-12">
+
+		            <div class="table-light">
+		                <div class="table-header">
+		                    <div class="table-caption">
+		                        CATEGORY LIST
+		                    </div>
+		                </div>
+		                <table class="table table-bordered">
+		                    <thead>
+		                    <tr>
+		                        <th style="width: 130px;">
+		                        	<a class="btn btn-xs btn-labeled btn-success" href="/cpanel/category/add"><span class="btn-label icon fa fa-plus-square"></span>Add</a>
+		                        </th>
+		                        <th>category</th>
+		                        <th>imageurl</th>
+		                       
+		                    </tr>
+		                    </thead>
+		                    <tbody>
+		                    	{{#each getallcategory}}
+		                            <tr>
+		                                <td>
+		                                    <a class="btn btn-xs btn-labeled btn-success" href="/cpanel/category/edit/{{_id}}"><span
+		                                            class="btn-label icon fa fa-edit"></span>U</a>
+		                                    <a  class="btn btn-xs btn-labeled btn-danger btn-del" href="#"><span
+		                                            class="btn-label icon fa fa-minus-square"></span>D</a>
+		                                </td>
+		                                <td>{{name}}</td>
+		                                <td>{{imageurl}}</td>
+		                                
+		                            </tr>
+		                        {{/each}}
+		                    </tbody>
+		                </table>
+
+		                <div class="table-footer clearfix">
+		                    <div class="DT-label">
+		                        <div class="dataTables_info" id="jq-datatables-example_info" role="alert" aria-live="polite"
+		                             aria-relevant="all">Showing 1 to 5 of 5 entries
+		                        </div>
+		                    </div>
+		                    <div class="DT-pagination">
+		                        <div class="dataTables_paginate paging_simple_numbers" id="jq-datatables-example_paginate">
+		                            <ul class="pagination"> </ul>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</div>    
+	</div>
+	 <div id="main-menu-bg"></div>
+</template>

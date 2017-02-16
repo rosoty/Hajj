@@ -1,0 +1,19 @@
+<template name="mainLayout">	
+	<div id="main-wrapper"> 
+		{{#if currentUser}}
+	    	{{>navbar}}
+	    	{{>menu}}
+			{{>yield}}
+		{{else}}
+			<div>
+				<h1 style="color:#ddd"> No Permission To access this page !!! Please make sure you are Admin</h1>
+			</div>
+		{{/if}}
+	</div> 
+</template>
+<template name="frontLayout">
+		{{>frontmenu}}
+		<div>
+			{{> yield}}
+		</div>
+</template>

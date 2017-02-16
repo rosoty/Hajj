@@ -1,0 +1,438 @@
+<template name="profile">
+	<div class="container">
+	    <div class="row profile">
+			{{>profilemenu}}
+			<div class="col-md-9 order-content">	          
+				<div class="form_main col-md-4 col-sm-5 col-xs-7">
+		            <h4 class="heading"><strong>Personal </strong> Contact <span></span></h4>
+		            <div class="well well-sm">
+		                <div class="media">
+		                    <a class="thumbnail pull-left" href="#">
+		                        <img class="media-object" src="http://guarddome.com/assets/images/profile-img.jpg" width="110">
+		                    </a>
+		                    <div class="media-body">
+		                        <h4 class="media-heading">{{currentUser.profile.username}}</h4>
+		                        {{#if isInRole 'affiliate'}}
+		                		<p><span class="label label-info">{{CountNumberInvite}} invited</span> 
+		                		<!-- <span class="label label-warning">$3000 Total</span> -->
+		                		</p>
+		                		{{/if}}
+		                        <p>
+		                            <!-- <a href="#" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-comment"></span> Message</a> -->
+		                        </p>
+		                        {{#if GenerateButton}}
+		                        <input type="button" name="ticket" value="Generate Ticket" class="pull-right btn-lg btn-success" data-toggle="modal" data-target="#product-options">
+		                        {{/if}}
+		                    </div>
+		                </div>
+		            </div>
+		            <table class="table table-hover">
+		           		{{#if isInRole 'agency'}}
+					    <tbody>
+					      <tr>
+					        <td>Username: <b>{{currentUser.profile.username}}</b></td>
+					        <td>
+					        	<a href="/profile/edit/{{currentUser._id}}">
+					        	<span class="btn-label icon fa fa-edit"></span>edit
+					        	</a>
+					        </td>
+					      </tr>
+					      <tr>
+					        <td>Address: <b>{{currentUser.emails.[0].address}}</b></td>
+					        <td>
+					        	<a href="/profile/edit/{{currentUser._id}}">
+					        	<span class="btn-label icon fa fa-edit"></span>edit
+					        	</a>
+					        </td>
+					      </tr>
+					      <tr>
+					        <td>Phone Number: <b>{{currentUser.profile.phone}}</b></td>
+					        <td>
+					        	<a href="/profile/edit/{{currentUser._id}}">
+					        	<span class="btn-label icon fa fa-edit"></span>edit
+					        	</a>
+					        </td>
+					      </tr>
+					      <tr>
+					        <td>Contact first name: <b>{{currentUser.profile.contact_firstname}}</b></td>
+					        <td>
+					        	<a href="/profile/edit/{{currentUser._id}}">
+					        	<span class="btn-label icon fa fa-edit"></span>edit
+					        	</a>
+					        </td>
+					      </tr>
+					       <tr>
+					        <td>Contact last name: <b>{{currentUser.profile.contact_lastname}}</b></td>
+					        <td>
+					        	<a href="/profile/edit/{{currentUser._id}}">
+					        	<span class="btn-label icon fa fa-edit"></span>edit
+					        	</a>
+					        </td>
+					      </tr>
+					      <tr>
+					        <td>Siret Number: <b>{{currentUser.profile.siret_num}}</b></td>
+					        <td>
+					        	<a href="/profile/edit/{{currentUser._id}}">
+					        	<span class="btn-label icon fa fa-edit"></span>edit
+					        	</a>
+					        </td>
+					      </tr>
+					      <tr>
+					        <td>Address: <b>{{currentUser.profile.address}}</b></td>
+					        <td>
+					        	<a href="/profile/edit/{{currentUser._id}}">
+					        	<span class="btn-label icon fa fa-edit"></span>edit
+					        	</a>
+					        </td>
+					      </tr>
+					    </tbody>
+					    {{else}}
+					    	<tbody>
+						      <tr>
+						        <td>User Name: <b>{{currentUser.profile.username}}</b></td>
+						        <td>
+						        	<a href="/profile/edit/{{currentUser._id}}">
+						        	<span class="btn-label icon fa fa-edit"></span>edit
+						        	</a>
+						        </td>
+						      </tr>
+						      <tr>
+						        <td>Family Name: <b>{{currentUser.profile.familyname}}</b></td>
+						        <td>
+						        	<a href="/profile/edit/{{currentUser._id}}">
+						        	<span class="btn-label icon fa fa-edit"></span>edit
+						        	</a>
+						        </td>
+						      </tr>
+						      <tr>
+						        <td>Address: <b>{{currentUser.emails.[0].address}}</b></td>
+						        <td>
+						        	<a href="/profile/edit/{{currentUser._id}}">
+						        	<span class="btn-label icon fa fa-edit"></span>edit
+						        	</a>
+						        </td>
+						      </tr>
+						      <tr>
+						        <td>Phone Number: <b>{{currentUser.profile.phone}}</b></td>
+						        <td>
+						        	<a href="/profile/edit/{{currentUser._id}}">
+						        	<span class="btn-label icon fa fa-edit"></span>edit
+						        	</a>
+						        </td>
+						      </tr>
+						      <tr>
+					        <td>Date Of birth: <b>{{currentUser.profile.dob}}</b></td>
+					        <td>
+					        	<a href="/profile/edit/{{currentUser._id}}">
+					        	<span class="btn-label icon fa fa-edit"></span>edit
+					        	</a>
+					        </td>
+					      </tr>
+					    
+					    </tbody>
+					    {{/if}}
+					  </table>
+		        </div>	
+		        {{#if isInRole 'affiliate'}}
+		        	{{>inviteuser}}            
+		        {{/if}}
+			</div>	
+		</div>
+	</div>
+	<!-- Popup Modal Ticket -->
+
+	<div class="modal fade" id="product-options" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-lg" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <form>
+		        <div class="form-group">
+		        	<div class="col-md-6">
+		        		<div class="col-md-2"><label for="sel1">Agency:</label></div>
+		        		<div class="col-md-10">
+							<select class="form-control" id="selAgency">
+								<option value="">All Agency</option>
+								{{#each GetallAgency}}
+							    	<option value="{{_id}}">{{profile.username}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div>
+					<!-- <div class="col-md-6">
+		        		<div class="col-md-2"><label for="sel1">Time:</label></div>
+		        		<div class="col-md-10">
+							  <select class="form-control" id="sel1">
+							    <option>1</option>
+							    <option>2</option>
+							    <option>3</option>
+							    <option>4</option>
+							  </select>
+						</div>
+					</div> -->
+		        </div>
+	        </form>
+	      </div>
+	      <div class="modal-body">
+	      	{{#if currentUser.profile.passport}}
+	        	<table class="table table-hover">
+	       			<thead>
+	       				<tr class="btn-default">
+		       				<th>#</th>
+		       				<th>Agency name</th>
+		       				<th>description</th>
+		       				<th>Type</th>
+		       				<th>date_of_departure</th>
+		       				<th>date_of_return</th>
+		       				<th>Action</th>
+		       			</tr>
+	       			</thead>
+				    <tbody>
+				    	{{#if GetProduct currentUser.profile.type}}
+					    	{{#each GetProduct currentUser.profile.type}}
+						      	<tr>
+						        	<td>{{index}}</td>
+						        	<td>{{getagencyname agency}}</td>
+						        	<td>{{description}}</td>
+						        	<td>{{type}}</td>
+						        	<td>{{getHumanDate date_of_departure}}</td>
+						        	<td>{{getHumanDate date_of_return}}</td>
+						        	<td><input type="button" name="book" value="Book" class="btn-success btn-sm booking"></td>
+						      	</tr>
+						    {{/each}}
+						{{else}}
+							<tr><td colspan="7">No Product!!!</td></tr>
+						{{/if}}
+				    </tbody>
+			  	</table>
+			{{else}}
+				<h3 style="color:#ddd;text-align:center">Enter Your Passport Number below to activate your ticket</h3>
+				<form class="passvalidate">
+					<div class="col-md-2"></div>
+					<div class="col-md-2"><label for="usr">Passport Number:</label></div>
+					<div class="col-md-4">
+						<input type="text" class="form-control" name="passport">
+					</div>
+					<div class="col-md-2">
+						<button type="button" class="btn btn-primary" id="btn-passport">Save</button>
+					</div>
+					<div class="col-md-2"></div>
+				</form>
+			{{/if}}
+	      </div>
+	      <div class="modal-footer"></div>
+	    </div>
+	  </div>
+	</div>
+</template>
+
+<template name="profilemenu">
+	<div class="col-md-3">
+				<div class="profile-sidebar">
+					<div class="profile-userpic">
+	                   
+	                    
+					</div>
+					<div class="profile-usertitle">
+						<div class="profile-usertitle-name">
+							{{#if isInRole 'agency'}}
+								<span class="hidden-xs">Welcome <b style="color:#18039D">{{currentUser.profile.username}}</b> <p style="color:red">( Agency )</p></span>
+							{{else}}
+								<span class="hidden-xs">Welcome <b style="color:#18039D">{{currentUser.profile.username}} </b><p style="color:red">( Affiliate )</p></span>
+							{{/if}}
+						</div>
+						<div class="profile-usertitle-job">
+						</div>
+					</div>
+					<div class="profile-usermenu">
+						<ul class="nav">
+							<li class="active">
+								<a href="/user/profile">
+								<i class="glyphicon glyphicon-home"></i>
+								<span class="hidden-xs">Personal Info</span> </a>
+							</li>
+							<li>
+								<a href="/user/password">
+								<i class="glyphicon glyphicon-user"></i>
+								<span class="hidden-xs">Change Password</span> </a>
+							</li>
+							{{#if isInRole 'agency'}}
+								<li>
+									<a href="/ticket">
+									<i class="glyphicon glyphicon-user"></i>
+									<span class="hidden-xs">My Ticket</span> </a>
+								</li>
+								<li>
+									<a href="/agency/product">
+									<i class="glyphicon glyphicon-ok"></i>
+									<span class="hidden-xs">product</span></a>
+								</li>
+							{{/if}}
+							<!-- <li>
+								<a href="#">
+								<i class="glyphicon glyphicon-ok"></i>
+								<span class="hidden-xs">Setting </span></a>
+							</li>
+	                         -->
+						</ul>
+					</div>
+					<!-- END MENU -->
+				</div>
+			</div>
+</template>
+
+<template name="editprofile">
+	<div class="container">
+	    <div class="row profile">
+			{{>profilemenu}}
+			<div class="col-md-9 order-content">	          
+				<div class="form_main col-md-4 col-sm-5 col-xs-7">
+		            <h4 class="heading"><strong>Edit Personal </strong> Contact <span></span></h4>
+		            <div class="form">
+		            	{{#if isInRole 'agency'}}
+		            	<div class="form-group col-lg-12" id="msg-error"></div>	
+			            <form action="" class="regedit" method="" id="contactFrm" name="contactFrm">
+		                    <div class="form-group col-lg-12">
+								<label>Username</label>
+								<input type="text" name="username" class="form-control" id="" value="{{currentUser.profile.username}}">
+							</div>
+							<div class="form-group col-lg-12">
+								<label>Contact first name</label>
+								<input type="text" name="firstname" class="form-control" id="" value="{{currentUser.profile.contact_firstname}}">
+							</div>
+							<div class="form-group col-lg-12">
+								<label>Contact last name</label>
+								<input type="text" name="lastname" class="form-control" id="" value="{{currentUser.profile.contact_lastname}}">
+							</div>
+							<div class="form-group col-lg-12">
+								<label>Email Address</label>
+								<input type="email" name="email" class="form-control" id="" value="{{currentUser.emails.[0].address}}">
+							</div>
+							<div class="form-group col-lg-12">
+								<label>Siret Number</label>
+								<input type="text" name="siretnum" class="form-control" id="" value="{{currentUser.profile.siret_num}}">
+							</div>
+							<div class="form-group col-lg-12">
+								<label>Phone</label>
+								<input type="text" name="phone" class="form-control" id="" value="{{currentUser.profile.phone}}">
+							</div>
+							<div class="form-group col-lg-12">
+								<label>Address</label>
+								<input type="text" name="address" class="form-control" id="" value="{{currentUser.profile.address}}">
+							</div>
+		                    <button type="button" id="btn-update" class="btn btn-lg btn-primary pull-right">Update</button>
+		                    <input type="hidden" name="timestamp" value="{{currentUser.profile.time}}">
+		                    <input type="hidden" name="profileId" value="{{currentUser._id}}">
+		                </form>
+			            {{else}}
+			            	<form action="" method="" id="contactFrm" name="contactFrm">
+			                    <div class="form-group col-lg-12">
+									<label>Username</label>
+									<input type="" name="username" class="form-control" id="username" value="{{currentUser.profile.username}}">
+								</div>
+								 <div class="form-group col-lg-12">
+									<label>Family Name</label>
+									<input type="" name="username" class="form-control" id="familyname" value="{{currentUser.profile.familyname}}">
+								</div>
+								<div class="form-group col-lg-12">
+									<label>Email Address</label>
+									<input type="" name="email" class="form-control" id="email" value="{{currentUser.emails.[0].address}}">
+								</div>
+								 <div class="form-group col-lg-12">
+									<label>Date Of Birth</label>
+									<!-- <input type="" name="username" class="form-control" id="dob" value="{{currentUser.profile.dob}}"> -->
+									 <div class="input-group datetimepicker">
+									    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+									    <input class="set-due-date form-control" id="dob" value="{{currentUser.profile.dob}}" type="text"/>
+									</div>
+								</div>
+								<div class="form-group col-lg-12">
+									<label>Phone</label>
+									<input type="" name="phone" class="form-control" id="phone" value="{{currentUser.profile.phone}}">
+								</div>
+								<div class="form-group col-lg-12 hidden">
+									<input type="" name="address" class="form-control" id="selecttype" value="{{currentUser.profile.type}}">
+									<input type="" name="address" class="form-control" id="numpayment" value="{{currentUser.profile.numpayment}}">
+								</div>
+			                    <button type="button" id="btneditprofile" class="btn btn-default">Update</button>
+			                </form>
+			            {{/if}}
+
+		            </div>
+		        </div>	            
+			</div>	
+		</div>
+	</div>
+</template>
+
+<template name="inviteuser">
+			          
+	<div class="form_main col-md-4 col-sm-5 col-xs-7">
+		{{#if countinvite}}
+	        <h4 class="heading"><strong>Invite </strong> User ( {{CountNumberInvite}} Invited)<span></span></h4>   
+	        <table class="table table-hover">
+			    <tbody id="data-count">
+			    	{{{countinvite}}}	
+			    </tbody>
+			</table>
+		{{else}}
+			<h4 class="heading"><strong>My </strong> Ticket<span></span></h4> 
+			<table class="table table-hover">
+                <thead>
+                    <tr class="btn-primary">
+                    	<th>#</th>
+                        <th>Agency Name</th>
+                        <th>Product</th>
+                        <th>date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+             
+                <tbody>
+                    {{#if getallTicket}}
+                        {{#each getallTicket}}
+                            <tr>
+                            	<td>{{index}}</td>
+                                <td>{{getUsername agency}}</td>
+                                <td>{{getProductname product}}</td>
+                                <td>{{getHumanDate date}}</td>
+                                <td class="btn-default btn-sm">{{status}}</td>
+                            </tr>
+                        {{/each}}
+                    {{else}}
+                        <tr>
+                            <div class="alert alert-danger">
+                                <strong>Please Order Ticket !!!</strong>
+                            </div>
+                        </tr>
+                    {{/if}}
+                </tbody>
+                
+            </table>
+		{{/if}}
+    </div>	            
+	<div class="form_main col-md-4 col-sm-5 col-xs-7">
+        <h4 class="heading"><strong>My </strong> Affiliates<span></span></h4>   
+        <table class="table table-hover">
+       			<thead>
+       				<tr class="btn-primary">
+	       				<th class="text-center">No</th>
+	       				<!-- <th>Username</th>
+	       				<th>Email</th>
+	       				<th>Phone</th> -->
+	       				<th class="text-center">Status</th>
+	       			</tr>
+       			</thead>
+			    <tbody>
+			    	{{#each GetuserInvite}}
+				      	<tr>
+				        	<td class="text-center">{{index}}</td>
+				        	<!-- <td>{{profile.username}}</td>
+				        	<td>{{emails.[0].address}}</td>
+				        	<td>{{profile.phone}}</td> -->
+				        	<td class="btn-default btn-sm text-center"><a href="#" >totally acquired</a></td>
+				      	</tr>
+				    {{/each}}
+			    </tbody>
+		  </table>
+    </div>	
+</template>

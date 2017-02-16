@@ -1,0 +1,71 @@
+<template name="listproduct">
+	<div id="content-wrapper">
+        <div class="panel-body">
+		    <div class="row">
+		    	<div class="col-md-4 pull-right">
+		    		<form class="form-inline">
+			    		<div class="form-group">
+						  	<label for="sel1">Select Agency:</label>
+							<select class="form-control" id="seltagency" style="width: 236px">
+							   {{#each allagency}}
+							    <option value="{{_id}}">{{profile.username}}</option>
+							 	{{/each}}
+							  </select>
+						</div>
+					</form>
+               	</div>
+		    	</div>
+		        <div class="col-sm-12">
+		            <div class="table-light">
+		                <div class="table-header">
+		                    <div class="table-caption">
+		                        PRODUCT LIST
+		                    </div>
+		                <table class="table table-bordered">
+		                  	<thead>
+		                    <tr>
+		                    	<th style="width:1%">No</th>
+	                            <th>Agency Name</th>
+	                            <th>ORIG-DEST</th>
+	                            <th>departure date</th>
+	                            <th>Return date</th>
+	                            <th>action</th>
+		                    </tr>
+		                    </thead>
+		                    <tbody>
+		                    	{{#each getallProduct}}
+		                            <tr>
+		                            	<td>{{@index}}</td>
+		                                <td>{{getUsername agency}}</td>
+		                                <td>{{name}}</td>
+		                                <td>{{getHumanDate date}}</td>
+		                                <td>{{getHumanDate date}}</td>
+		                                <td>
+		                                    <a class="btn btn-xs btn-labeled btn-danger" id="btnremove" href=""><span  class="glyphicon glyphicon-remove"></span>delete</a>
+		                                    
+		                                </td>
+		                            
+		                            </tr>
+                            	{{/each}}
+		                    </tbody>
+		                </table>
+
+		                <div class="table-footer clearfix">
+		                    <div class="DT-label">
+		                     
+		                    </div>
+		                    <div class="DT-pagination">
+		                        <div class="dataTables_paginate paging_simple_numbers" id="jq-datatables-example_paginate">
+		                            <ul id="pagination" class="pagination pagination-sm">
+		                        
+		                            </ul>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</div>    
+	</div>
+    <div id="main-menu-bg"></div>
+</template>
