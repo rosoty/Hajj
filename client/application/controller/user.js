@@ -198,7 +198,6 @@ Template.userregister.events({
 		var phone=$("#phone").val();
 		var email=$("#email").val();
 		var password=$("#pwd").val();
-		var payment=$("#selectpayment").val();
 		var role="affiliate";
 		var res_affiliate = Router.current().params.id;
 		console.log('res_affiliate== '+res_affiliate);
@@ -227,8 +226,7 @@ Template.userregister.events({
 				type:res_type,
 				numpayment:res_numpayment,
 				affiliate:res_affiliate,
-				depaturedate:res_depaturedate,
-				payment:payment
+				depaturedate:res_depaturedate
 			}
 			if(username==''||familyname==''||dob==''||phone==''||email==''||password==''){
 				$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill out the form</div>")

@@ -17,8 +17,11 @@
 		                		<!-- <span class="label label-warning">$3000 Total</span> -->
 		                		</p>
 		                		{{/if}}
-		                        <p>
+		                        <p style="font-size: 14px">
 		                            <!-- <a href="#" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-comment"></span> Message</a> -->
+		                            {{#if currentUser.profile.passport}}
+		                           	 Passport Number : <b style="color: red;font-size: 14px">{{currentUser.profile.passport}}</b>
+		                           	 {{/if}}
 		                        </p>
 		                        {{#if GenerateButton}}
 		                        <input type="button" name="ticket" value="Generate Ticket" class="pull-right btn-lg btn-success" data-toggle="modal" data-target="#product-options">
