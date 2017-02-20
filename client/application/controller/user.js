@@ -206,7 +206,7 @@ Template.userregister.events({
 		if(typeof(res) == 'undefined'){
 			console.log('undefined');
 			if(username==''||familyname==''||dob==''||phone==''||email==''||password==''){
-				$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill out the form</div>")
+				$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill out the form</div>");
 			}else{
 				$("#registerform").addClass("hidden");
 				$("#nextrgister").removeClass("hidden");
@@ -237,17 +237,10 @@ Template.userregister.events({
 					}
 				});
 			}
-		}
-		
-		
+		}		
 	},
 	'click #btnregister':function(e){
 		e.preventDefault();
-		var affiliate = Router.current().params.id;
-		console.log('params =='+ affiliate);
-		if(affiliate==''||affiliate=='undefined'){
-			affiliate='';
-		}
 		var username=$("#firstname").val();
 		var familyname=$("#familyname").val();
 		var dob=$("#dob").val();
@@ -275,24 +268,17 @@ Template.userregister.events({
 			phone:phone,
 			type:selecttype,
 			numpayment:numpayment,
-			affiliate:affiliate,
+			affiliate:'',
 			depaturedate:depaturedate,
 			payment:payment
 		}
-		if(affiliate==''|| affiliate=="undefined"){
-			Meteor.call("registerUser",email,password,obj,role,function(err,data){
-				if(!err){
-					Meteor.call("findAffiliate",data);
-					Router.go("/login");
-				}
-			});
-		}else{
-			Meteor.call("registerUser",email,password,obj,role,function(err,data){
-				if(!err){
-					Router.go("/login");
-				}
-			});
-		}
+		Meteor.call("registerUser",email,password,obj,role,function(err,data){
+			if(!err){
+				console.log('Affiliate data'+ data);
+				Meteor.call("findAffiliate",data);
+				Router.go("/login");
+			}
+		});
 		
 
 	},
