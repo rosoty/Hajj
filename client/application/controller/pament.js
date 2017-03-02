@@ -27,3 +27,31 @@ Template.payment.events({
 		});
 	}
 });
+
+
+Template.pay.helpers({
+	getAmount:function(){
+		return 999;
+	}
+});
+
+
+Template.pay.events({
+	'click button': function(e) {
+      e.preventDefault();
+      paymentId='abc';  //Replace by payment
+      StripeCheckout.open({
+        key: 'pk_test_njC2z064KCYm0e0kjilPA26o',
+        amount: 5000, // this is equivalent to $50
+        name: 'Mecque it easy',
+        description: 'Cotisation MIE',
+        panelLabel: 'Payer',
+        currency: 'eur',
+        token: function(res) {
+          stripeToken = res.id;
+          console.info(res);
+          Meteor.call('chargeCard', stripeToken,paymentId);
+        }
+      });
+    }
+});
