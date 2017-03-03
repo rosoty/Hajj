@@ -1,0 +1,53 @@
+<template name="paymentlist">
+    {{#if isInRole 'affiliate'}}
+    <div class="container">
+        <div class="row profile">
+            {{>profilemenu}}
+            <div class="col-md-9 order-content">              
+                <div class="form_main col-md-4 col-sm-5 col-xs-7">
+                    <h4 class="heading"><strong>Payments </strong> List <span></span></h4>
+                    
+                        <table class="table table-hover">
+                            <thead>
+                                <tr class="btn-primary">
+                                    <th>No</th>
+                                    <th>Amount</th>
+                                    <th>User</th>
+                                    <th>Created Date</th>
+                                    <th>Due Date</th>
+                                    <th>Status</th>
+                                   <!--  <th>action</th> -->
+                                </tr>
+                            </thead>
+                         
+                            <tbody>
+                                {{#if getPaymentlist}}
+                                    {{#each getPaymentlist}}
+                                        <tr>
+                                            <td>{{index}}</td>
+                                            <td>{{amount}}</td>
+                                            <td>{{getUsername userid}}</td>
+
+                                            <td>{{getHumanDate created_date}}</td>
+                                           <td>{{due_date}}</td>
+                                            <td>{{status}}</td>
+                                        </tr>
+                                           
+                                    {{/each}}
+                                {{else}}
+                                    <tr>
+                                        <div class="alert alert-danger">
+                                            <strong>No Payments !!!</strong>
+                                        </div>
+                                    </tr>
+                                {{/if}}
+                            </tbody>
+                            
+                        </table>
+                    
+                </div>      
+            </div>  
+        </div>
+    </div>
+    {{/if}}
+</template>

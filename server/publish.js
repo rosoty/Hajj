@@ -86,3 +86,6 @@ Meteor.publish("allagency",function(){
 Meteor.publish("UserRegisterAffiliate",function(){
   return Meteor.users.find({roles:"affiliate"});
 });
+Meteor.publish("GetPayment",function(id){
+  return payment.find({'userid':id});
+});

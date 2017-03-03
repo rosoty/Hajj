@@ -55,3 +55,13 @@ Template.pay.events({
       });
     }
 });
+
+Template.paymentlist.helpers({
+	getPaymentlist:function(){
+		var result = payment.find({}).map(function(document, index){
+	      document.index = index+1;
+	      return document;
+	    });
+	    return result;
+	}
+});
