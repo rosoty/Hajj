@@ -274,9 +274,14 @@ Template.userregister.events({
 		}
 		Meteor.call("registerUser",email,password,obj,role,function(err,data){
 			if(!err){
-				console.log('Affiliate data'+ data);
-				Meteor.call("findAffiliate",data);
-				Router.go("/login");
+				if(numpayment == 3){
+					var pay_obj = {"status":"new","created_date":Date.now(),"due_date":depaturedate,"amount":"1500000","userid":data,"updated_date":""}
+					Meteor.call("InsertPayment",pay_obj);
+					Router.go("/login");
+				}else{
+					Meteor.call("findAffiliate",data);
+					Router.go("/login");
+				}
 			}
 		});
 		
