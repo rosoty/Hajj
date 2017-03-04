@@ -23,10 +23,16 @@ Meteor.methods({
             //console.log(err, charge);
         });
     },
-    'InsertPayment':function(obj){
-        for(var i = 0; i<3; i++){
+    'InsertPayment':function(obj,x){
+        for(var i = 0; i<x; i++){
              payment.insert(obj);
         }
+    },
+    RemovePayment:function(id){
+      payment.remove({'_id':id});
+    },
+    UpdatePayment:function(obj,id){
+        payment.update({'_id':id},{$set:obj});
     }
 });
 /*

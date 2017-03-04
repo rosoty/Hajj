@@ -33,6 +33,7 @@ Template.agency.events({
         	siret_num:siret_num,
         	phone:phone,
         	address:address,
+        	status:'pending',
         	time:timestamp
 		}
 		
@@ -122,6 +123,13 @@ Template.agencyproduct.helpers({
 			return document;
 		});
 		return result;
+	},
+	Isvalidate:function(status){
+		if(status == 'validated'){
+			return true;
+		}else{
+			return false;
+		}
 	}
 });
 Template.agencyproduct.events({

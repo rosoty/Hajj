@@ -1,0 +1,65 @@
+<template name="editproduct">
+	<div id="content-wrapper">
+	    <form  class="panel form-horizontal form-bordered">
+			    <div class="panel-heading">
+			        <span class="panel-title">PRODUCT EDIT</span>
+			    </div>
+			    <div class="panel-body">
+			    <input type="hidden" id="cat_id" value="{{GetOneCategory._id}}">
+			        <div class="row form-group">
+			            <label class="col-sm-2 control-label">Agency:</label>
+			            <div class="col-sm-10">
+			            	<input type="hidden" name="agency" value="{{GetOne.agency}}">
+			                <input required type="text"  value="{{getUsername GetOne.agency}}" class="form-control">
+			            </div>
+			        </div>
+			       <input type="hidden" name="proId" value="{{GetOne._id}}">
+			        <div class="row form-group">
+			            <label class="col-sm-2 control-label">Name:</label>
+			            <div class="col-sm-10 btn btn-default image-preview-input">
+			            	<input required type="text" name="name" id="name" value="{{GetOne.name}}" class="form-control">
+			            </div>
+			        </div>
+			        <div class="row form-group">
+			            <label class="col-sm-2 control-label">Description:</label>
+			            <div class="col-sm-10 btn btn-default image-preview-input">
+			            	<input required type="text" name="description" id="description" value="{{GetOne.description}}" class="form-control">
+			            </div>
+			        </div>
+			        <div class="row form-group">
+			        	<label class="control-label col-sm-2"  for="sel1">Type:</label>
+			        	<div class="col-sm-10 btn btn-default image-preview-input">
+							<select class="form-control" name="type">
+			            		<option value="{{GetOne.type}}" style="display:none">{{GetOne.type}}</option>
+			            		<option value="hajj">Hajj</option>
+			            		<option value="omrah">Omrah</option>
+			            	</select>
+			            </div>
+					</div>
+					<div  class="row form-group">
+				    	<label class="control-label col-sm-2"  for="sel1">Departure Date:</label>
+					  	<div class="col-sm-10">  
+						  	<div class="input-group datetimepicker">
+							    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+							    <input class="set-due-date form-control" name="departure"  type="text" value="{{getHumanDate GetOne.date_of_departure}}" />
+							</div>
+						</div>
+				    </div>
+				    <div  class="row form-group">
+				    	<label class="control-label col-sm-2"  for="sel1">Return Date:</label>
+					  	<div class="col-sm-10">  
+						  	<div class="input-group datetimepicker1">
+							    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+							    <input class="set-due-date form-control" name="return"  type="text" value="{{getHumanDate GetOne.date_of_return}}" />
+							</div>
+						</div>
+				    </div>
+			       
+			    </div>
+		    <div class="panel-footer text-right">
+		        <button class="btn btn-primary" id="btn-update">UPDATE</button>
+		    </div>
+		</form>
+    </div>
+    <div id="main-menu-bg"></div>
+</template>

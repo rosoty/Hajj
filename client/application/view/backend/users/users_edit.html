@@ -41,6 +41,14 @@
 								<div class="row form-group col-md-10">
 									<input type="text" name="address" class="form-control" id="" value="{{GetOne.profile.address}}">
 								</div>
+								<div class="col-md-2"><label>Status</label></div>
+								<div class="row form-group col-md-10">
+									<select class="form-control" name="status">
+					            		<option value="{{GetOne.profile.status}}" style="display:none">{{GetOne.profile.status}}</option>
+					            		<option value="pending">pending</option>
+					            		<option value="validated">validated</option>
+					            	</select>
+								</div>
 							</div>
 						</form>
 			    	{{/if}}

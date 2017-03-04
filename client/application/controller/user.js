@@ -123,6 +123,7 @@ Template.useredit.events({
 			var contact_name = $("[name='contactname']").val();
 			var address = $("[name='address']").val();
 			var time = $("[name='time']").val();
+			var status = $("[name='status']").val();
 		// Affiliate Field
 			var familyname = $("[name='familyname']").val();
 			var dob = $("[name='dob']").val();
@@ -136,7 +137,7 @@ Template.useredit.events({
 			}
 		}else if(userRoles == 'agency'){
 			obj = {
-				username:name,siret_num:siret_num,contact_name:contact_name,phone:phone,address:address,time:time
+				username:name,siret_num:siret_num,contact_name:contact_name,phone:phone,address:address,status:status,time:time
 			}
 		}
 			
@@ -200,11 +201,11 @@ Template.userregister.events({
 		var password=$("#pwd").val();
 		var role="affiliate";
 		var res_affiliate = Router.current().params.id;
-		console.log('res_affiliate== '+res_affiliate);
+		//console.log('res_affiliate== '+res_affiliate);
 		var res = Meteor.users.findOne({'_id':res_affiliate});
 		console.log('res== '+res);
 		if(typeof(res) == 'undefined'){
-			console.log('undefined');
+			//console.log('undefined');
 			if(username==''||familyname==''||dob==''||phone==''||email==''||password==''){
 				$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill out the form</div>");
 			}else{
@@ -217,7 +218,7 @@ Template.userregister.events({
 			var res_type = res.profile.type;
 			var res_numpayment = res.profile.numpayment;
 			var res_depaturedate = res.profile.depaturedate;
-			console.log('type== '+res_type+' ==numpayment== '+res_numpayment+' ==depaturedate== '+res_depaturedate);
+			//console.log('type== '+res_type+' ==numpayment== '+res_numpayment+' ==depaturedate== '+res_depaturedate);
 			var obj={
 				username:username,
 				familyname:familyname,
@@ -274,14 +275,10 @@ Template.userregister.events({
 		}
 		Meteor.call("registerUser",email,password,obj,role,function(err,data){
 			if(!err){
-				if(numpayment == 3){
-					var pay_obj = {"status":"new","created_date":Date.now(),"due_date":depaturedate,"amount":"1500000","userid":data,"updated_date":""}
-					Meteor.call("InsertPayment",pay_obj);
-					Router.go("/login");
-				}else{
-					Meteor.call("findAffiliate",data);
-					Router.go("/login");
-				}
+				var pay_obj = {"status":"new","created_date":Date.now(),"due_date":depaturedate,"amount":"1500000","userid":data,"updated_date":""}
+				Meteor.call("InsertPayment",pay_obj,numpayment);
+				Meteor.call("findAffiliate",data);
+				Router.go("/login");
 			}
 		});
 		
@@ -317,6 +314,7 @@ Template.profile.helpers({
 			return true;
 		}
 	},
+	
 	GetProduct:function(type){
 		var agencyId = Session.get('AGENCY-ID');
 		if(agencyId){
@@ -337,10 +335,10 @@ Template.profile.helpers({
 		return Meteor.users.findOne({'_id':id}).profile.username;
 	},
 	GetallAgency:function(){
-		return Meteor.users.find({'roles':'agency'});
+		return Meteor.users.find({'roles':'agency','status':'validated'});
 	},
 	Ispassport:function(passport){
-		console.log('passport== '+passport);
+		//console.log('passport== '+passport);
 		if (passport) {return true}else{return false}
 	}
 });
@@ -413,6 +411,7 @@ Template.editprofile.events({
 		Meteor.call("UpdateProfile",id,email,obj);
 	}
 });
+
 Template.editprofile.onRendered(function() {
     this.$('.datetimepicker').datetimepicker({
     	format:'YYYY/MM/DD'

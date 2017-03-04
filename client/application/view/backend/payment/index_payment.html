@@ -1,0 +1,63 @@
+<template name="adminpayment">
+	<div id="content-wrapper">
+        <div class="panel-body">
+		    <div class="row">
+		        <div class="col-sm-12">
+
+		            <div class="table-light">
+		                <div class="table-header">
+		                    <div class="table-caption">
+		                        PAYMENTS LIST
+		                    </div>
+		                </div>
+		                <table class="table table-bordered">
+		                    <thead>
+		                    <tr>
+		                        <th style="width: 130px;">
+		                        	<!-- <a class="btn btn-xs btn-labeled btn-success" href="/cpanel/category/add"><span class="btn-label icon fa fa-plus-square"></span>Add</a> -->
+		                        </th>
+		                        <th>User</th>
+		                        <th>Amount</th>
+		                       <th>Due Date</th>
+		                       <th>Created Date</th>
+		                       <th>Status</th>
+		                    </tr>
+		                    </thead>
+		                    <tbody>
+		                    	{{#each GetAllpayment}}
+		                            <tr>
+		                                <td>
+		                                    <a class="btn btn-xs btn-labeled btn-success" href="/cpanel/payment/edit/{{_id}}"><span
+		                                            class="btn-label icon fa fa-edit"></span>U</a>
+		                                    <a  class="btn btn-xs btn-labeled btn-danger btn-del" href="#"><span
+		                                            class="btn-label icon fa fa-minus-square"></span>D</a>
+		                                </td>
+		                                <td>{{getUsername userid}}</td>
+		                                <td>{{amount}}</td>
+		                                <td>{{due_date}}</td>
+		                                <td>{{getHumanDate created_date}}</td>
+		                                <td>{{status}}</td>
+		                            </tr>
+		                        {{/each}}
+		                    </tbody>
+		                </table>
+
+		                <div class="table-footer clearfix">
+		                    <div class="DT-label">
+		                        <div class="dataTables_info" id="jq-datatables-example_info" role="alert" aria-live="polite"
+		                             aria-relevant="all">
+		                        </div>
+		                    </div>
+		                    <div class="DT-pagination">
+		                        <div class="dataTables_paginate paging_simple_numbers" id="jq-datatables-example_paginate">
+		                            <ul class="pagination"> </ul>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</div>    
+	</div>
+	 <div id="main-menu-bg"></div>
+</template>

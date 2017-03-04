@@ -35,12 +35,14 @@
 		                    <tbody>
 		                    	{{#each getallProduct}}
 		                            <tr>
-		                            	<td>{{@index}}</td>
+		                            	<td>{{index}}</td>
 		                                <td>{{getUsername agency}}</td>
 		                                <td>{{name}}</td>
 		                                <td>{{getHumanDate date}}</td>
 		                                <td>{{getHumanDate date}}</td>
 		                                <td>
+		                                	<a class="btn btn-xs btn-labeled btn-success" href="/cpanel/product/edit/{{_id}}"><span
+		                                            class="btn-label icon fa fa-edit"></span>U</a>
 		                                    <a class="btn btn-xs btn-labeled btn-danger" id="btnremove" href=""><span  class="glyphicon glyphicon-remove"></span>delete</a>
 		                                    
 		                                </td>

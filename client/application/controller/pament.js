@@ -65,3 +65,55 @@ Template.paymentlist.helpers({
 	    return result;
 	}
 });
+
+
+// ADMIN PAGE //
+
+Template.adminpayment.helpers({
+	GetAllpayment:function(){
+		var result = payment.find({}).map(function(document, index){
+	      document.index = index+1;
+	      return document;
+	    });
+	    return result;
+	}
+});
+Template.adminpayment.events({
+	"click .btn-del":function(e){
+		e.preventDefault();
+		if(confirm("Are you sure want to delete this?")){
+			Meteor.call('RemovePayment',this._id, function(err){
+				if(!err){console.log('RemovePayment Success')}
+			});
+		}
+	}
+});
+Template.editpayment.onRendered(function() {
+    this.$('.datetimepicker').datetimepicker({
+    	format:'YYYY'
+    });
+});
+Template.editpayment.helpers({
+	getUserPayment:function(){
+		return Meteor.users.find();
+	}
+});
+Template.editpayment.events({
+	"click #btn-update":function(e){
+		e.preventDefault();
+		var id = $('[name = "paymentId"]').val();
+		var amount = $('[name = "amount"]').val();
+		var status = $('[name = "status"]').val();
+		var due_date = $('[name = "due_date"]').val();
+		var userid = $('[name = "userid"]').val();
+		var created_date = $('[name = "created_date"]').val();
+		var updated_date = new Date().getTime();
+		//alert(amount+status+due_date+userid+"==="+updated_date);
+		var obj = {
+			status:status,created_date:created_date,due_date:due_date,amount:amount,userid:userid,updated_date:updated_date
+		}
+		Meteor.call('UpdatePayment',obj, id, function(err){
+			if(!err){console.log('UpdatePayment Success');Router.go('/cpanel/payment')}
+		})
+	}
+})

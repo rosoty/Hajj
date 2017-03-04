@@ -29,9 +29,17 @@ Template.listproduct.helpers({
 	getallProduct:function(){
 		var agencyId=Session.get("SELECTAGENCY");
 		if(agencyId){
-			return product.find({agency:agencyId});
+			var result = product.find({'agency':agencyId}).map(function(document, index){
+				document.index = index+1;
+				return document;
+			});
+			return result;
 		}else{
-			return product.find({});
+			var result = product.find({}).map(function(document, index){
+				document.index = index+1;
+				return document;
+			});
+			return result;
 		}
 		
 	},
@@ -39,3 +47,34 @@ Template.listproduct.helpers({
 		return Meteor.users.find({roles:"agency"});
 	}
 });
+Template.editproduct.onRendered(function() {
+    this.$('.datetimepicker').datetimepicker({
+    	format:'YYYY/MM/DD'
+    });
+    this.$('.datetimepicker1').datetimepicker({
+    	format:'YYYY/MM/DD'
+    });
+});
+Template.editproduct.events({
+	"click #btn-update":function(e){
+		e.preventDefault();
+		var proId = $('[name="proId"]').val();
+		var agency = $('[name="agency"]').val();
+		var type = $('[name="type"]').val();
+		var name = $('[name="name"]').val();
+		var description = $('[name="description"]').val();
+		var departure = $('[name="departure"]').val();
+			departure = Math.floor(Date.now(departure) / 1000); 
+		var return_date = $('[name="return"]').val(); 
+			return_date = Math.floor(Date.now(return_date) / 1000);
+		var obj = {
+			agency:agency,type:type,name:name,description:description,date_of_departure:departure,date_of_return:return_date
+		}
+		Meteor.call('UpdateProduct',proId, obj, function(err){
+			if(!err){
+				console.log('UpdateProduct Success');
+				Router.go('/cpanel/product')
+			}
+		});
+	}
+})

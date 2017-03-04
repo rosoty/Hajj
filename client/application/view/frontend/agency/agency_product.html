@@ -5,47 +5,54 @@
             <div class="col-md-9 order-content">              
                 <div class="form_main col-md-4 col-sm-5 col-xs-7">
                     <h4 class="heading"><strong>My </strong> Products <span></span>
-                    <a href="/agency/product/add" class="pull-right btn-sm btn-danger">Add Product</a>
+                    
                     </h4>
 
                     {{#if isInRole 'agency'}}
-                        <table class="table table-hover">
-                            <thead>
-                                <tr class="btn-primary">
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Date_Departure</th>
-                                    <th>Date_Return</th>
-                                    <th>action</th>
-                                </tr>
-                            </thead>
-                         
-                            <tbody>
-                                {{#if getallProduct}}
-                                    {{#each getallProduct}}
-                                        <tr>
-                                            <td>{{index}}</td>
-                                            <td>{{name}}</td>
-                                            <td>{{getHumanDate date_of_departure}}</td>
-                                            <td>{{getHumanDate date_of_return}}</td>
-                                            <td>
-                                                <a href="#" class="del">Del |</a>
-                                                <a href="/agency/product/edit/{{_id}}"> Edit |</a>
-                                                <a href="/agency/product/{{_id}}"> View</a>
-                                            </td>
-                                        
-                                        </tr>
-                                    {{/each}}
-                                {{else}}
-                                    <tr>
-                                        <div class="alert alert-danger">
-                                            <strong>No Product !!!</strong> Please add new product !!!
-                                        </div>
+                        {{#if Isvalidate currentUser.profile.status}}
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr><td><a href="/agency/product/add" class="btn-sm btn-danger">Add Product</a></td></tr>
+                                    
+                                    <tr class="btn-primary">
+                                       
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Date_Departure</th>
+                                        <th>Date_Return</th>
+                                        <th>action</th>
                                     </tr>
-                                {{/if}}
-                            </tbody>
-                            
-                        </table>
+                                </thead>
+                             
+                                <tbody>
+                                    {{#if getallProduct}}
+                                        {{#each getallProduct}}
+                                            <tr>
+                                                <td>{{index}}</td>
+                                                <td>{{name}}</td>
+                                                <td>{{getHumanDate date_of_departure}}</td>
+                                                <td>{{getHumanDate date_of_return}}</td>
+                                                <td>
+                                                    <a href="#" class="del">Del |</a>
+                                                    <a href="/agency/product/edit/{{_id}}"> Edit |</a>
+                                                    <a href="/agency/product/{{_id}}"> View</a>
+                                                </td>
+                                            
+                                            </tr>
+                                        {{/each}}
+                                    {{else}}
+                                        <tr>
+                                            <td colspan="5"><div class="alert alert-danger">
+                                                <strong>No Product !!!</strong> Please add new product !!!
+                                            </div></td>
+                                        </tr>
+                                    {{/if}}
+                                </tbody>
+                                
+                            </table>
+                        {{else}}
+                            <h3 style="color:#ddd">Your Acount is in review by admin. can not access now!!!</h3>
+                        {{/if}}
                     {{/if}}
                 </div>      
             </div>  

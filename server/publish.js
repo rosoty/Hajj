@@ -30,7 +30,13 @@ Meteor.publish("AllproductAgency",function(id){
   return product.find({'agency':id});
 });
 Meteor.publish("Allproduct",function(){
-  return product.find({});
+  var allproduct = product.find({});
+  var alluser=[]
+  allproduct.forEach(function(val){
+    alluser.push(val.agency);
+  });
+  var listuser=Meteor.users.find({_id:{$in:alluser}})
+  return [allproduct,listuser];
 });
 Meteor.publish("allticket",function(){
   return ticket.find({});
@@ -88,4 +94,13 @@ Meteor.publish("UserRegisterAffiliate",function(){
 });
 Meteor.publish("GetPayment",function(id){
   return payment.find({'userid':id});
+});
+Meteor.publish("GetAllPayment",function(){
+    var userpayment = payment.find({});
+    var userArr = [];
+    userpayment.forEach(function(val){
+      userArr.push(val.userid);
+    });
+    var listuser=Meteor.users.find({_id:{$in:userArr}})
+    return [userpayment, listuser]
 });
