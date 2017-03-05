@@ -16,7 +16,7 @@
                                     <th>Created Date</th>
                                     <th>Due Date</th>
                                     <th>Status</th>
-                                   <!--  <th>action</th> -->
+                                  <th>action</th> 
                                 </tr>
                             </thead>
                          
@@ -31,6 +31,7 @@
                                             <td>{{getHumanDate created_date}}</td>
                                            <td>{{due_date}}</td>
                                             <td>{{status}}</td>
+                                            <td>{{> pay}}</td>
                                         </tr>
                                            
                                     {{/each}}
