@@ -335,7 +335,7 @@ Template.profile.helpers({
 		return Meteor.users.findOne({'_id':id}).profile.username;
 	},
 	GetallAgency:function(){
-		return Meteor.users.find({'roles':'agency','status':'validated'});
+		return Meteor.users.find({'roles':'agency','profile.status':'validated'});
 	},
 	Ispassport:function(passport){
 		//console.log('passport== '+passport);
