@@ -153,9 +153,9 @@ Template.agencyaddproduct.events({
 		var type = $('[name="type"] option:selected').val();
 		var description = $('[name="description"]').val();
 		var date_of_departure = $('[name="dod"]').val();
-			date_of_departure = Math.floor(Date.now(date_of_departure) / 1000);
+			date_of_departure = Math.round(Date.parse(date_of_departure) / 1000);
 		var date_of_return = $('[name="dor"]').val();
-			date_of_return = Math.floor(Date.now(date_of_return) / 1000);
+			date_of_return = Math.round(Date.parse(date_of_return) / 1000);
 		var obj = {
 			agency:agency,
 			type:type,
@@ -172,7 +172,7 @@ Template.agencyaddproduct.events({
 		}else{
 			Meteor.call('InsertProduct',obj, function(error){
 				if(!error){
-					console.log('InsertProduct Successfully');
+					//console.log('InsertProduct Successfully');
 					Router.go('/agency/product');
 				}
 			});
@@ -180,24 +180,29 @@ Template.agencyaddproduct.events({
 	}
 });
 Template.agencyeditproduct.onRendered(function(){
-	this.$('.dod').datetimepicker();
-	this.$('.dor').datetimepicker();
+	this.$('.dod').datetimepicker({
+    	format:'YYYY/MM/DD'
+    });
+    this.$('#re-date').datetimepicker({
+    	format:'YYYY/MM/DD'
+    });
 });
 Template.agencyeditproduct.events({
 	"click #btn-update":function(e){
 		e.preventDefault();
 		var html = '';
 		var id = this._id;
-		alert(id);
+		var type = $('[name="type"]').val();
 		var agency = Meteor.userId();
 		var name = $('[name="name"]').val();
 		var description = $('[name="description"]').val();
 		var date_of_departure = $('[name="dod"]').val();
-			date_of_departure = Date.now();
+			date_of_departure = Math.round(Date.parse(date_of_departure) / 1000); 
 		var date_of_return = $('[name="dor"]').val();
-			date_of_return = Date.now();
+			date_of_return = Math.round(Date.parse(date_of_return) / 1000);
 		var obj = {
 			agency:agency,
+			type:type,
 			name:name,
 			description:description,
 			date_of_departure:date_of_departure,
@@ -211,7 +216,7 @@ Template.agencyeditproduct.events({
 		}else{
 			Meteor.call('UpdateProduct',id,obj, function(error){
 				if(!error){
-					console.log('UpdateProduct Successfully');
+					//console.log('UpdateProduct Successfully');
 					Router.go('/agency/product');
 				}
 			});

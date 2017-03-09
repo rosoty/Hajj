@@ -14,8 +14,10 @@
                                     <th>Name</th>
                                     <th>Product</th>
                                     <th>date</th>
+                                    <th>Upload</th>
                                     <th>Invoice</th>
                                     <th>Status</th>
+                                    <th>Info</th>
                                    <!--  <th>action</th> -->
                                 </tr>
                             </thead>
@@ -29,8 +31,11 @@
                                             <td>{{getUsername customer}}</td>
                                             <td>{{getProductname product}}</td>
                                             <td>{{getHumanDate date}}</td>
+                                            <td>
+                                                <a class="btn btn-xs btn-labeled btn-success" id="uploadinvoice" href=""><span class="glyphicon glyphicon-upload"></span>upload invoice</a>
+                                            </td>
                                             {{#if checkInvoice invoice}}
-                                            <td><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-eye-open"></span></a>
+                                            <td><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-eye-open"></span>invoice</a>
                                              <!--MODAL POPUP-->
                                                  <div class="modal fade" id="myModal" role="dialog">
                                                     <div class="modal-dialog modal-lg">
@@ -59,12 +64,10 @@
 
                                             <td>{{status}}</td>
                                            
-                                        
+                                            <td>
+                                                <a class="btn btn-xs btn-labeled btn-primary info-view"  href="#"><span class="glyphicon glyphicon-upload"></span>view</a>
+                                            </td>
                                         </tr>
-
-                                        <div class="pull-right">
-                                                <a class="btn btn-xs btn-labeled btn-success" id="uploadinvoice" href=""><span class="glyphicon glyphicon-upload"></span>upload invoice</a>
-                                        </div>
                                            
                                     {{/each}}
                                 {{else}}
@@ -83,7 +86,7 @@
         </div>
     </div>
    <!-- Modal -->
-            <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal" id="InfoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">

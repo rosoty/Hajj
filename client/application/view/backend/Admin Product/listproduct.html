@@ -26,6 +26,7 @@
 		                    <tr>
 		                    	<th style="width:1%">No</th>
 	                            <th>Agency Name</th>
+	                            <th>Product Name</th>
 	                            <th>ORIG-DEST</th>
 	                            <th>departure date</th>
 	                            <th>Return date</th>
@@ -38,8 +39,9 @@
 		                            	<td>{{index}}</td>
 		                                <td>{{getUsername agency}}</td>
 		                                <td>{{name}}</td>
-		                                <td>{{getHumanDate date}}</td>
-		                                <td>{{getHumanDate date}}</td>
+		                                <td>{{description}}</td>
+		                                <td>{{getHumanDate date_of_departure}}</td>
+		                                <td>{{getHumanDate date_of_return}}</td>
 		                                <td>
 		                                	<a class="btn btn-xs btn-labeled btn-success" href="/cpanel/product/edit/{{_id}}"><span
 		                                            class="btn-label icon fa fa-edit"></span>U</a>

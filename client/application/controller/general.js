@@ -12,7 +12,8 @@ Template.registerHelper('getHumanDate', function(timestamp){
 	min = d.getMinutes();
 	if (month.length < 2) month = '0' + month;
 	if (day.length < 2) day = '0' + day;
-	return [year, month, day].join('/')+' '+hour+':'+min;
+	//return [year, month, day].join('/')+' '+hour+':'+min;
+	return [year, month, day].join('-');
 });
 Template.registerHelper('getImageurl', function(imageId){
 	var img = images.findOne({_id:imageId});

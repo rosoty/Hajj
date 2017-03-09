@@ -26,9 +26,9 @@
 		                  	<thead>
 		                    <tr>
 		                    	<th style="width:1%">No</th>
+		                    	<th>Ticket ID</th>
 		                        <th>Customer Name</th>
 	                            <th>Agency Name</th>
-	                            <th>Product</th>
 	                            <th>date</th>
 	                            <th>Invoice</th>
 	                            <th>Status</th>
@@ -39,9 +39,9 @@
 		                    	{{#each getallTicket}}
 		                            <tr>
 		                            	<td>{{@index}}</td>
+		                            	 <td>{{_id}}</td>
 		                                <td>{{getUsername customer}}</td>
 		                                <td>{{getUsername agency}}</td>
-		                                <td>{{product}}</td>
 		                                <td>{{getHumanDate date}}</td>
 		                                {{#if checkInvoice invoice}}
 		                                <td><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-eye-open"></span></a>

@@ -39,7 +39,17 @@ Meteor.publish("Allproduct",function(){
   return [allproduct,listuser];
 });
 Meteor.publish("allticket",function(){
-  return ticket.find({});
+    var allTicket = ticket.find({});
+    var alluser=[];
+    var alPro = [];
+    allTicket.forEach(function(val){
+        alluser.push(val.agency);
+        alluser.push(val.customer);
+        alPro.push(val.product);
+    });
+    var listuser=Meteor.users.find({_id:{$in:alluser}})
+    var myPro = product.find({_id:{$in:alPro}});
+    return [allTicket,listuser,myPro];
 });
 Meteor.publish("allticketByUser",function(uid){
   var allticket= ticket.find({ $or: [ { agency:uid }, { customer: uid } ] });

@@ -16,8 +16,9 @@
                                     
                                     <tr class="btn-primary">
                                        
-                                        <th>#</th>
+                                        <th>No</th>
                                         <th>Name</th>
+                                        <th>Type</th>
                                         <th>Date_Departure</th>
                                         <th>Date_Return</th>
                                         <th>action</th>
@@ -30,12 +31,12 @@
                                             <tr>
                                                 <td>{{index}}</td>
                                                 <td>{{name}}</td>
+                                                <td>{{type}}</td>
                                                 <td>{{getHumanDate date_of_departure}}</td>
                                                 <td>{{getHumanDate date_of_return}}</td>
                                                 <td>
                                                     <a href="#" class="del">Del |</a>
-                                                    <a href="/agency/product/edit/{{_id}}"> Edit |</a>
-                                                    <a href="/agency/product/{{_id}}"> View</a>
+                                                    <a href="/agency/product/edit/{{_id}}"> Edit </a>
                                                 </td>
                                             
                                             </tr>
@@ -138,7 +139,7 @@
                             <label class="col-sm-2 control-label">Select Type:</label>
                             <div class="col-sm-10">
                                 <select class="form-control" id="type" name="type">
-                                    <option value="">Select Type</option>
+                                    <option value="{{type}}" style="display: none">{{type}}</option>
                                     <option value="hajj">Hajj</option>
                                     <option value="omrah">Omrah</option>
                                 </select>
@@ -170,7 +171,7 @@
                             <div class="col-sm-10">
                                 <div class="input-group datetimepicker">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                    <input class="set-due-date form-control dor" name="dor" type="text" value="{{getHumanDate date_of_return}}" />
+                                    <input class="set-due-date form-control" id="re-date" name="dor" type="text" value="{{getHumanDate date_of_return}}" />
                                 </div>
                             </div>
                         </div>

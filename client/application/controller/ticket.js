@@ -43,9 +43,9 @@ Template.ticket.events({
         e.preventDefault();
         window.parent.location = "http://bootsnipp.com/iframe/Q60Oj";
     },
-    "click tbody > tr":function(e){
+    "click .info-view":function(e){
         e.preventDefault();
-        $('#myModal').modal('show');
+        $('#InfoModal').modal('show');
         var id = this.customer;
         var user = Meteor.users.findOne({'_id':id});
         //alert(id);

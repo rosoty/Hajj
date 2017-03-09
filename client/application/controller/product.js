@@ -64,9 +64,9 @@ Template.editproduct.events({
 		var name = $('[name="name"]').val();
 		var description = $('[name="description"]').val();
 		var departure = $('[name="departure"]').val();
-			departure = Math.floor(Date.now(departure) / 1000); 
+			departure = Math.round(Date.parse(departure) / 1000);
 		var return_date = $('[name="return"]').val(); 
-			return_date = Math.floor(Date.now(return_date) / 1000);
+			return_date = Math.round(Date.parse(return_date) / 1000);
 		var obj = {
 			agency:agency,type:type,name:name,description:description,date_of_departure:departure,date_of_return:return_date
 		}
