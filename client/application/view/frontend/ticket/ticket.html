@@ -4,20 +4,30 @@
             {{>profilemenu}}
             <div class="col-md-9 order-content">              
                 <div class="form_main col-md-4 col-sm-5 col-xs-7">
-                    <h4 class="heading"><strong>My </strong> Ticket <span></span></h4>
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <h4 class="heading"><strong>My </strong> Ticket <span></span></h4>
+                             <div class="form-group pull-right">
+                                <select class="form-control" id="select-filter" name="select-filter">
+                                    <option value="all">All</option>
+                                    <option value="validated">validated</option>
+                                    <option value="not-validated">not validated</option>
+                                    <option value="waiting-for-validation">waiting for validation</option>
+                                </select>
+                            </div>
+                        </div> 
+                    </div>
                     {{#if isInRole 'agency'}}
                         <table class="table table-hover">
                             <thead>
                                 <tr class="btn-primary">
-                                    <th>No</th>
+                                    <!-- <th>No</th> -->
                                     <th>Ticket_ID</th>
                                     <th>Name</th>
-                                    <th>Product</th>
-                                    <th>date</th>
+                                    <th>Travel Agency</th>
                                     <th>Upload</th>
                                     <th>Invoice</th>
                                     <th>Status</th>
-                                    <th>Info</th>
                                    <!--  <th>action</th> -->
                                 </tr>
                             </thead>
@@ -26,13 +36,12 @@
                                 {{#if getallTicket}}
                                     {{#each getallTicket}}
                                         <tr>
-                                            <td>{{index}}</td>
-                                            <td>{{_id}}</td>
+                                            <!-- <td>{{index}}</td> -->
+                                            <td class="info-view">{{_id}}</td>
                                             <td>{{getUsername customer}}</td>
-                                            <td>{{getProductname product}}</td>
-                                            <td>{{getHumanDate date}}</td>
+                                            <td>{{getUsername agency}}</td>
                                             <td>
-                                                <a class="btn btn-xs btn-labeled btn-success" id="uploadinvoice" href=""><span class="glyphicon glyphicon-upload"></span>upload invoice</a>
+                                                <a class="btn btn-xs btn-labeled btn-success uploadinvoice" id="uploadinvoice" href="#"><span class="glyphicon glyphicon-upload"></span>upload invoice</a>
                                             </td>
                                             {{#if checkInvoice invoice}}
                                             <td><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-eye-open"></span>invoice</a>
@@ -63,10 +72,6 @@
                                             {{/if}}
 
                                             <td>{{status}}</td>
-                                           
-                                            <td>
-                                                <a class="btn btn-xs btn-labeled btn-primary info-view"  href="#"><span class="glyphicon glyphicon-upload"></span>view</a>
-                                            </td>
                                         </tr>
                                            
                                     {{/each}}
@@ -107,12 +112,12 @@
                     </div>
                     
                     <div class="clearfix"></div>
-                   <p class="open_info hide">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                  <!--  <p class="open_info hide">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p> -->
                   </div>
                     
                   <div class="modal-footer">       
                       
-                    <div class="text-right pull-right col-md-3">
+                   <!--  <div class="text-right pull-right col-md-3">
                         Varejo: <br/> 
                         <span class="h3 text-muted"><strong> R$50,00 </strong></span>
                     </div> 
@@ -120,8 +125,26 @@
                     <div class="text-right pull-right col-md-3">
                         Atacado: <br/> 
                         <span class="h3 text-muted"><strong>R$35,00</strong></span>
+                    </div> -->
+                    <div class="text-center col-md-12">
+                        <h3>Do you validate this invoice?</h3>
                     </div>
-                     
+                     <div class="text-center col-md-4">
+                        <span class="h3 text-muted"><strong><a href="#" class="validate-status">Yes</a></strong></span>
+                    </div> 
+                    <div class="text-center col-md-4">
+                        <div class="form-group">
+                            <select class="form-control" id="select-validate" name="select-validate">
+                                <option value="validated">validated</option>
+                                <option value="not-validated">not validated</option>
+                                <option value="waiting-for-validation">waiting for validation</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="text-center col-md-4">
+                        <span class="h3 text-muted"><strong><a href="#" data-dismiss="modal">No</a></strong></span>
+                    </div>
+                    <div style="height: 50px"></div>
                 </div>
               </div>
             </div>

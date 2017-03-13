@@ -186,6 +186,12 @@ Template.userregister.onRendered(function() {
     });
 });
 
+Template.userregister.helpers({
+	Getpayment:function(){
+		return amount.find();
+	}
+});
+
 Template.userregister.events({
 /*	"focus input":function(e){
 		e.preventDefault();
@@ -230,7 +236,7 @@ Template.userregister.events({
 				depaturedate:res_depaturedate
 			}
 			if(username==''||familyname==''||dob==''||phone==''||email==''||password==''){
-				$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill out the form</div>")
+				$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill out the form</div>");
 			}else{
 				Meteor.call("registerUser",email,password,obj,role,function(err,data){
 					if(!err){
@@ -273,16 +279,18 @@ Template.userregister.events({
 			depaturedate:depaturedate,
 			payment:payment
 		}
-		Meteor.call("registerUser",email,password,obj,role,function(err,data){
-			if(!err){
-				var pay_obj = {"status":"new","created_date":Date.now(),"due_date":depaturedate,"amount":"1500000","userid":data,"updated_date":""}
-				Meteor.call("InsertPayment",pay_obj,numpayment);
-				Meteor.call("findAffiliate",data);
-				Router.go("/login");
-			}
-		});
-		
-
+		if(numpayment == 'choose' || depaturedate == '' || payment == 'nopay'){
+			$("#msg-error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill out the form</div>");
+		}else{
+			Meteor.call("registerUser",email,password,obj,role,function(err,data){
+				if(!err){
+					var pay_obj = {"status":"new","created_date":Date.now(),"due_date":depaturedate,"amount":"1500000","userid":data,"updated_date":""}
+					Meteor.call("InsertPayment",pay_obj,numpayment);
+					Meteor.call("findAffiliate",data);
+					Router.go("/login");
+				}
+			});
+		}
 	},
 	"change #selecttype":function(e){
 		e.preventDefault();
@@ -296,6 +304,17 @@ Template.userregister.events({
 			$('.dateomrah').removeClass('hidden');
 			Session.set('HAJJ-DATE','omrah');
 		}
+	},
+	"change #numpayment":function(e){
+		e.preventDefault();
+		var val = $('[name="numpayment"] option:selected').val();
+		var result = amount.findOne({'_id':val});
+		var html = '';
+			html += '<label class="control-label col-sm-2"  for="sel1">Amount </label>';
+		    html += '<div class="col-sm-10 btn btn-default image-preview-input">';
+	            html += '<input type="text" class="form-control" disabled value="'+result.amount+'" style="color:red;font-weight: bold;border:red 2px solid">';
+	        html += '</div>';
+			$('#show-amount').html(html);
 	}
 });
 

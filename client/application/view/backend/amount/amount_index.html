@@ -1,0 +1,55 @@
+<template name="adminamount">
+	<div id="content-wrapper">
+        <div class="panel-body">
+		    <div class="row">
+		        <div class="col-sm-12">
+
+		            <div class="table-light">
+		                <div class="table-header2">
+		                	<div class="col-sm-4">
+		                		 <b style="color:red">AMOUNT PAYMENTS LIST:</b>
+			                </div>
+		                </div>	
+		                <table class="table table-bordered">
+		                    <thead>
+		                    <tr>
+		                        <th style="width: 130px;">
+		                        	<a class="btn btn-xs btn-labeled btn-success" href="/cpanel/amount-payment/add"><span class="btn-label icon fa fa-plus-square"></span>Add</a>
+		                        </th>
+		                        <th>Number Of Payment</th>
+		                        <th>Amount</th>
+		                    </tr>
+		                    </thead>
+		                    <tbody id="data-user">
+		                    	{{#each Getamount}}
+		                            <tr>
+		                                <td>
+		                                    <a class="btn btn-xs btn-labeled btn-success" href="/cpanel/amount-payment/edit/{{_id}}"><span
+		                                            class="btn-label icon fa fa-edit"></span>U</a>
+		                                    <a  class="btn btn-xs btn-labeled btn-danger btn-del" href="#"><span
+		                                            class="btn-label icon fa fa-minus-square"></span>D</a>
+		                                </td>
+		                                <td>{{paynum}}</td>
+		                                <td>{{amount}}</td>
+		                            </tr>
+		                        {{/each}}
+		                    </tbody>
+		                </table>
+
+		                <div class="table-footer clearfix">
+		                    <div class="DT-label">
+		                       
+		                    </div>
+		                    <div class="DT-pagination">
+		                        <div class="dataTables_paginate paging_simple_numbers" id="jq-datatables-example_paginate">
+		                            <ul id="pagination" class="pagination pagination-sm"></ul>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</div>    
+	</div>
+    <div id="main-menu-bg"></div>
+</template>

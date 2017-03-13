@@ -5,12 +5,12 @@
 		    	<div class="col-md-4 pull-right">
 		    		<form class="form-inline">
 			    		<div class="form-group">
-						  	<label for="sel1">Select Status:</label>
+						  	<label for="sel1">filter by status:</label>
 							<select class="form-control" id="selstatus" style="width: 236px">
-							    <option>all</option>
-							    <option>new</option>
-							    <option>pending</option>
-							    <option>ready</option>
+							    <option value="all">all</option>
+							    <option value="validated">validated</option>
+							    <option value="waiting-for-validation">waiting for validation</option>
+							    <option value="not-validated">not validated</option>
 							  </select>
 						</div>
 					</form>
@@ -29,22 +29,22 @@
 		                    	<th>Ticket ID</th>
 		                        <th>Customer Name</th>
 	                            <th>Agency Name</th>
-	                            <th>date</th>
+	                           <!--  <th>Upload Invoice</th> -->
 	                            <th>Invoice</th>
 	                            <th>Status</th>
-	                            <th>action</th>
+	                            <th>Action</th>
 		                    </tr>
 		                    </thead>
 		                    <tbody>
 		                    	{{#each getallTicket}}
 		                            <tr>
 		                            	<td>{{@index}}</td>
-		                            	 <td>{{_id}}</td>
+		                            	 <td class="info-view">{{_id}}</td>
 		                                <td>{{getUsername customer}}</td>
 		                                <td>{{getUsername agency}}</td>
-		                                <td>{{getHumanDate date}}</td>
+		                               <!--  <td><a class="btn btn-xs btn-labeled btn-success uploadinvoice" id="uploadinvoice" href="#">upload</a></td> -->
 		                                {{#if checkInvoice invoice}}
-		                                <td><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-eye-open"></span></a>
+		                                <td><a href="#" data-toggle="modal" data-target="#myModal" class="btn btn-xs btn-labeled btn-success">invoice</a>
 		                                 <!--MODAL POPUP-->
 		                                     <div class="modal fade" id="myModal" role="dialog">
 		                                        <div class="modal-dialog modal-lg">
@@ -63,7 +63,6 @@
 		                                        </div>
 		                                      </div>
 		                                <!--END MODAL-->
-
 		                                </td>
 		                                {{else}}
 		                                    <td>
@@ -71,15 +70,24 @@
 		                                    </td>
 		                                {{/if}}
 
-		                                <td>{{status}}</td>
 		                                <td>
-		                                	{{#if checkStatus status}}
+		                                	{{#if Isvalidated status}}
+		                                		<a class="btn btn-xs btn-labeled btn-success btn-status" href="#">{{status}}</a>
+		                                	{{/if}}
+		                                	{{#if Isnotvalidated status}}
+		                                		<a class="btn btn-xs btn-labeled btn-danger btn-status" href="#">{{status}}</a>
+		                                	{{/if}}
+		                                	{{#if Iswait status}}
+		                                		<a class="btn btn-xs btn-labeled btn-warning btn-status" href="#">{{status}}</a>
+		                                	{{/if}}
+		                                </td>
+		                                <td>
+		                                	<!-- {{#if checkStatus status}}
 		                                    <a class="btn btn-xs btn-labeled btn-success" id="btnstatus" href=""><span class="glyphicon glyphicon-upload"></span>update status</a>
 		                                    {{else}}
 		                                     <a class="btn btn-xs btn-labeled btn-success" id="btnstatuspending" href=""><span class="glyphicon glyphicon-upload"></span>update status</a>
-		                                    {{/if}}
-		                                     <a class="btn btn-xs btn-labeled btn-danger" id="btnremove" href=""><span  class="glyphicon glyphicon-remove"></span>delete</a>
-		                                    
+		                                    {{/if}} -->
+		                                     <a class="btn btn-xs btn-labeled btn-danger" id="btnremove" href=""><span  class="glyphicon glyphicon-remove"></span>delete</a>		                                    
 		                                </td>
 		                            
 		                            </tr>
@@ -121,4 +129,64 @@
 	   	background-color: #7985BA;
 	   }*/
   </style>
+    <!-- Modal -->
+            <div class="modal" id="InfoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="text-danger fa fa-times"></i></button>
+                        <h4 class="modal-title" id="myModalLabel"> </h4>
+                    </div>
+                    <div class="modal-body">
+                  
+                    <table class="pull-left col-md-8 ">
+                         <tbody id="userInfo">
+                           
+                         </tbody>
+                    </table>
+                             
+                         
+                    <div class="col-md-4"> 
+                        <img src="http://lorempixel.com/150/150/technics/" alt="teste" class="img-thumbnail">  
+                    </div>
+                    
+                    <div class="clearfix"></div>
+                  <!--  <p class="open_info hide">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p> -->
+                  </div>
+                    
+                  <div class="modal-footer">       
+                      
+                   <!--  <div class="text-right pull-right col-md-3">
+                        Varejo: <br/> 
+                        <span class="h3 text-muted"><strong> R$50,00 </strong></span>
+                    </div> 
+                      
+                    <div class="text-right pull-right col-md-3">
+                        Atacado: <br/> 
+                        <span class="h3 text-muted"><strong>R$35,00</strong></span>
+                    </div> -->
+                    <div class="text-center col-md-12">
+                        <h3>Do you validate this invoice?</h3>
+                    </div>
+                     <div class="text-center col-md-4">
+                        <span class="h3 text-muted"><strong><a href="#" class="validate-status">Yes</a></strong></span>
+                    </div> 
+                    <div class="text-center col-md-4">
+                        <div class="form-group">
+                            <select class="form-control" id="select-validate" name="select-validate">
+                                <option value="validated">validated</option>
+                                <option value="not-validated">not validated</option>
+                                <option value="waiting-for-validation">waiting for validation</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="text-center col-md-4">
+                        <span class="h3 text-muted"><strong><a href="#" data-dismiss="modal">No</a></strong></span>
+                    </div>
+                    <div style="height: 50px"></div>
+                </div>
+              </div>
+            </div>
+            </div>
+<!-- fim Modal-->    
 </template>

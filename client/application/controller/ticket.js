@@ -11,7 +11,7 @@ Template.ticket.events({
 	"click #uploadinvoice":function(e){
 		e.preventDefault();
          $('#myModal').modal('hide');
-		var ticketid=this._id;
+		var ticketid = this._id;
 		filepicker.setKey("ACTP7A0fnQou2s5L4f9FBz");
         filepicker.pick({
            //  mimetype:['image/*','text/*','pdf/*'], /* Images only */
@@ -47,13 +47,14 @@ Template.ticket.events({
         e.preventDefault();
         $('#InfoModal').modal('show');
         var id = this.customer;
+        Session.set('TICKET_ID',this._id);
         var user = Meteor.users.findOne({'_id':id});
         //alert(id);
         var html = '';
             html += '<tr>';
                 html += '<td class="h6"><strong>Username</strong></td>';
                 html += '<td> </td>';
-                html += '<td class="h5">'+user.profile.username+'</td>';
+                html += '<td class="h5 username">'+user.profile.username+'</td>';
             html += '</tr>';
              html += '<tr>';
                 html += '<td class="h6"><strong>Family Name</strong></td>';
@@ -98,29 +99,47 @@ Template.ticket.events({
                 html += '<td> </td>';
                 html += '<td class="h5"></td>';
             html += '</tr>';
-        var title = '<i class="text-muted fa fa-user"></i> <strong>Member</strong> -'+user.profile.username; 
+        var title = '<i class="text-muted fa fa-user"></i> <strong>Affiliator</strong> -'+user.profile.username; 
         $('#myModalLabel').html(title);
         $('#userInfo').html(html); 
     },
     "click .btn-mais-info":function(e){
         e.preventDefault();
         $( '.open_info' ).toggleClass( "hide" );
+    },
+    'click .validate-status':function(e){
+        e.preventDefault();
+        var status = $('[name="select-validate"] option:selected').val();
+        var id = Session.get('TICKET_ID');
+        Meteor.call('updateStaus', id, status, function(err){
+            if(!err){console.log('updateStaus Successfully');$('.close').click()}
+        });
+    },
+    'change #select-filter':function(e){
+        e.preventDefault();
+        var val = $('[name="select-filter"] option:selected').val();
+        Session.set('VAL-STATUS',val);
     }
 });
 Template.ticket.helpers({
 	getallTicket:function () {
-    var uid=Meteor.userId();
-    var result = ticket.find({'agency':uid}).map(function(document, index){
-      document.index = index+1;
-      return document;
-    });
-    return result;
+        var uid=Meteor.userId();
+        var val = Session.get('VAL-STATUS');
+        if(val == 'validated'){
+            return ticket.find({'agency':uid,'status':val});
+        }else if(val == 'not-validated'){
+            return ticket.find({'agency':uid,'status':val});
+        }else if(val == 'waiting-for-validation'){
+            return ticket.find({'agency':uid,'status':val});
+        }else{
+            return ticket.find({'agency':uid});
+        }
 	},
-  checkInvoice:function(invoice){
-    if(invoice){
-      return true;
-    }else{
-      return false;
+    checkInvoice:function(invoice){
+        if(invoice){
+            return true;
+        }else{
+            return false;
+        }
     }
-  }
 });

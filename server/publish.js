@@ -114,3 +114,7 @@ Meteor.publish("GetAllPayment",function(){
     var listuser=Meteor.users.find({_id:{$in:userArr}})
     return [userpayment, listuser]
 });
+
+Meteor.publish("GetAmount",function(id){
+  return amount.find({});
+});
