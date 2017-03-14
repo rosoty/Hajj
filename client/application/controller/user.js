@@ -406,6 +406,31 @@ Template.profile.events({
 		e.preventDefault();
 		var val = $('#selAgency').val();
 		Session.set('AGENCY-ID',val);
+	},
+	"click #send":function(e){
+		e.preventDefault();
+		// alert('send');
+		// var to = "rosoty24@gmail.com";
+		// var subject = "Test send email";
+		// var html = "hello rosoty this is my first email";
+		// Meteor.call("sendEmail", to, subject, html, function(err){
+		// 	if(!err){
+		// 		console.log('successfully send email');
+		// 	}else{
+		// 		console.log(err);
+		// 	}
+		// });
+		Meteor.call('sendEmail',
+            'rosoty24@gmail.com',
+            'bob@example.com',
+            'Hello from Meteor!',
+            'This is a test of Email.send.', function(err){
+            	if(!err){
+            		console.log('sendEmail successfully');
+            	}else{
+            		console.log(err);
+            	}
+            });
 	}
 });
 Template.editprofile.events({
