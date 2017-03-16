@@ -18,10 +18,13 @@ Template.inviteuser.helpers({
 		var html = '';
 		var roots = window.location.href;
 		var fullurl = roots.replace(/(http.*?\/\/.*?\/)(.*)/g,"$1");
-		var member = 8;
+		var member = Meteor.users.findOne({'_id':id});
+		var a = parseInt(member.profile.aff_number);
+		console.log(typeof a);
+		console.log('MYCOUNT==== '+a);
 		var i = 0;
-		if(num <= member){
-			for(num ; num <= member ; num++){
+		if(num <= a){
+			for(num ; num < a ; num++){
 				html += '<tr>';
 			        html += '<td><b>link '+(i+1)+' :</b></td>';
 			        html += '<td><input type="text" readonly name="link1" class="link-text" value="'+fullurl+'register/affiliate/'+Meteor.userId()+'" style="width: 450px;"></td>';

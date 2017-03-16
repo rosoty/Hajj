@@ -1,0 +1,66 @@
+<template name="platform">
+	<div id="content-wrapper">
+        <div class="panel-body">
+		    <div class="row">
+		        <div class="col-sm-12">
+
+		            <div class="table-light">
+		                <div class="table-header">
+		                    <div class="table-caption">
+		                        Manage Platform
+		                    </div>
+		                </div>
+		                <table class="table table-bordered">
+		                    <thead>
+		                    <tr>
+		                        <th style="width: 130px;">
+		                        	<a class="btn btn-xs btn-labeled btn-success" href="/cpanel/platform/add"><span class="btn-label icon fa fa-plus-square"></span>Add</a>
+		                        </th>
+		                        <th>Desc.</th>
+		                        <th>Date From</th>
+		                        <th>Date To</th>
+		                       <th>Status</th>
+		                    </tr>
+		                    </thead>
+		                    <tbody>
+		                    	{{#each GetAllPlatform}}
+		                            <tr>
+		                                <td>
+		                                    <a class="btn btn-xs btn-labeled btn-success" href="/cpanel/platform/edit/{{_id}}"><span
+		                                            class="btn-label icon fa fa-edit"></span>U</a>
+		                                    <a  class="btn btn-xs btn-labeled btn-danger btn-del" href="#"><span
+		                                            class="btn-label icon fa fa-minus-square"></span>D</a>
+		                                </td>
+		                                <td>{{description}}</td>
+		                                <td>{{getHumanDate date_from}}</td>
+		                                <td>{{getHumanDate date_to}}</td>
+		                                {{#if IsActive status}}
+		                                	<td><a class="btn btn-xs btn-labeled btn-success btn-status" href="#">{{status}}</a></td>
+		                                {{/if}}
+		                                {{#if IsPandding status}}
+		                                	<td><a class="btn btn-xs btn-labeled btn-danger btn-status" href="#">{{status}}</a></td>
+		                                {{/if}}
+		                            </tr>
+		                        {{/each}}
+		                    </tbody>
+		                </table>
+
+		                <div class="table-footer clearfix">
+		                    <div class="DT-label">
+		                        <div class="dataTables_info" id="jq-datatables-example_info" role="alert" aria-live="polite"
+		                             aria-relevant="all">
+		                        </div>
+		                    </div>
+		                    <div class="DT-pagination">
+		                        <div class="dataTables_paginate paging_simple_numbers" id="jq-datatables-example_paginate">
+		                            <ul class="pagination"> </ul>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</div>    
+	</div>
+	 <div id="main-menu-bg"></div>
+</template>

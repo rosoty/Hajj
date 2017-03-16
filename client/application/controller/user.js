@@ -209,7 +209,7 @@ Template.userregister.events({
 		var res_affiliate = Router.current().params.id;
 		//console.log('res_affiliate== '+res_affiliate);
 		var res = Meteor.users.findOne({'_id':res_affiliate});
-		console.log('res== '+res);
+		//console.log('res== '+res);
 		if(typeof(res) == 'undefined'){
 			//console.log('undefined');
 			if(username==''||familyname==''||dob==''||phone==''||email==''||password==''){
@@ -219,7 +219,7 @@ Template.userregister.events({
 				$("#nextrgister").removeClass("hidden");
 			}
 		}else{
-			console.log('insert');
+			//console.log('insert');
 			res_affiliate = res._id;
 			var res_type = res.profile.type;
 			var res_numpayment = res.profile.numpayment;
@@ -240,7 +240,9 @@ Template.userregister.events({
 			}else{
 				Meteor.call("registerUser",email,password,obj,role,function(err,data){
 					if(!err){
-						Router.go("/login");
+						console.log('DATA== '+ data);
+						//Meteor.call('sendUserRegister');
+						//Router.go("/login");
 					}
 				});
 			}
@@ -284,6 +286,9 @@ Template.userregister.events({
 		}else{
 			Meteor.call("registerUser",email,password,obj,role,function(err,data){
 				if(!err){
+					console.log('DATA=== '+data);
+					Meteor.call('sendUserRegister',data);
+					//console.log('Email === '+res_obj.profile.username);
 					var pay_obj = {"status":"new","created_date":Date.now(),"due_date":depaturedate,"amount":"1500000","userid":data,"updated_date":""}
 					Meteor.call("InsertPayment",pay_obj,numpayment);
 					Meteor.call("findAffiliate",data);
@@ -328,8 +333,10 @@ Template.profile.helpers({
 		var id = Meteor.userId();	
 		var result = Meteor.users.find({'profile.affiliate':id, 'roles':'affiliate'}).count();
 		var tic = ticket.findOne({'customer':id});
-		console.log(tic);
-		if(result >= 9 && typeof(tic) == 'undefined'){
+		//console.log(tic);
+		var num = Meteor.user();
+		var mynum = parseInt(num.profile.aff_number);
+		if(result >= mynum && typeof(tic) == 'undefined'){
 			return true;
 		}
 	},
@@ -409,28 +416,11 @@ Template.profile.events({
 	},
 	"click #send":function(e){
 		e.preventDefault();
-		// alert('send');
-		// var to = "rosoty24@gmail.com";
-		// var subject = "Test send email";
-		// var html = "hello rosoty this is my first email";
-		// Meteor.call("sendEmail", to, subject, html, function(err){
-		// 	if(!err){
-		// 		console.log('successfully send email');
-		// 	}else{
-		// 		console.log(err);
-		// 	}
-		// });
-		Meteor.call('sendEmail',
-            'rosoty24@gmail.com',
-            'bob@example.com',
-            'Hello from Meteor!',
-            'This is a test of Email.send.', function(err){
-            	if(!err){
-            		console.log('sendEmail successfully');
-            	}else{
-            		console.log(err);
-            	}
-            });
+		alert('send');
+		var to = "rosoty24@gmail.com";
+		var subject = "Test send email";
+		var text = "<b>hello rosoty this is my first email</b>";
+		Meteor.call("sendEmail");
 	}
 });
 Template.editprofile.events({
@@ -478,3 +468,25 @@ Template.changepassword.events({
 		
 	}
 });
+
+Template.affiliator.events({
+	"click #btn-update":function(e){
+		e.preventDefault();
+		var affnum = $('[name="aff-number"]').val();
+		var html = '';
+		if(affnum == ''){
+			html += '<div class="alert alert-danger">';
+                html += '<strong>All Fields!</strong> can not empty please fill it.';
+            html += '</div>';
+            $('#msg-error').html(html);
+		}else{
+			Meteor.call('UpdateNumber',affnum,function(err){
+				if(!err){
+					console.log('UpdateNumber successfully');Router.go('/cpanel/user')
+				}else{
+					console.log(err.reason);
+				}
+			});
+		}
+	}
+})

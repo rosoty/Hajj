@@ -13,10 +13,11 @@ Meteor.startup(function() {
         ];
         _.each(users, function (user) {
             var id;
+            var num = 7;
             id = Accounts.createUser({
                 email: user.email,
                 password: "123",
-                profile: { username: user.name }
+                profile: { username: user.name ,num_affiliate:num}
             });
             Roles.addUsersToRoles(id, user.roles);
         });

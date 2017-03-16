@@ -6,23 +6,25 @@
 
 		            <div class="table-light">
 		                <div class="table-header2">
-		                	<div class="col-sm-4">
+		                	<div class="col-sm-2">
 		                		 <b style="color:red">USERS LIST:</b>
 			                </div>
-		                	<div class="col-sm-2">
-			                	<div class="table-caption">
-			                        <b>FILER:</b>
-			                    </div>
-			                </div>
-	                        <div class="col-sm-6">
+	                        <div class="col-sm-4">
 		                        <div class="form-group">
 			                    	<select class="form-control" id="usertype">
-									    <option value="none">Select User Type</option>
+									    <option value="none">Filter</option>
 									    <option value="admin">Admin</option>
 									    <option value="agency">Agency</option>
 									    <option value="affiliate">Affiliate</option>
 									</select>
 			                    </div>
+			                </div>
+			                <div class="col-sm-2"></div>
+			                <div class="col-sm-2">
+			                	<a href="user/edit-affiliator/{{currentUser._id}}" name="aff" id="btn-aff" class="btn-lg btn-success">Set Affiliator Number </a>
+			                </div>
+			                <div class="col-sm-2">
+			                	<a href="user/edit-affiliator/{{currentUser._id}}" name="aff" id="btn-aff" class="btn-lg btn-primary">{{currentUser.profile.aff_number}} Link </a>
 			                </div>
 		                </div>	
 		                <table class="table table-bordered">

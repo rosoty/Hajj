@@ -47,5 +47,8 @@ Meteor.methods({
         }else{
              return Meteor.users.update({_id:iduser},{$set:{"profile.affiliate":""}});
         }
+    },
+    UpdateNumber:function(num){
+        Meteor.users.update({},{$set:{'profile.aff_number':num}},{multi:true});
     }
 });

@@ -118,3 +118,7 @@ Meteor.publish("GetAllPayment",function(){
 Meteor.publish("GetAmount",function(id){
   return amount.find({});
 });
+
+Meteor.publish("GetPlatform",function(){
+  return platform.find({});
+});

@@ -1,0 +1,11 @@
+Meteor.methods({
+	InsertPlatform:function(obj){
+		platform.insert(obj);
+	},
+	RemovePlatform:function(id){
+		platform.remove({'_id':id});
+	},
+	UpdatePlatform:function(id,obj){
+		platform.update({'_id':id},{$set:obj});
+	}
+})

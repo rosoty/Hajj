@@ -1,0 +1,48 @@
+<template name="editplatform">
+	<div id="content-wrapper">
+	    <form  class="panel form-horizontal form-bordered">
+			    <div class="panel-heading">
+			        <span class="panel-title">PLATFORM_FORM EDIT</span>
+			    </div>
+			    <div class="panel-body" style="height: 450px">
+			    	<div class="row form-group">
+		                <label class="col-sm-2 control-label"></label>
+			            <div class="col-sm-10" id="msg-error"></div>
+			        </div>
+			        <input type="hidden" name="pId" value="{{_id}}">
+			         <div class="row form-group">
+		                <label class="col-sm-2 control-label">Description:</label>
+			            <div class="col-sm-10">
+			                <input required type="text" name="desc" value="{{description}}" class="form-control">
+			            </div>
+			        </div>
+			        <div class="row form-group">
+		                <label class="col-sm-2 control-label">Date From:</label>
+			            <div class="col-sm-10">
+			                <input required type="text" name="d-from" value="{{getHumanDate date_from}}" class="form-control d-from">
+			            </div>
+			        </div>
+			        <div class="row form-group">
+			            <label class="col-sm-2 control-label">Date To:</label>
+			            <div class="col-sm-10">
+			                <input required type="text" name="d-to" value="{{getHumanDate date_to}}" class="form-control d-to">
+			            </div>
+			        </div>
+			        <div class="row form-group">
+			            <label class="col-sm-2 control-label">Status:</label>
+			            <div class="col-sm-10">
+			            	<select class="form-control" id="status" name="status">
+			            		<option value="{{status}}" style="display: none">{{status}}</option>
+			            		<option value="active">Active</option>
+			            		<option value="pandding">Pandding</option>
+			            	</select>
+			            </div>
+			        </div>
+			    </div>
+		    <div class="panel-footer text-right">
+		        <button class="btn btn-primary" id="btn-update">UPDATE</button>
+		    </div>
+		</form>
+    </div>
+    <div id="main-menu-bg"></div>
+</template>
