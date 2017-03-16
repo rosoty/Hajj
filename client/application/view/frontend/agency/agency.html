@@ -1,67 +1,91 @@
 <template name="agency">
 	<div class="container">
     	<div class="col-md-12">
-    		<div class="row">		
-					<div class="col-md-6" style="margin-top:50px">
-						<h3 class="dark-grey"></h3>
-						<div class="form-group col-lg-12" id="msg-error"></div>	
-						<div class="form-group col-lg-12">
-							<label>Travel agency’s name</label>
-							<input type="text" name="username" class="form-control" id="" value="">
+	    		<div class="row">
+	    			{{#if CheckPlatform}}
+						<div class="col-md-6" style="margin-top:50px">
+							<h3 class="dark-grey"></h3>
+							<div class="form-group col-lg-12" id="msg-error"></div>	
+							<div class="form-group col-lg-12">
+								<label>Travel agency’s name</label>
+								<input type="text" name="username" class="form-control" id="" value="">
+							</div>
+							<div class="form-group col-lg-12">
+								<label>Contact’s first name</label>
+								<input type="text" name="firstname" class="form-control" id="" value="">
+							</div>
+							<div class="form-group col-lg-12">
+								<label>Contact’s last name</label>
+								<input type="text" name="lastname" class="form-control" id="" value="">
+							</div>
+							<div class="form-group col-lg-12">
+								<label>Email Address</label>
+								<input type="email" name="email" class="form-control" id="" value="">
+							</div>
+							<div class="form-group col-lg-12">
+								<label>Siret Number</label>
+								<input type="text" name="siretnum" class="form-control" id="" value="">
+							</div>
+							<div class="form-group col-lg-12">
+								<label>Phone</label>
+								<input type="text" name="phone" class="form-control" id="" value="">
+							</div>
+							<div class="form-group col-lg-12">
+								<label>Address</label>
+								<input type="text" name="address" class="form-control" id="" value="">
+							</div>
+							<div class="form-group col-lg-12">
+								<label>Password</label>
+								<input type="password" name="password" class="form-control" id="" value="">
+							</div>
 						</div>
-						<div class="form-group col-lg-12">
-							<label>Contact’s first name</label>
-							<input type="text" name="firstname" class="form-control" id="" value="">
+					
+						<div class="col-md-6" style="margin-top:50px">
+							<h3 class="dark-grey">Terms and Conditions</h3>
+							<p>
+								By clicking on "Register" you agree to The Company's' Terms and Conditions
+							</p>
+							<p>
+								While rare, prices are subject to change based on exchange rate fluctuations - 
+								should such a fluctuation happen, we may request an additional payment. You have the option to request a full refund or to pay the new price. (Paragraph 13.5.8)
+							</p>
+							<p>
+								Should there be an error in the description or pricing of a product, we will provide you with a full refund (Paragraph 13.5.6)
+							</p>
+							<p>
+								Acceptance of an order by us is dependent on our suppliers ability to provide the product. (Paragraph 13.5.6)
+							</p>
+							<div class="col-sm-6">	
+								<input type="checkbox" name="agree" class="checkbox" />
+								<p class="confirm"></p> Agree with this?				
+							</div>	
+							
+							<button  id="btn-register" class="btn btn-lg btn-default" disabled>Register</button>
 						</div>
-						<div class="form-group col-lg-12">
-							<label>Contact’s last name</label>
-							<input type="text" name="lastname" class="form-control" id="" value="">
-						</div>
-						<div class="form-group col-lg-12">
-							<label>Email Address</label>
-							<input type="email" name="email" class="form-control" id="" value="">
-						</div>
-						<div class="form-group col-lg-12">
-							<label>Siret Number</label>
-							<input type="text" name="siretnum" class="form-control" id="" value="">
-						</div>
-						<div class="form-group col-lg-12">
-							<label>Phone</label>
-							<input type="text" name="phone" class="form-control" id="" value="">
-						</div>
-						<div class="form-group col-lg-12">
-							<label>Address</label>
-							<input type="text" name="address" class="form-control" id="" value="">
-						</div>
-						<div class="form-group col-lg-12">
-							<label>Password</label>
-							<input type="password" name="password" class="form-control" id="" value="">
-						</div>
-					</div>
-				
-					<div class="col-md-6" style="margin-top:50px">
-						<h3 class="dark-grey">Terms and Conditions</h3>
-						<p>
-							By clicking on "Register" you agree to The Company's' Terms and Conditions
-						</p>
-						<p>
-							While rare, prices are subject to change based on exchange rate fluctuations - 
-							should such a fluctuation happen, we may request an additional payment. You have the option to request a full refund or to pay the new price. (Paragraph 13.5.8)
-						</p>
-						<p>
-							Should there be an error in the description or pricing of a product, we will provide you with a full refund (Paragraph 13.5.6)
-						</p>
-						<p>
-							Acceptance of an order by us is dependent on our suppliers ability to provide the product. (Paragraph 13.5.6)
-						</p>
-						<div class="col-sm-6">	
-							<input type="checkbox" name="agree" class="checkbox" />
-							<p class="confirm"></p> Agree with this?				
-						</div>	
-						
-						<button  id="btn-register" class="btn btn-lg btn-default" disabled>Register</button>
-					</div>
-			</div>
+					{{else}}
+						<div class="error-template">
+			                <h1>
+			                    Register</h1>
+			                <h2>
+			                    Out of Date</h2>
+			                <div class="error-details">
+			                	{{#with ShowDateRegister}}
+			                    	<p>Sorry, Requested page of out date!,</p><b style="color:red">you can start register from {{getHumanDate ShowDateRegister.date_from}} To {{getHumanDate ShowDateRegister.date_to}}</b>
+			                	{{/with}}
+			                </div>
+			                <div class="error-actions">
+			                    <a href="/" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home"></span>
+			                        Take Me Home </a><a href="#" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-envelope"></span> Contact Support </a>
+			                </div>
+			            </div>
+					{{/if}}
+				</div>
 		</div>
 	</div>
+	<style type="text/css">
+		body { background-image:('https://previews.123rf.com/images/chrisdorney/chrisdorney1303/chrisdorney130300024/18516290-OUT-OF-DATE-Rubber-Stamp-over-a-white-background-Stock-Photo.jpg');}
+		.error-template {padding: 40px 15px;text-align: center;}
+		.error-actions {margin-top:15px;margin-bottom:15px;}
+		.error-actions .btn { margin-right:10px; }
+	</style>
 </template>

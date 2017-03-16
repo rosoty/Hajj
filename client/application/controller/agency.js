@@ -75,6 +75,28 @@ Template.agency.events({
 	    }
 	}
 });
+Template.agency.helpers({
+	CheckPlatform:function(){
+		var getone = platform.findOne({'status':'active'});
+		console.log('mydate=='+getone.date_from+'===to=='+getone.date_to);
+		// var result = platform.find( { 'date_from': { $gt: getone.date_from } }, { 'date_to': {$lt: getone.date_to}} );
+		// console.log('RESULT platform'+result);
+		// console.log(result);
+		var mydate = Math.round(Date.parse(new Date()) / 1000);
+		console.log('timestamp=='+ mydate);
+		if(mydate >= getone.date_from && mydate <= getone.date_to){
+			return true;
+		}else{
+			return false;
+		}
+	},
+	ShowDateRegister:function(){
+		var getone = platform.findOne({'status':'active'});
+		if(getone){
+			return getone;
+		}
+	}
+});
 Template.editprofile.events({
 	"click #btn-update": function(e){
 		e.preventDefault();

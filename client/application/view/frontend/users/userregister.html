@@ -1,131 +1,158 @@
 <template name="userregister">
 	<div class="container">
-	  <h2>Register  form</h2>
-	  	<form class="registerform" id="registerform">
-	  		<div class="form-group">
-	  			<label class="control-label col-sm-2" for="name"></label>
-	  			<div class="col-sm-10" id="error"></div>
-	  		</div>
-	  		<div class="form-group">
-		      <label class="control-label col-sm-2" for="name">Name:</label>
-		      <div class="col-sm-10">
-		        <input type="text" class="form-control" name="username" id="firstname" placeholder="Enter Name">
-		      </div>
-		    </div>
-		    <div class="form-group">
-		      <label class="control-label col-sm-2" for="family name">Family Name:</label>
-		      <div class="col-sm-10">
-		        <input type="text" class="form-control" id="familyname" placeholder="Enter Family Name">
-		      </div>
-		    </div>
-		     <div class="form-group">
-		      <label class="control-label col-sm-2" for="dob">Date Of Birth:</label>
-		      <div class="col-sm-10">
-		        <div class="input-group datetimepicker">
-				    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-				    <input class="set-due-date form-control" id="dob" type="text"/>
-				</div>
-		      </div>
-		    </div>
-		     <div class="form-group">
-		      <label class="control-label col-sm-2" for="phone">Phone:</label>
-		      <div class="col-sm-10">
-		        <input type="text" class="form-control" id="phone" placeholder="Enter Phone Number">
-		      </div>
-		    </div>
-		    <div class="form-group">
-		      <label class="control-label col-sm-2" for="email">Email:</label>
-		      <div class="col-sm-10">
-		        <input type="email" class="form-control" id="email" placeholder="Enter email">
-		      </div>
-		    </div>
-		    <div class="form-group">
-		      <label class="control-label col-sm-2" for="pwd">Password:</label>
-		      <div class="col-sm-10">          
-		        <input type="password" class="form-control" id="pwd" placeholder="Enter password">
-		      </div>
-		    </div>
-		    <!-- <div class="form-group">        
-		      <div class="col-sm-offset-2 col-sm-10">
-		        <div class="checkbox">
-		          <label><input type="checkbox"> Remember me</label>
-		        </div>
-		      </div>
-		    </div> -->
-		    <div class="form-group">        
-		      <div class="col-sm-offset-2 col-sm-10">
-		        <button type="button" id="btnnext" class="btn btn-default">Submit</button>
-		      </div>
-		    </div>
-	 	</form>
-	 	<form class="form-horizontal hidden" id="nextrgister">
-	 		<div class="col-sm-12">
-	 			<label class="control-label col-sm-2"  for="sel1"></label>
-	 			<div class="col-sm-10" id="msg-error">  </div>
-	 		</div>
-	 		<div class="form-group">
-		     	<label class="control-label col-sm-2"  for="sel1">Select list:</label>
-		      	<div class="col-sm-10">  
-			  		<select class="form-control" id="selecttype">
-			   			<option value="hajj">Hajj</option>
-			    		<option value="omrah">Omrah</option>
-			  
-			 		</select>
-			  </div>
-		    </div>
-		    <div class="form-group">
-		     	<label class="control-label col-sm-2"  for="sel1"> Choose number of payment:</label>
-			  	<div class="col-sm-10">  
-				  	<select class="form-control" id="numpayment" name="numpayment">
-				  		<option value="choose" style="display: none">choose number</option>
-					   	{{#each Getpayment}}
-					   		<option value="{{_id}}">{{paynum}}</option>
-					   	{{/each}}
-					</select>
-				</div>
-		    </div>
-		    <div class="form-group" id="show-amount">  </div>
-		    <div  class="form-group">
-		    	<label class="control-label col-sm-2"  for="sel1"> Choose departure:</label>
-			  	<div class="col-sm-10">  
-				  	<div class="input-group datetimepicker1 datehajj">
-					    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-					    <input class="set-due-date form-control hajjdepaturedate" id="depaturedate" type="text"/>
-					</div>
-					<div class="input-group datetimepicker dateomrah hidden">
-					    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-					    <input class="set-due-date form-control omrahdepaturedate"  type="text"/>
-					</div>
-				</div>
-		    </div>
-		     <div class="form-group">
-		     	<label class="control-label col-sm-2"  for="selectpayment">Select Payments:</label>
-		      	<div class="col-sm-10">  
-			  		<select class="form-control" id="selectpayment">
-			  			<option value="nopay">Select payments</option>
-			   			<option value="paypal">Paypal</option>
-			    		<option value="card">Cradit Card</option>
-			  
-			 		</select>
-			  </div>
-		    </div>
-		    <!--  <div  class="form-group">
-		    	<label class="control-label col-sm-2"  for="sel1"> Choose Payment Model:</label>
-			  	<div class="col-sm-10">  
-				  	<select class="form-control" id="paymentmodel">
-					  	<option>1</option>
-					  	<option>2</option>
-					  	<option>3</option>
-					  	<option>6</option>
-					</select>
-				</div>
-		    </div> -->
-		    <div class="form-group">        
-		      <div class="col-sm-offset-2 col-sm-10">
-		        <button type="button" id="btnregister" class="btn btn-default">Submit</button>
-		      </div>
-		    </div>
-	 	</form>
+		<div class="col-md-12">
+	    	<div class="row">
+				{{#if CheckPlatform}}
+				  	<h2>Register  form</h2>
+				  	<form class="registerform" id="registerform">
+				  		<div class="form-group">
+				  			<label class="control-label col-sm-2" for="name"></label>
+				  			<div class="col-sm-10" id="error"></div>
+				  		</div>
+				  		<div class="form-group">
+					      <label class="control-label col-sm-2" for="name">Name:</label>
+					      <div class="col-sm-10">
+					        <input type="text" class="form-control" name="username" id="firstname" placeholder="Enter Name">
+					      </div>
+					    </div>
+					    <div class="form-group">
+					      <label class="control-label col-sm-2" for="family name">Family Name:</label>
+					      <div class="col-sm-10">
+					        <input type="text" class="form-control" id="familyname" placeholder="Enter Family Name">
+					      </div>
+					    </div>
+					     <div class="form-group">
+					      <label class="control-label col-sm-2" for="dob">Date Of Birth:</label>
+					      <div class="col-sm-10">
+					        <div class="input-group datetimepicker">
+							    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+							    <input class="set-due-date form-control" id="dob" type="text"/>
+							</div>
+					      </div>
+					    </div>
+					     <div class="form-group">
+					      <label class="control-label col-sm-2" for="phone">Phone:</label>
+					      <div class="col-sm-10">
+					        <input type="text" class="form-control" id="phone" placeholder="Enter Phone Number">
+					      </div>
+					    </div>
+					    <div class="form-group">
+					      <label class="control-label col-sm-2" for="email">Email:</label>
+					      <div class="col-sm-10">
+					        <input type="email" class="form-control" id="email" placeholder="Enter email">
+					      </div>
+					    </div>
+					    <div class="form-group">
+					      <label class="control-label col-sm-2" for="pwd">Password:</label>
+					      <div class="col-sm-10">          
+					        <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+					      </div>
+					    </div>
+					    <!-- <div class="form-group">        
+					      <div class="col-sm-offset-2 col-sm-10">
+					        <div class="checkbox">
+					          <label><input type="checkbox"> Remember me</label>
+					        </div>
+					      </div>
+					    </div> -->
+					    <div class="form-group">        
+					      <div class="col-sm-offset-2 col-sm-10">
+					        <button type="button" id="btnnext" class="btn btn-default">Submit</button>
+					      </div>
+					    </div>
+				 	</form>
+				 	<form class="form-horizontal hidden" id="nextrgister">
+				 		<div class="col-sm-12">
+				 			<label class="control-label col-sm-2"  for="sel1"></label>
+				 			<div class="col-sm-10" id="msg-error">  </div>
+				 		</div>
+				 		<div class="form-group">
+					     	<label class="control-label col-sm-2"  for="sel1">Select list:</label>
+					      	<div class="col-sm-10">  
+						  		<select class="form-control" id="selecttype">
+						   			<option value="hajj">Hajj</option>
+						    		<option value="omrah">Omrah</option>
+						  
+						 		</select>
+						  </div>
+					    </div>
+					    <div class="form-group">
+					     	<label class="control-label col-sm-2"  for="sel1"> Choose number of payment:</label>
+						  	<div class="col-sm-10">  
+							  	<select class="form-control" id="numpayment" name="numpayment">
+							  		<option value="choose" style="display: none">choose number</option>
+								   	{{#each Getpayment}}
+								   		<option value="{{_id}}">{{paynum}}</option>
+								   	{{/each}}
+								</select>
+							</div>
+					    </div>
+					    <div class="form-group" id="show-amount">  </div>
+					    <div  class="form-group">
+					    	<label class="control-label col-sm-2"  for="sel1"> Choose departure:</label>
+						  	<div class="col-sm-10">  
+							  	<div class="input-group datetimepicker1 datehajj">
+								    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+								    <input class="set-due-date form-control hajjdepaturedate" id="depaturedate" type="text"/>
+								</div>
+								<div class="input-group datetimepicker dateomrah hidden">
+								    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+								    <input class="set-due-date form-control omrahdepaturedate"  type="text"/>
+								</div>
+							</div>
+					    </div>
+					     <div class="form-group">
+					     	<label class="control-label col-sm-2"  for="selectpayment">Select Payments:</label>
+					      	<div class="col-sm-10">  
+						  		<select class="form-control" id="selectpayment">
+						  			<option value="nopay">Select payments</option>
+						   			<option value="paypal">Paypal</option>
+						    		<option value="card">Cradit Card</option>
+						  
+						 		</select>
+						  </div>
+					    </div>
+					    <!--  <div  class="form-group">
+					    	<label class="control-label col-sm-2"  for="sel1"> Choose Payment Model:</label>
+						  	<div class="col-sm-10">  
+							  	<select class="form-control" id="paymentmodel">
+								  	<option>1</option>
+								  	<option>2</option>
+								  	<option>3</option>
+								  	<option>6</option>
+								</select>
+							</div>
+					    </div> -->
+					    <div class="form-group">        
+					      <div class="col-sm-offset-2 col-sm-10">
+					        <button type="button" id="btnregister" class="btn btn-default">Submit</button>
+					      </div>
+					    </div>
+				 	</form>
+				{{else}}
+					<div class="error-template">
+		                <h1>
+		                    Register</h1>
+		                <h2>
+		                    Out of Date</h2>
+		                <div class="error-details">
+		                	{{#with ShowDateRegister}}
+		                    	<p>Sorry, Requested page of out date!,</p><b style="color:red">you can start register from {{getHumanDate ShowDateRegister.date_from}} To {{getHumanDate ShowDateRegister.date_to}}</b>
+		                	{{/with}}
+		                </div>
+		                <div class="error-actions">
+		                    <a href="/" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home"></span>
+		                        Take Me Home </a><a href="#" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-envelope"></span> Contact Support </a>
+		                </div>
+		            </div>
+				{{/if}}
+			</div>
+		</div>
 	</div>
-
+	<style type="text/css">
+		body { background-image:('https://previews.123rf.com/images/chrisdorney/chrisdorney1303/chrisdorney130300024/18516290-OUT-OF-DATE-Rubber-Stamp-over-a-white-background-Stock-Photo.jpg');}
+		.error-template {padding: 40px 15px;text-align: center;}
+		.error-actions {margin-top:15px;margin-bottom:15px;}
+		.error-actions .btn { margin-right:10px; }
+	</style>
 </template>

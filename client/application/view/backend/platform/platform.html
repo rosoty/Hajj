@@ -13,13 +13,13 @@
 		                <table class="table table-bordered">
 		                    <thead>
 		                    <tr>
-		                        <th style="width: 130px;">
+		                        <th style="width: 130px;" class="text-center">
 		                        	<a class="btn btn-xs btn-labeled btn-success" href="/cpanel/platform/add"><span class="btn-label icon fa fa-plus-square"></span>Add</a>
 		                        </th>
-		                        <th>Desc.</th>
-		                        <th>Date From</th>
-		                        <th>Date To</th>
-		                       <th>Status</th>
+		                        <th class="text-center">Desc.</th>
+		                        <th class="text-center">From Date ==></th>
+		                        <th class="text-center">To Date</th>
+		                       <th class="text-center">Status</th>
 		                    </tr>
 		                    </thead>
 		                    <tbody>
@@ -31,14 +31,14 @@
 		                                    <a  class="btn btn-xs btn-labeled btn-danger btn-del" href="#"><span
 		                                            class="btn-label icon fa fa-minus-square"></span>D</a>
 		                                </td>
-		                                <td>{{description}}</td>
-		                                <td>{{getHumanDate date_from}}</td>
-		                                <td>{{getHumanDate date_to}}</td>
+		                                <td class="text-center">{{description}}</td>
+		                                <td class="text-center">{{getHumanDate date_from}}</td>
+		                                <td class="text-center">{{getHumanDate date_to}}</td>
 		                                {{#if IsActive status}}
-		                                	<td><a class="btn btn-xs btn-labeled btn-success btn-status" href="#">{{status}}</a></td>
+		                                	<td class="text-center"><a class="btn btn-xs btn-labeled btn-success btn-status" href="#">{{status}}</a></td>
 		                                {{/if}}
 		                                {{#if IsPandding status}}
-		                                	<td><a class="btn btn-xs btn-labeled btn-danger btn-status" href="#">{{status}}</a></td>
+		                                	<td class="text-center"><a class="btn btn-xs btn-labeled btn-danger btn-status" href="#">{{status}}</a></td>
 		                                {{/if}}
 		                            </tr>
 		                        {{/each}}

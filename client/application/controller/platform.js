@@ -14,7 +14,7 @@ Template.addplatform.events({
 			d_from = Math.round(Date.parse(d_from) / 1000);
 		var d_to = $('[name="d-to"]').val();
 			d_to = Math.round(Date.parse(d_to) / 1000);
-		var status = $('[name="status"] option:selected').val();
+		var status = 'pandding';
 		var obj = {
 			description:desc,
 			date_from:d_from,
@@ -53,7 +53,7 @@ Template.editplatform.events({
 			d_from = Math.round(Date.parse(d_from) / 1000);
 		var d_to = $('[name="d-to"]').val();
 			d_to = Math.round(Date.parse(d_to) / 1000);
-		var status = $('[name="status"] option:selected').val();
+		var status = $('[name="status"]').val();
 		var obj = {
 			description:desc,
 			date_from:d_from,
@@ -91,9 +91,22 @@ Template.platform.helpers({
 	}
 });
 Template.platform.events({
-	"click .btn-del":function(){
+	"click .btn-del":function(e){
+		e.preventDefault();
 		if(confirm('Are you sure want to delete this?')){
 			Meteor.call('RemovePlatform', this._id);
+		}
+	},
+	"click .btn-status":function(e){
+		e.preventDefault();
+		var id = this._id;
+		var status = this.status;
+		if(confirm('Are you sure want update this status?')){
+			Meteor.call('UpdatePlatform_status', id, status, function(err){
+				if(!err){
+					console.log('success');
+				}
+			});
 		}
 	}
 });

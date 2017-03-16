@@ -189,6 +189,26 @@ Template.userregister.onRendered(function() {
 Template.userregister.helpers({
 	Getpayment:function(){
 		return amount.find();
+	},
+	CheckPlatform:function(){
+		var getone = platform.findOne({'status':'active'});
+		console.log('mydate=='+getone.date_from+'===to=='+getone.date_to);
+		// var result = platform.find( { 'date_from': { $gt: getone.date_from } }, { 'date_to': {$lt: getone.date_to}} );
+		// console.log('RESULT platform'+result);
+		// console.log(result);
+		var mydate = Math.round(Date.parse(new Date()) / 1000);
+		console.log('timestamp=='+ mydate);
+		if(mydate >= getone.date_from && mydate <= getone.date_to){
+			return true;
+		}else{
+			return false;
+		}
+	},
+	ShowDateRegister:function(){
+		var getone = platform.findOne({'status':'active'});
+		if(getone){
+			return getone;
+		}
 	}
 });
 
@@ -242,7 +262,7 @@ Template.userregister.events({
 					if(!err){
 						console.log('DATA== '+ data);
 						//Meteor.call('sendUserRegister');
-						//Router.go("/login");
+						Router.go("/payment");
 					}
 				});
 			}
@@ -292,7 +312,7 @@ Template.userregister.events({
 					var pay_obj = {"status":"new","created_date":Date.now(),"due_date":depaturedate,"amount":"1500000","userid":data,"updated_date":""}
 					Meteor.call("InsertPayment",pay_obj,numpayment);
 					Meteor.call("findAffiliate",data);
-					Router.go("/login");
+					Router.go("/payment");
 				}
 			});
 		}
