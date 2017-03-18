@@ -22,6 +22,7 @@ Meteor.methods({
         return Meteor.users.update({'_id':id},{$set:{'profile.passport':passport}});
     },
     registerUser:function(email,password,obj,roles){
+        var aff = Meteor.users.findOne({'roles':'admin'}).
         targetUserId = Accounts.createUser({
             email: email,
             password: password,
@@ -50,5 +51,11 @@ Meteor.methods({
     },
     UpdateNumber:function(num){
         Meteor.users.update({},{$set:{'profile.aff_number':num}},{multi:true});
+    },
+    UpdateUserAffiliat_number:function(data){
+        if(data){
+            var num = Meteor.users.findOne({'roles':'admin'}).profile.aff_number;
+            return Meteor.users.update({'_id':data},{$set:{'profile.aff_number':num}});
+        }
     }
 });

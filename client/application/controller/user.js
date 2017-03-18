@@ -260,8 +260,9 @@ Template.userregister.events({
 			}else{
 				Meteor.call("registerUser",email,password,obj,role,function(err,data){
 					if(!err){
-						console.log('DATA== '+ data);
+						//console.log('DATA== '+ data);
 						//Meteor.call('sendUserRegister');
+						Meteor.call('UpdateUserAffiliat_number',data);
 						Router.go("/payment");
 					}
 				});
@@ -306,9 +307,10 @@ Template.userregister.events({
 		}else{
 			Meteor.call("registerUser",email,password,obj,role,function(err,data){
 				if(!err){
-					console.log('DATA=== '+data);
+					//console.log('DATA=== '+data);
 					Meteor.call('sendUserRegister',data);
 					//console.log('Email === '+res_obj.profile.username);
+					Meteor.call('UpdateUserAffiliat_number',data);
 					var pay_obj = {"status":"new","created_date":Date.now(),"due_date":depaturedate,"amount":"1500000","userid":data,"updated_date":""}
 					Meteor.call("InsertPayment",pay_obj,numpayment);
 					Meteor.call("findAffiliate",data);
@@ -352,11 +354,11 @@ Template.profile.helpers({
 	GenerateButton:function(){
 		var id = Meteor.userId();	
 		var result = Meteor.users.find({'profile.affiliate':id, 'roles':'affiliate'}).count();
+		console.log('MY RESULT COUNT== '+result);
 		var tic = ticket.findOne({'customer':id});
-		//console.log(tic);
 		var num = Meteor.user();
 		var mynum = parseInt(num.profile.aff_number);
-		if(result >= mynum && typeof(tic) == 'undefined'){
+		if(result+1 >= mynum && typeof(tic) == 'undefined'){
 			return true;
 		}
 	},
