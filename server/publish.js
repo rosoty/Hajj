@@ -111,7 +111,7 @@ Meteor.publish("GetAllPayment",function(){
     userpayment.forEach(function(val){
       userArr.push(val.userid);
     });
-    var listuser=Meteor.users.find({})
+    var listuser=Meteor.users.find({_id:{$in:userArr}})
     return [userpayment, listuser]
 });
 

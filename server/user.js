@@ -22,7 +22,7 @@ Meteor.methods({
         return Meteor.users.update({'_id':id},{$set:{'profile.passport':passport}});
     },
     registerUser:function(email,password,obj,roles){
-        var aff = Meteor.users.findOne({'roles':'admin'}).
+        //var aff = Meteor.users.findOne({'roles':'admin'}).
         targetUserId = Accounts.createUser({
             email: email,
             password: password,
