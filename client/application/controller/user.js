@@ -307,9 +307,7 @@ Template.userregister.events({
 		}else{
 			Meteor.call("registerUser",email,password,obj,role,function(err,data){
 				if(!err){
-					//console.log('DATA=== '+data);
-					Meteor.call('sendUserRegister',data);
-					//console.log('Email === '+res_obj.profile.username);
+					//Meteor.call('sendUserRegister',data);
 					Meteor.call('UpdateUserAffiliat_number',data);
 					var pay_obj = {"status":"new","created_date":Date.now(),"due_date":depaturedate,"amount":"1500000","userid":data,"updated_date":""}
 					Meteor.call("InsertPayment",pay_obj,numpayment);
