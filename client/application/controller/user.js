@@ -188,7 +188,10 @@ Template.userregister.onRendered(function() {
 
 Template.userregister.helpers({
 	Getpayment:function(){
-		return amount.find();
+		var product = Session.get('HAJJ-DATE');
+		if(product){
+			return amount.find({'product':product});
+		}
 	},
 	CheckPlatform:function(){
 		var getone = platform.findOne({'status':'active'});
@@ -227,11 +230,8 @@ Template.userregister.events({
 		var password=$("#pwd").val();
 		var role="affiliate";
 		var res_affiliate = Router.current().params.id;
-		//console.log('res_affiliate== '+res_affiliate);
 		var res = Meteor.users.findOne({'_id':res_affiliate});
-		//console.log('res== '+res);
 		if(typeof(res) == 'undefined'){
-			//console.log('undefined');
 			if(username==''||familyname==''||dob==''||phone==''||email==''||password==''){
 				$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill out the form</div>");
 			}else{
@@ -239,12 +239,10 @@ Template.userregister.events({
 				$("#nextrgister").removeClass("hidden");
 			}
 		}else{
-			//console.log('insert');
 			res_affiliate = res._id;
 			var res_type = res.profile.type;
 			var res_numpayment = res.profile.numpayment;
 			var res_depaturedate = res.profile.depaturedate;
-			//console.log('type== '+res_type+' ==numpayment== '+res_numpayment+' ==depaturedate== '+res_depaturedate);
 			var obj={
 				username:username,
 				familyname:familyname,
@@ -260,8 +258,6 @@ Template.userregister.events({
 			}else{
 				Meteor.call("registerUser",email,password,obj,role,function(err,data){
 					if(!err){
-						//console.log('DATA== '+ data);
-						//Meteor.call('sendUserRegister');
 						Meteor.call('UpdateUserAffiliat_number',data);
 						Router.go("/payment");
 					}

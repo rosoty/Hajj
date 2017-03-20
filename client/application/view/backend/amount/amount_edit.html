@@ -10,6 +10,16 @@
 			            <div class="col-sm-10" id="msg-error"> </div>
 			    	</div>
 			    	<input type="hidden" name="amountId" value="{{_id}}">
+			    	<div class="row form-group">
+			            <label class="col-sm-2 control-label">Select Product:</label>
+			            <div class="col-sm-10">
+			            	<select class="form-control" name="product">
+			            		<option value="{{product}}" style="display: none">{{product}}</option>
+			            		<option value="hajj">Hajj</option>
+			            		<option value="omrah">Omrah</option>
+			            	</select>
+			            </div>
+			        </div>
 			        <div class="row form-group">
 		                <label class="col-sm-2 control-label">Number of Payment:</label>
 			            <div class="col-sm-10">

@@ -391,7 +391,7 @@
 			<table class="table table-hover">
                 <thead>
                     <tr class="btn-primary">
-                    	<th width="10px">Ticket ID</th>
+                    	<th width="100px">Ticket ID</th>
                         <th>Agency Name</th>
                         <th>Product</th>
                         <th>date</th>
@@ -403,7 +403,7 @@
                     {{#if getallTicket}}
                         {{#each getallTicket}}
                             <tr>
-                            	<td width="10px">{{_id}}</td>
+                            	<td width="100px">{{_id}}</td>
                                 <td>{{getUsername agency}}</td>
                                 <td>{{getProductname product}}</td>
                                 <td>{{getHumanDate date}}</td>
@@ -412,9 +412,11 @@
                         {{/each}}
                     {{else}}
                         <tr>
+                        	<td colspan="5">
                             <div class="alert alert-danger">
                                 <strong>Please Order Ticket !!!</strong>
                             </div>
+                            </td>
                         </tr>
                     {{/if}}
                 </tbody>

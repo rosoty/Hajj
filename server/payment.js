@@ -24,7 +24,9 @@ Meteor.methods({
         });
     },
     'InsertPayment':function(obj,x){
-        for(var i = 0; i<x; i++){
+      console.log('amountID=='+x);
+      var num = amount.findOne({'_id':x}).paynum;
+        for(var i = 0; i<num; i++){
              payment.insert(obj);
         }
     },

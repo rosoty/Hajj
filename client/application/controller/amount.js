@@ -1,6 +1,7 @@
 Template.addamount.events({
 	'click #btn-save':function(e){
 		e.preventDefault();
+		var product = $('[name="product"]').val();
 		var num = $('[name="num-pay"]').val();
 		var amount = $('[name="amount"]').val();
 		var html = '';
@@ -10,7 +11,7 @@ Template.addamount.events({
             html += '</div>';
             $('#msg-error').append(html);
 		}else{
-			var obj = {paynum:parseInt(num),amount:parseInt(amount)}
+			var obj = {product:product,paynum:parseInt(num),amount:parseInt(amount)}
 			Meteor.call('InsertAmount',obj, function(err){
 				if(!err){console.log('InsertAmount Successfully');Router.go('/cpanel/amount-payment')}
 			});
@@ -38,6 +39,7 @@ Template.editamount.events({
 	'click #btn-update':function(e){
 		e.preventDefault();
 		var id = $('[name="amountId"]').val();
+		var product = $('[name="product"]').val();
 		var num = $('[name="num-pay"]').val();
 		var amount = $('[name="amount"]').val();
 		var html = '';
@@ -47,7 +49,7 @@ Template.editamount.events({
             html += '</div>';
             $('#msg-error').append(html);
 		}else{
-			var obj = {paynum:parseInt(num),amount:parseInt(amount)}
+			var obj = {product:product,paynum:parseInt(num),amount:parseInt(amount)}
 			Meteor.call('UpdateAmount', id, obj, function(err){
 				if(!err){console.log('UpdateAmount Successfully');Router.go('/cpanel/amount-payment')}
 			});
