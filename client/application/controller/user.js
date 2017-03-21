@@ -382,6 +382,15 @@ Template.profile.helpers({
 	Ispassport:function(passport){
 		//console.log('passport== '+passport);
 		if (passport) {return true}else{return false}
+	},
+	GetnumberPayment:function(){
+		var user = Meteor.userId();
+		var result = payment.find({'userid':user,'status':'new'}).count();
+		if(result > 0){
+			return result;
+		}else{
+			return false;
+		}
 	}
 });
 Template.profile.onRendered(function(){

@@ -58,3 +58,13 @@ Template.registerHelper('CountNumberInvite', function(){
 	var id = Meteor.userId();	
 	return Meteor.users.find({'profile.affiliate':id}).count();
 });
+
+Template.registerHelper('Checkpayment', function(){
+	var id = Meteor.userId();	
+	var result = payment.find({'userid':id,'status':'new'}).count();
+	if(result == 0){
+		return true;
+	}else{
+		return false;
+	}
+});

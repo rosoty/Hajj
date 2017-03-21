@@ -58,11 +58,15 @@ Template.pay.events({
 
 Template.paymentlist.helpers({
 	getPaymentlist:function(){
-		var result = payment.find({}).map(function(document, index){
+		var user = Meteor.userId();
+		var num = payment.find({'userid':user,'status':'new'}).count();
+		var result = payment.find({'userid':user,'status':'new'}).map(function(document, index){
 	      document.index = index+1;
 	      return document;
 	    });
-	    return result;
+	    if(num > 0 ){
+	    	return result;
+	    }
 	}
 });
 
