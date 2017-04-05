@@ -12,11 +12,13 @@
 		                    </a>
 		                    <!-- <input type="button" name="send" id="send" value="Send"> -->
 		                    <div class="media-body">
-		                    	{{#if GetnumberPayment}}
-		                    		<p style="font-size: 18px;color:red;margin-right: 20px" class="pull-right">You have <b>{{GetnumberPayment}}</b> payment  need to pay more</p>
-		                    	{{else}}
-		                    		<p style="font-size: 18px;color:red;margin-right: 20px" class="pull-right">Your payment is completed</p>
-		                    	{{/if}}
+		                    	{{#if isInRole 'affiliate'}}
+			                    	{{#if GetnumberPayment}}
+			                    		<p style="font-size: 18px;color:red;margin-right: 20px" class="pull-right">You have <b>{{GetnumberPayment}}</b> payment  need to pay more</p>
+			                    	{{else}}
+			                    		<p style="font-size: 18px;color:red;margin-right: 20px" class="pull-right">Your payment is completed</p>
+			                    	{{/if}}
+			                    {{/if}}
 		                        <h4 class="media-heading">{{currentUser.profile.username}}</h4>
 		                        {{#if isInRole 'affiliate'}}
 		                		<p><span class="label label-info">{{CountNumberInvite}} invited</span> 

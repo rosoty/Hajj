@@ -18,14 +18,25 @@ Template.adminticket.onCreated(function bodyOnCreated() {
 Template.adminticket.helpers({
 	getallTicket:function () {
         var val = Session.get('TICKETSTATUS');
-        if(val == 'validated'){
-            return ticket.find({'status':val});
-        }else if(val == 'not-validated'){
-            return ticket.find({'status':val});
-        }else if(val == 'waiting-for-validation'){
-            return ticket.find({'status':val});
+        var agency = Session.get('SEARCHTICKET-AGENCY');
+        var customer = Session.get('SEARCHTICKET-CUSTOMER');
+        var tickId = Session.get('SEARCHTICKET-ID');
+        if(agency){
+            return product.find({ 'name': { '$regex': agency } });
+        }else if(customer){
+            return product.find({ 'customer': { '$regex': customer } });
+        }else if(tickId){
+            return product.find({ '_id': { '$regex': tickId } });
         }else{
-            return ticket.find({});
+            if(val == 'validated'){
+                return ticket.find({'status':val});
+            }else if(val == 'not-validated'){
+                return ticket.find({'status':val});
+            }else if(val == 'waiting-for-validation'){
+                return ticket.find({'status':val});
+            }else{
+                return ticket.find({});
+            }
         }
 		
 	},
@@ -164,5 +175,23 @@ Template.adminticket.events({
         Meteor.call('updateStaus', id, status, function(err){
             if(!err){console.log('updateStaus Successfully');$('.close').click()}
         });
+    },
+    'click .btn-searchcus':function(e){
+        e.preventDefault();
+        var val = $('[name="search-customer"]').val();
+        alert(val);
+        Session.set('SEARCHTICKET-CUSTOMER',val);
+    },
+    'click .btn-searchid':function(e){
+        e.preventDefault();
+        var val = $('[name="search-ticketid"]').val();
+        Session.set('SEARCHTICKET-ID',val);
+        alert(val);
+    },
+    'click .btn-searchagency':function(e){
+        e.preventDefault();
+        var val = $('[name="search-agency"]').val();
+        alert(val);
+        Session.set('SEARCHTICKET-AGENCY',val);
     }
 });
