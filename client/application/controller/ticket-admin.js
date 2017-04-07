@@ -21,23 +21,24 @@ Template.adminticket.helpers({
         var agency = Session.get('SEARCHTICKET-AGENCY');
         var customer = Session.get('SEARCHTICKET-CUSTOMER');
         var tickId = Session.get('SEARCHTICKET-ID');
-        if(agency){
-            return product.find({ 'name': { '$regex': agency } });
-        }else if(customer){
-            return product.find({ 'customer': { '$regex': customer } });
-        }else if(tickId){
-            return product.find({ '_id': { '$regex': tickId } });
-        }else{
-            if(val == 'validated'){
-                return ticket.find({'status':val});
-            }else if(val == 'not-validated'){
-                return ticket.find({'status':val});
-            }else if(val == 'waiting-for-validation'){
-                return ticket.find({'status':val});
-            }else{
-                return ticket.find({});
-            }
-        }
+        // if(agency){
+        //     return ticket.find({ 'name': { '$regex': agency } });
+        // }else if(customer){
+        //     return ticket.find({ 'customer': { '$regex': customer } });
+        // }else if(tickId){
+        //     return ticket.find({ '_id': { '$regex': tickId } });
+        // }else{
+        //     if(val == 'validated'){
+        //         return ticket.find({'status':val});
+        //     }else if(val == 'not-validated'){
+        //         return ticket.find({'status':val});
+        //     }else if(val == 'waiting-for-validation'){
+        //         return ticket.find({'status':val});
+        //     }else{
+        //         return ticket.find({});
+        //     }
+        // }
+        return ticket.find({});
 		
 	},
     checkInvoice:function(invoice){
@@ -167,6 +168,12 @@ Template.adminticket.events({
         var title = '<i class="text-muted fa fa-user"></i> <strong>Affiliator</strong> -'+user.profile.username; 
         $('#myModalLabel').html(title);
         $('#userInfo').html(html); 
+    },
+     'click .view-invoice':function(e){
+        e.preventDefault();
+        var invoice = this.invoice;
+        $('#InvoiceModal').modal('show');
+        $('embed#pdfview').attr('src',invoice);
     },
     'click .validate-status':function(e){
         e.preventDefault();

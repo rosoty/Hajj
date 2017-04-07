@@ -18,78 +18,136 @@
                         </div> 
                     </div>
                     {{#if isInRole 'agency'}}
-                        <table class="table table-hover">
+                        <table class="table table-bordered">
                             <thead>
-                                <tr class="btn-primary">
-                                    <!-- <th>No</th> -->
-                                    <th>Ticket_ID</th>
-                                    <th>Name</th>
-                                    <th>Travel Agency</th>
-                                    <th>Upload</th>
-                                    <th>Invoice</th>
-                                    <th>Status</th>
-                                   <!--  <th>action</th> -->
-                                </tr>
+                            <tr class="btn-primary">
+                                <th style="width:1%">No</th>
+                                <th>Ticket ID</th>
+                                <th>Customer Name</th>
+                                <th>Agency Name</th>
+                                <th>Upload Invoice</th>
+                                <th>Invoice</th>
+                                <th>Status</th>
+                               <!--  <th>Action</th> -->
+                            </tr>
                             </thead>
-                         
+                            {{#each getallTicket}}
+                                <h1>{{name}}</h1>
+                            {{/each}}
                             <tbody>
-                                {{#if getallTicket}}
-                                    {{#each getallTicket}}
-                                        <tr>
-                                            <!-- <td>{{index}}</td> -->
-                                            <td class="info-view">{{_id}}</td>
-                                            <td>{{getUsername customer}}</td>
-                                            <td>{{getUsername agency}}</td>
-                                            <td>
-                                                <a class="btn btn-xs btn-labeled btn-success uploadinvoice" id="uploadinvoice" href="#"><span class="glyphicon glyphicon-upload"></span>upload invoice</a>
-                                            </td>
-                                            {{#if checkInvoice invoice}}
-                                            <td><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-eye-open"></span>invoice</a>
-                                             <!--MODAL POPUP-->
-                                                 <div class="modal fade" id="myModal" role="dialog">
-                                                    <div class="modal-dialog modal-lg">
-                                                      <div class="modal-content">
-                                                        <div class="modal-header">
-                                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                          <h4 class="modal-title">YOUR INVOICE</h4>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                          <embed src="{{invoice}}" width="850px" height="2000px" />
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                        </div>
-                                                      </div>
-                                                    </div>
-                                                  </div>
-                                            <!--END MODAL-->
-
-                                            </td>
-                                            {{else}}
-                                                <td>
-                                                    <a href="#" title="No Invoice"><span class="glyphicon glyphicon-remove"></span></a>
-                                                </td>
-                                            {{/if}}
-
-                                            <td>{{status}}</td>
-                                        </tr>
-                                           
-                                    {{/each}}
-                                {{else}}
+                                {{#each getallTicket}}
                                     <tr>
-                                        <div class="alert alert-danger">
-                                            <strong>No Ticket !!!</strong>
-                                        </div>
+                                        <td>{{@index}}</td>
+                                         <td class="info-view">{{_id}}</td>
+                                        <td>{{getUsername customer}}</td>
+                                        <td>{{getUsername agency}}</td>
+                                        <td>
+                                            <a class="btn btn-xs btn-labeled uploadinvoice" id="uploadinvoice" href="#"><span class="glyphicon"></span>browse</a>
+                                        </td>
+                                        {{#if checkInvoice invoice}}
+                                            <td><a href="#" class="btn btn-xs btn-labeled view-invoice"><span class="glyphicon"></span>view</a>
+                                            </td>
+                                        {{else}}
+                                            <td>
+                                                <a href="#" title="No Invoice"><span class="glyphicon">no invoice</span></a>
+                                            </td>
+                                        {{/if}}
+
+                                        <td>
+                                            {{#if Isvalidated status}}
+                                                <a class="btn btn-xs btn-labeled btn-success btn-status1 info-view" href="#">{{status}}</a>
+                                            {{/if}}
+                                            {{#if Isnotvalidated status}}
+                                                <a class="btn btn-xs btn-labeled btn-danger btn-status1 info-view" href="#">{{status}}</a>
+                                            {{/if}}
+                                            {{#if Iswait status}}
+                                                <a class="btn btn-xs btn-labeled btn-warning btn-status1 info-view" href="#">pending</a>
+                                            {{/if}}
+                                        </td>
+                                       <!--  <td>
+                                             <a class="btn btn-xs btn-labeled btn-danger" id="btn-del" href=""><span  class="glyphicon glyphicon-remove"></span>delete</a>                                            
+                                        </td> -->
+                                    
                                     </tr>
-                                {{/if}}
+                                {{/each}}
                             </tbody>
-                            
+                        </table>
+                    {{/if}}
+                    {{#if isInRole 'affiliate'}}
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr class="btn-primary">
+                                <th style="width:1%">No</th>
+                                <th>Ticket ID</th>
+                                <th>Customer Name</th>
+                                <th>Agency Name</th>
+                                <th>Invoice</th>
+                                <th>Status</th>
+                               <!--  <th>Action</th> -->
+                            </tr>
+                            </thead>
+                            {{#each getAffTicket}}
+                                <h1>{{name}}</h1>
+                            {{/each}}
+                            <tbody>
+                                {{#each getAffTicket}}
+                                    <tr>
+                                        <td>{{@index}}</td>
+                                         <td class="info-view">{{_id}}</td>
+                                        <td>{{getUsername customer}}</td>
+                                        <td>{{getUsername agency}}</td>
+                                        {{#if checkInvoice invoice}}
+                                            <td><a href="#"  class="btn btn-xs btn-labeled view-invoice"><span class="glyphicon"></span>view</a>
+                                            
+                                            </td>
+                                        {{else}}
+                                            <td>
+                                                <a href="#" title="No Invoice"><span class="glyphicon">no invoice</span></a>
+                                            </td>
+                                        {{/if}}
+
+                                        <td>
+                                            {{#if Isvalidated status}}
+                                                <a class="btn btn-xs btn-labeled btn-success btn-status1 info-view" href="#">{{status}}</a>
+                                            {{/if}}
+                                            {{#if Isnotvalidated status}}
+                                                <a class="btn btn-xs btn-labeled btn-danger btn-status1 info-view" href="#">{{status}}</a>
+                                            {{/if}}
+                                            {{#if Iswait status}}
+                                                <a class="btn btn-xs btn-labeled btn-success btn-status1 info-view" href="#">ready</a>
+                                            {{/if}}
+                                        </td>
+                                       <!--  <td>
+                                             <a class="btn btn-xs btn-labeled btn-danger" id="btn-del" href=""><span  class="glyphicon glyphicon-remove"></span>delete</a>                                            
+                                        </td> -->
+                                    
+                                    </tr>
+                                {{/each}}
+                            </tbody>
                         </table>
                     {{/if}}
                 </div>      
             </div>  
         </div>
     </div>
+     <!--MODAL POPUP INVOICE-->
+         <div class="modal fade" id="InvoiceModal" role="dialog" data-toggle="modal" data-target="#myModal">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">YOUR INVOICE</h4>
+                </div>
+                <div class="modal-body">
+                  <embed src="" id="pdfview" width="850px" height="2000px" />
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+    <!--END MODAL-->
    <!-- Modal -->
             <div class="modal" id="InfoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
               <div class="modal-dialog">
@@ -108,7 +166,7 @@
                              
                          
                     <div class="col-md-4"> 
-                        <img src="http://lorempixel.com/150/150/technics/" alt="teste" class="img-thumbnail">  
+                        <img src="#" alt="teste" class="img-thumbnail">  
                     </div>
                     
                     <div class="clearfix"></div>

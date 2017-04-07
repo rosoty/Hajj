@@ -77,15 +77,15 @@ Template.user.helpers({
 		var type = Session.get('TYPEVALUE');
 		if(type){
 			if(type == "admin"){
-				return Meteor.users.find({'roles':'admin'},{sort:{'createdAt':-1}});
+				return Meteor.users.find({'roles':'admin'},{sort:{'createdAt':1}});
 			}else if(type == "agency"){
-				return Meteor.users.find({'roles':'agency'},{sort:{'createdAt':-1}});
+				return Meteor.users.find({'roles':'agency'},{sort:{'createdAt':1}});
 			}else if(type == "affiliate"){
-				return Meteor.users.find({'roles':'affiliate'},{sort:{'createdAt':-1}});
+				return Meteor.users.find({'roles':'affiliate'},{sort:{'createdAt':1}});
 			}else{
-				return Meteor.users.find({},{sort:{'createdAt':-1}});
+				return Meteor.users.find({},{sort:{'createdAt':1}});
 			}
-		}else{return Meteor.users.find({},{sort:{'createdAt':-1}});Session.set('TYPEVALUE',undefined);}
+		}else{return Meteor.users.find({},{sort:{'createdAt':1}});Session.set('TYPEVALUE',undefined);}
 	},
 	Isadmin:function(roles){
 		if(roles == "admin"){
@@ -107,7 +107,10 @@ Template.user.events({
 	}
 });
 Template.useredit.onRendered(function(){
-	this.$('.datetimepicker').datetimepicker();
+	//this.$('#dobpicker').datetimepicker();
+	this.$('#dobpicker').datetimepicker({
+    	format:'YYYY/MM/DD'
+    });
 })
 Template.useredit.events({
 	"click #btn-update": function(e){
@@ -126,7 +129,8 @@ Template.useredit.events({
 			var status = $("[name='status']").val();
 		// Affiliate Field
 			var familyname = $("[name='familyname']").val();
-			var dob = $("[name='dob']").val();
+			var dob1 = $("[name='dob']").val();
+			var	dob = Math.round(Date.parse(dob1) / 1000);
 			var userType = $("[name='usertype']").val();
 			var numpayment = $("[name='numpayment']").val();					
 			var affiliate = $("[name='affiliate']").val();
@@ -141,7 +145,7 @@ Template.useredit.events({
 			}
 		}
 			
-		var roles = $("[name='permission'] option:selected").val();
+		var roles = $("[name='permission']").val();
 		Meteor.call("UpdateUser",id, obj, email, roles, function(res){
 			if(!res){
 				alert("Update User successfully!!!!!!!");
@@ -165,9 +169,12 @@ Template.signin.events({
 		var password = $("[name='password']").val();
 		Meteor.loginWithPassword(email, password, function(res){
 		    if(!res){	
-		    	if(Roles.userIsInRole(Meteor.userId(), ['agency'])||Roles.userIsInRole(Meteor.userId(), ['affiliate'])){
+		    	if(Roles.userIsInRole(Meteor.userId(), ['affiliate'])){
+		    		Router.go("/profile/payment")
+		    	}else if(Roles.userIsInRole(Meteor.userId(), ['agency'])){
 		    		Router.go("/user/profile")
-		    	}else { 	
+		    	}
+		    	else { 	
 			    	Router.go('/cpanel/dashboad');		 
 			    }   	
 		    }else{
@@ -259,7 +266,7 @@ Template.userregister.events({
 				Meteor.call("registerUser",email,password,obj,role,function(err,data){
 					if(!err){
 						Meteor.call('UpdateUserAffiliat_number',data);
-						Router.go("/payment");
+						Router.go("/profile/payment");
 					}
 				});
 			}
@@ -305,10 +312,10 @@ Template.userregister.events({
 				if(!err){
 					//Meteor.call('sendUserRegister',data);
 					Meteor.call('UpdateUserAffiliat_number',data);
-					var pay_obj = {"status":"new","created_date":Date.now(),"due_date":depaturedate,"amount":"1500000","userid":data,"updated_date":""}
+					var pay_obj = {"status":"new","created_date":Math.round(Date.parse(new Date()) / 1000),"due_date":depaturedate,"amount":"1500000","userid":data,"updated_date":""}
 					Meteor.call("InsertPayment",pay_obj,numpayment);
 					Meteor.call("findAffiliate",data);
-					Router.go("/payment");
+					Router.go("/login");
 				}
 			});
 		}
@@ -330,10 +337,16 @@ Template.userregister.events({
 		e.preventDefault();
 		var val = $('[name="numpayment"] option:selected').val();
 		var result = amount.findOne({'_id':val});
+		var montly_amounts = parseInt(result.amount) / parseInt(result.paynum); 
+		var montly = montly_amounts.toFixed(2);
 		var html = '';
-			html += '<label class="control-label col-sm-2"  for="sel1">Amount </label>';
+			html += '<label class="control-label col-sm-2"  for="sel1">Total amount </label>';
 		    html += '<div class="col-sm-10 btn btn-default image-preview-input">';
-	            html += '<input type="text" class="form-control" disabled value="'+result.amount+'" style="color:red;font-weight: bold;border:red 2px solid">';
+	            html += '<input type="text" class="form-control" disabled value="'+result.amount+'" style="color:red;font-weight: bold;border:#000 2px solid">';
+	        html += '</div>';
+	        html += '<label class="control-label col-sm-2"  for="sel1">Montly debit amounts </label>';
+		    html += '<div class="col-sm-10 btn btn-default image-preview-input">';
+	            html += '<input type="text" class="form-control" disabled value="'+montly+'" style="color:red;font-weight: bold;border:#000 2px solid">';
 	        html += '</div>';
 			$('#show-amount').html(html);
 	}
@@ -352,7 +365,7 @@ Template.profile.helpers({
 		var tic = ticket.findOne({'customer':id});
 		var num = Meteor.user();
 		var mynum = parseInt(num.profile.aff_number);
-		if(result+1 >= mynum && typeof(tic) == 'undefined'){
+		if(result >= mynum && typeof(tic) == 'undefined'){
 			return true;
 		}
 	},
@@ -404,7 +417,7 @@ Template.profile.events({
 		var agency = this.agency;
 		var date = Math.floor(Date.now() / 1000);
 		var invoice = '';
-		var status = 'new';
+		var status = 'waiting-for-validation';
 		var obj = {
 			customer: customer,
 			product:product,

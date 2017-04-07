@@ -3,23 +3,7 @@
         <div class="panel-body">
 		    	<div class="row">
 		    		<div class="container" style="margin-top: 1%;">
-						<div class="col-md-4">     
-							<div class="row" style="margin-right: 0px">
-								<form role="form" id="form-buscar">
-									<div class="form-group">
-										<div class="input-group">
-											<input id="1" class="form-control" type="text" name="search-customer" placeholder="Search by customer name..." required/>
-											<span class="input-group-btn">
-												<button class="btn btn-success btn-searchcus" type="submit">
-													<i class="glyphicon glyphicon-search" aria-hidden="true"></i> Search
-												</button>
-											</span>
-										</div>
-									</div>
-								</form>
-							</div>            
-						</div>
-						<div class="col-md-4">     
+						<div class="col-sm-4">     
 							<div class="row" style="margin-right: 0px">
 								<form role="form" id="form-buscar">
 									<div class="form-group">
@@ -27,7 +11,7 @@
 											<input id="1" class="form-control" type="text" name="search-ticketid" placeholder="Search by Ticket ID..." required/>
 											<span class="input-group-btn">
 												<button class="btn btn-success btn-searchid" type="submit">
-													<i class="glyphicon glyphicon-search" aria-hidden="true"></i> Search
+													<i class="glyphicon glyphicon-search" aria-hidden="true"></i> Browse
 												</button>
 											</span>
 										</div>
@@ -35,20 +19,71 @@
 								</form>
 							</div>            
 						</div>
-						<div class="col-md-4">     
+						<div class="col-sm-4">     
 							<div class="row" style="margin-right: 0px">
 								<form role="form" id="form-buscar">
 									<div class="form-group">
 										<div class="input-group">
-											<input id="1" class="form-control" type="text" name="search-agency" placeholder="Search by Agency name..." required/>
+											<input id="1" class="form-control" type="text" name="search-firstname" placeholder="Search by First name..." required/>
 											<span class="input-group-btn">
-												<button class="btn btn-success btn-searchagency" type="submit">
-													<i class="glyphicon glyphicon-search" aria-hidden="true"></i> Search
+												<button class="btn btn-success btn-searchcus" type="submit">
+													<i class="glyphicon glyphicon-search" aria-hidden="true"></i> Browse
 												</button>
 											</span>
 										</div>
 									</div>
 								</form>
+							</div>            
+						</div>
+						<div class="col-sm-4">     
+							<div class="row" style="margin-right: 0px">
+								<form role="form" id="form-buscar">
+									<div class="form-group">
+										<div class="input-group">
+											<input id="1" class="form-control" type="text" name="search-lastname" placeholder="Search by Last name..." required/>
+											<span class="input-group-btn">
+												<button class="btn btn-success btn-searchcus" type="submit">
+													<i class="glyphicon glyphicon-search" aria-hidden="true"></i> Browse
+												</button>
+											</span>
+										</div>
+									</div>
+								</form>
+							</div>            
+						</div>
+						<div class="col-sm-4">     
+							<div class="row" style="margin-right: 0px">
+								<form role="form" id="form-buscar">
+									<div class="form-group">
+										<div class="input-group">
+											<input id="1" class="form-control" type="text" name="search-agency" placeholder="Search by Travel Agency..." required/>
+											<span class="input-group-btn">
+												<button class="btn btn-success btn-searchagency" type="submit">
+													<i class="glyphicon glyphicon-search" aria-hidden="true"></i> Browse
+												</button>
+											</span>
+										</div>
+									</div>
+								</form>
+							</div>            
+						</div>
+						<div class="col-sm-4">     
+							<div class="row" style="margin-right: 0px">
+									<div class="form-group">
+										<div class="input-group">
+											<select class="form-control" id="usertype">
+											    <option value="admin">Admin</option>
+											    <option value="agency">Agency</option>
+											    <option value="affiliate">Affiliate</option>
+											</select>
+
+											<span class="input-group-btn">
+												<button class="btn btn-success btn-searchcus" type="submit">
+													<i class="glyphicon glyphicon-search" aria-hidden="true"></i> Filter
+												</button>
+											</span>
+										</div>
+									</div>
 							</div>            
 						</div>
 					</div>
@@ -76,56 +111,39 @@
 		                    	<h1>{{name}}</h1>
 		                    {{/each}}
 		                    <tbody>
-		                    	<!-- {{#each getallTicket}}
+		                    	{{#each getallTicket}}
 		                            <tr>
 		                            	<td>{{@index}}</td>
 		                            	 <td class="info-view">{{_id}}</td>
 		                                <td>{{getUsername customer}}</td>
 		                                <td>{{getUsername agency}}</td>
 		                                {{#if checkInvoice invoice}}
-		                                <td><a href="#" data-toggle="modal" data-target="#myModal" class="btn btn-xs btn-labeled btn-success">invoice</a>
-		                                
-		                                     <div class="modal fade" id="myModal" role="dialog">
-		                                        <div class="modal-dialog modal-lg">
-		                                          <div class="modal-content">
-		                                            <div class="modal-header">
-		                                              <button type="button" class="close" data-dismiss="modal">&times;</button>
-		                                              <h4 class="modal-title">YOUR INVOICE</h4>
-		                                            </div>
-		                                            <div class="modal-body">
-		                                              <embed src="{{invoice}}" width="850px" height="2000px" />
-		                                            </div>
-		                                            <div class="modal-footer">
-		                                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		                                            </div>
-		                                          </div>
-		                                        </div>
-		                                      </div>
-		                               
+		                                <td><a href="#" class="btn btn-xs btn-labeled view-invoice">view</a>
+		                              
 		                                </td>
 		                                {{else}}
 		                                    <td>
-		                                        <a href="#" title="No Invoice"><span class="glyphicon glyphicon-remove"></span></a>
+		                                        <a href="#" title="No Invoice"><span class="glyphicon">no invoice</span></a>
 		                                    </td>
 		                                {{/if}}
 
 		                                <td>
 		                                	{{#if Isvalidated status}}
-		                                		<a class="btn btn-xs btn-labeled btn-success btn-status" href="#">{{status}}</a>
+		                                		<a class="btn btn-xs btn-labeled btn-success btn-status1 info-view" href="#">{{status}}</a>
 		                                	{{/if}}
 		                                	{{#if Isnotvalidated status}}
-		                                		<a class="btn btn-xs btn-labeled btn-danger btn-status" href="#">{{status}}</a>
+		                                		<a class="btn btn-xs btn-labeled btn-danger btn-status1 info-view" href="#">{{status}}</a>
 		                                	{{/if}}
 		                                	{{#if Iswait status}}
-		                                		<a class="btn btn-xs btn-labeled btn-warning btn-status" href="#">{{status}}</a>
+		                                		<a class="btn btn-xs btn-labeled btn-warning btn-status1 info-view" href="#">{{status}}</a>
 		                                	{{/if}}
 		                                </td>
 		                                <td>
-		                                     <a class="btn btn-xs btn-labeled btn-danger" id="btnremove" href=""><span  class="glyphicon glyphicon-remove"></span>delete</a>		                                    
+		                                     <a class="btn btn-xs btn-labeled" id="btnremove" href=""><span  class="glyphicon"></span>delete</a>		                                    
 		                                </td>
 		                            
 		                            </tr>
-                            	{{/each}} -->
+                            	{{/each}}
 		                    </tbody>
 		                </table>
 
@@ -150,6 +168,24 @@
 		</div>    
 	</div>
     <div id="main-menu-bg"></div>
+     <!--MODAL POPUP INVOICE-->
+         <div class="modal fade" id="InvoiceModal" role="dialog" data-toggle="modal" data-target="#myModal">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">YOUR INVOICE</h4>
+                </div>
+                <div class="modal-body">
+                  <embed src="" id="pdfview" width="850px" height="2000px" />
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+    <!--END MODAL-->
     <!-- Modal -->
             <div class="modal" id="InfoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
               <div class="modal-dialog">

@@ -119,6 +119,12 @@ Template.ticket.events({
         e.preventDefault();
         var val = $('[name="select-filter"] option:selected').val();
         Session.set('VAL-STATUS',val);
+    },
+    'click .view-invoice':function(e){
+        e.preventDefault();
+        var invoice = this.invoice;
+        $('#InvoiceModal').modal('show');
+        $('embed#pdfview').attr('src',invoice);
     }
 });
 Template.ticket.helpers({
@@ -135,11 +141,33 @@ Template.ticket.helpers({
             return ticket.find({'agency':uid});
         }
 	},
+    getAffTicket:function(){
+         var uid=Meteor.userId();
+        var val = Session.get('VAL-STATUS');
+        if(val == 'validated'){
+            return ticket.find({'customer':uid,'status':val});
+        }else if(val == 'not-validated'){
+            return ticket.find({'customer':uid,'status':val});
+        }else if(val == 'waiting-for-validation'){
+            return ticket.find({'customer':uid,'status':val});
+        }else{
+            return ticket.find({'customer':uid});
+        }
+    },
     checkInvoice:function(invoice){
         if(invoice){
             return true;
         }else{
             return false;
         }
+    },
+     Isvalidated:function(status){
+        if(status == 'validated'){return true}
+    },
+    Isnotvalidated:function(status){
+        if(status == 'not-validated'){return true}
+    },
+    Iswait:function(status){
+        if(status == 'waiting-for-validation'){return true}
     }
 });

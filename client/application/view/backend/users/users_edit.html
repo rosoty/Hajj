@@ -21,86 +21,71 @@
 			            </div>
 			        </div>
 
-			    	{{#if IstypeAgency GetOne.roles.[0]}}
-			    		<form class="reg">				
-							<div class="col-md-12">
-								<input type="hidden" name="time" value="{{GetOne.profile.time}}">
-								<div class="col-md-2"><label>Siret Number</label></div>
-								<div class="row form-group col-md-10">
-									<input type="text" name="siretnum" class="form-control" id="" value="{{GetOne.profile.siret_num}}">
-								</div>
-								<div class="col-md-2"><label>Contact Name</label></div>
-								<div class="row form-group col-md-10">
-									<input type="text" name="contactname" class="form-control" id="" value="{{GetOne.profile.contact_name}}">
-								</div>
-								<div class="col-md-2"><label>Phone</label></div>
-								<div class="row form-group col-md-10">
-									<input type="text" name="phone" class="form-control" id="" value="{{GetOne.profile.phone}}">
-								</div>
-								<div class="col-md-2"><label>Address</label></div>
-								<div class="row form-group col-md-10">
-									<input type="text" name="address" class="form-control" id="" value="{{GetOne.profile.address}}">
-								</div>
-								<div class="col-md-2"><label>Status</label></div>
-								<div class="row form-group col-md-10">
-									<select class="form-control" name="status">
-					            		<option value="{{GetOne.profile.status}}" style="display:none">{{GetOne.profile.status}}</option>
-					            		<option value="pending">pending</option>
-					            		<option value="validated">validated</option>
-					            	</select>
-								</div>
+			    	{{#if IstypeAgency GetOne.roles.[0]}}	
+			    		<div class="row form-group">	
+							<input type="hidden" name="time" value="{{GetOne.profile.time}}">
+							<label class="col-sm-2 control-label">Siret Number</label>
+							<div class="col-sm-10">
+								<input type="text" name="siretnum" class="form-control" id="" value="{{GetOne.profile.siret_num}}">
 							</div>
-						</form>
+						</div>
+						<div class="row form-group">
+							<label class="col-sm-2 control-label">Contact Name</label>
+							<div class="col-sm-10">
+								<input type="text" name="contactname" class="form-control" id="" value="{{GetOne.profile.contact_name}}">
+							</div>
+						</div>
+						<div class="row form-group">
+							<label class="col-sm-2 control-label">Phone</label>
+							<div class="col-sm-10">
+								<input type="text" name="phone" class="form-control" id="" value="{{GetOne.profile.phone}}">
+							</div>
+						</div>
+						<div class="row form-group">
+							<label class="col-sm-2 control-label">Address</label>
+							<div class="col-sm-10">
+								<input type="text" name="address" class="form-control" id="" value="{{GetOne.profile.address}}">
+							</div>
+						</div>
+						<div class="row form-group">
+							<label class="col-sm-2 control-label">Status</label>
+							<div class="col-sm-10">
+								<select class="form-control" name="status">
+				            		<option value="{{GetOne.profile.status}}" style="display:none">{{GetOne.profile.status}}</option>
+				            		<option value="pending">pending</option>
+				            		<option value="validated">validated</option>
+				            	</select>
+							</div>
+						</div>
 			    	{{/if}}
-			    	{{#if IstypeAffiliate GetOne.roles.[0]}}
-			    		<form class="reg">				
-							<div class="col-md-12">
-								<div class="col-md-2"><label>Family Name</label></div>
-								<div class="row form-group col-md-10">
+			    	{{#if IstypeAffiliate GetOne.roles.[0]}}	
+			    		<div class="row form-group">
+								<label class="col-sm-2 control-label">Family Name</label>
+								<div class="col-sm-10">
 									<input type="text" name="familyname" class="form-control" id="" value="{{GetOne.profile.familyname}}">
 								</div>
-								<label class="control-label col-sm-2" for="dob">Date Of Birth:</label>
+						</div>
+						<div class="row form-group" style="height: 130px">
+								<label class="col-sm-2 control-label" for="dob">Date Of Birth:</label>
 							    <div class="col-sm-10">
-							        <div class="input-group datetimepicker">
+							        <div class="input-group dobpicker" id="dobpicker">
 									    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-									    <input class="set-due-date form-control" id="dob" type="text" name="dob" value="{{GetOne.profile.dob}}" />
+									    <input class="set-due-date form-control" id="dob" type="text" name="dob" value="{{getHumanDate GetOne.profile.dob}}" />
 									</div>
 							    </div>
-								<div class="col-md-2"><label>Phone</label></div>
-								<div class="row form-group col-md-10">
+						</div>
+						<div class="row form-group">
+								<div class="col-sm-2 control-label"><label>Phone</label></div>
+								<div class="col-sm-10">
 									<input type="text" name="phone" class="form-control" id="" value="{{GetOne.profile.phone}}">
 								</div>
-								<div class="col-md-2"><label>User Type</label></div>
-								<div class="row form-group col-md-10">
-									<select class="form-control" name="usertype">
-					            		<option value="{{GetOne.profile.type}}" style="display:none">{{GetOne.profile.type}}</option>
-					            		<option value="hajj">Hajj</option>
-					            		<option value="omrah">Omrah</option>
-					            	</select>
-								</div>
-								<div class="col-md-2"><label>Payment</label></div>
-								<div class="row form-group col-md-10">
-									<input type="text" name="numpayment" class="form-control" id="" value="{{GetOne.profile.numpayment}}">
-								</div>
-								<div class="col-md-2"><label>Affiliate</label></div>
-								<div class="row form-group col-md-10">
-									<input type="text" name="affiliate" class="form-control" id="" value="{{GetOne.profile.affiliate}}">
-								</div>
-							</div>
-						</form>
+						</div>
+									<input type="hidden" name="usertype" value="{{GetOne.profile.type}}">
+									<input type="hidden" name="numpayment" class="form-control" id="" value="{{GetOne.profile.numpayment}}">
+									<input type="hidden" name="affiliate" class="form-control" id="" value="{{GetOne.profile.affiliate}}">
+							
 			    	{{/if}}
-			        
-			        <div class="row form-group">
-			            <label class="col-sm-2 control-label">Permission:</label>
-			            <div class="col-sm-10">
-			            	<select class="form-control" name="permission">
-			            		<option value="{{GetOne.roles.[0]}}" style="display:none">{{GetOne.roles.[0]}}</option>
-			            		<option value="admin">Admin</option>
-			            		<option value="agency">Agency</option>
-			            		<option value="affiliate">Affiliate</option>
-			            	</select>
-			            </div>
-			        </div>
+			            	<input type="hidden" name="permission" value="{{GetOne.roles.[0]}}">
 			    </div>
 		    <div class="panel-footer text-right">
 		        <button class="btn btn-primary" id="btn-update">UPDATE</button>

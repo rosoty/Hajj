@@ -3,7 +3,7 @@ Meteor.methods({
 		return ticket.update({_id:id},{$set:{status:status}});
 	},
 	updateInvoice:function(id,invoice){
-		var status="pending"
+		var status="waiting-for-validation"
 		return ticket.update({_id:id},{$set:{invoice:invoice,status:status}})
 	},
 	SaveTicket:function(obj){

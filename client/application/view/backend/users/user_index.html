@@ -51,7 +51,11 @@
 		                                <td>{{profile.username}}</td>
 		                                <td>{{emails.[0].address}}</td>
 		                                <td>{{roles.[0]}}</td>
-		                                 <td>{{profile.status}}</td>
+		                                {{#if profile.status}}
+		                                	<td><a href="#" class="btn btn-xs btn-labeled btn-success">{{profile.status}}</a></td>
+		                                {{else}}
+		                                 	<td><a href="#" class="btn btn-xs btn-labeled btn-warning">pending</a></td>
+		                                {{/if}}
 		                            </tr>
 		                        {{/each}}
 		                    </tbody>
