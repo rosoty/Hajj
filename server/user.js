@@ -29,6 +29,9 @@ Meteor.methods({
             profile: obj
         });
         Roles.setUserRoles(targetUserId,roles);
+        var secret="AllahuAkbar";
+        //url="http://mecqueiteasy.com/wp-content/plugins/wp-eMember/api/create.php?secret_key="+secret+"&first_name="+obj.username+"&last_name="+obj.familyname+"&email="+email+"&membership_level_id=1&username="+obj.username+"&password="+password;
+        //Meteor.http.call("GET", url);
         return targetUserId;
     },
     countUser:function(){
