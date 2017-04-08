@@ -1,11 +1,12 @@
 Meteor.methods({
 	InsertUser:function(obj,email,password, roles){
+        console.log("Registering user2");
 		targetUserId = Accounts.createUser({
             email: email,
             password: password,
             profile: obj
         });
-        var secret="ATnSceN+cnxD/ZO4YsmtVPyziknLQsGW+p6rupUcf1xd7aUHXwZuxdPTlEKr";
+        //var secret="ATnSceN+cnxD/ZO4YsmtVPyziknLQsGW+p6rupUcf1xd7aUHXwZuxdPTlEKr";
         var url="http://www.mecqueiteasy.com/api/user/register/?insecure=cool&username="+obj.username+"&email="+email+"&nonce=67ecdc46b5&display_name="+obj.username+"&notify=both&user_pass="+password;
         //url="http://mecqueiteasy.com/wp-content/plugins/wp-eMember/api/create.php?secret_key="+secret+"&first_name="+obj.username+"&last_name="+obj.familyname+"&email="+email+"&membership_level_id=1&username="+obj.username+"&password="+password;
         console.log(url);
@@ -28,13 +29,14 @@ Meteor.methods({
     },
     registerUser:function(email,password,obj,roles){
         //var aff = Meteor.users.findOne({'roles':'admin'}).
+        console.log("Registering user1");
         targetUserId = Accounts.createUser({
             email: email,
             password: password,
             profile: obj
         });
         Roles.setUserRoles(targetUserId,roles);
-        var secret="ATnSceN+cnxD/ZO4YsmtVPyziknLQsGW+p6rupUcf1xd7aUHXwZuxdPTlEKr";
+        //var secret="ATnSceN+cnxD/ZO4YsmtVPyziknLQsGW+p6rupUcf1xd7aUHXwZuxdPTlEKr";
         var url="http://www.mecqueiteasy.com/api/user/register/?insecure=cool&username="+obj.username+"&email="+email+"&nonce=67ecdc46b5&display_name="+obj.username+"&notify=both&user_pass="+password;
         //url="http://mecqueiteasy.com/wp-content/plugins/wp-eMember/api/create.php?secret_key="+secret+"&first_name="+obj.username+"&last_name="+obj.familyname+"&email="+email+"&membership_level_id=1&username="+obj.username+"&password="+password;
         console.log("Register wp: "+url);
