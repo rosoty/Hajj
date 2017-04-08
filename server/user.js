@@ -5,6 +5,10 @@ Meteor.methods({
             password: password,
             profile: obj
         });
+        var secret="ATnSceN+cnxD/ZO4YsmtVPyziknLQsGW+p6rupUcf1xd7aUHXwZuxdPTlEKr";
+        var url="http://www.mecqueiteasy.com/api/user/register/?insecure=cool&username="+obj.username+"&email="+email+"&nonce=67ecdc46b5&display_name="+obj.username+"&notify=both&user_pass="+password
+        //url="http://mecqueiteasy.com/wp-content/plugins/wp-eMember/api/create.php?secret_key="+secret+"&first_name="+obj.username+"&last_name="+obj.familyname+"&email="+email+"&membership_level_id=1&username="+obj.username+"&password="+password;
+        Meteor.http.call("GET", url);
         Roles.setUserRoles(targetUserId,roles);
 	},
 	RemoveUser:function(id){
@@ -30,9 +34,10 @@ Meteor.methods({
         });
         Roles.setUserRoles(targetUserId,roles);
         var secret="ATnSceN+cnxD/ZO4YsmtVPyziknLQsGW+p6rupUcf1xd7aUHXwZuxdPTlEKr";
-        var url="http://www.mecqueiteasy.com/api/user/register/?insecure=cool&username="+obj.username+"&email="+email+"&nonce=67ecdc46b5&display_name="+obj.username+"&notify=both&user_pass="+password
+        var url="http://www.mecqueiteasy.com/api/user/register/?insecure=cool&username="+obj.username+"&email="+email+"&nonce=67ecdc46b5&display_name="+obj.username+"&notify=both&user_pass="+password;
         //url="http://mecqueiteasy.com/wp-content/plugins/wp-eMember/api/create.php?secret_key="+secret+"&first_name="+obj.username+"&last_name="+obj.familyname+"&email="+email+"&membership_level_id=1&username="+obj.username+"&password="+password;
-        Meteor.http.call("GET", url);
+        console.log("Register wp: "+url);
+        //Meteor.http.call("GET", url);
         return targetUserId;
     },
     countUser:function(){

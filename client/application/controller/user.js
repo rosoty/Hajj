@@ -263,6 +263,9 @@ Template.userregister.events({
 			if(username==''||familyname==''||dob==''||phone==''||email==''||password==''){
 				$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill out the form</div>");
 			}else{
+				var url="http://www.mecqueiteasy.com/api/user/register/?insecure=cool&username="+obj.username+"&email="+email+"&nonce=67ecdc46b5&display_name="+obj.username+"&notify=both&user_pass="+password;
+				console.log('reg 1'+url);
+				$.get(url);
 				Meteor.call("registerUser",email,password,obj,role,function(err,data){
 					if(!err){
 						Meteor.call('UpdateUserAffiliat_number',data);
@@ -308,8 +311,12 @@ Template.userregister.events({
 		if(numpayment == 'choose' || depaturedate == '' || payment == 'nopay'){
 			$("#msg-error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill out the form</div>");
 		}else{
+			var url="http://www.mecqueiteasy.com/api/user/register/?insecure=cool&username="+obj.username+"&email="+email+"&nonce=67ecdc46b5&display_name="+obj.username+"&notify=both&user_pass="+password;
+			console.log('reg 2'+url);
+			$.get(url);
 			Meteor.call("registerUser",email,password,obj,role,function(err,data){
 				if(!err){
+					
 					//Meteor.call('sendUserRegister',data);
 					Meteor.call('UpdateUserAffiliat_number',data);
 					var pay_obj = {"status":"new","created_date":Math.round(Date.parse(new Date()) / 1000),"due_date":depaturedate,"amount":"1500000","userid":data,"updated_date":""}
