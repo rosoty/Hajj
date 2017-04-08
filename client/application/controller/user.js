@@ -265,7 +265,7 @@ Template.userregister.events({
 			}else{
 				var url="https://www.mecqueiteasy.com/api/user/register/?insecure=cool&username="+obj.username+"&email="+email+"&nonce=67ecdc46b5&display_name="+obj.username+"&notify=both&user_pass="+password;
 				console.log('reg 1'+url);
-				$.get(url);
+				//$.get(url);
 				Meteor.call("registerUser",email,password,obj,role,function(err,data){
 					if(!err){
 						Meteor.call('UpdateUserAffiliat_number',data);
@@ -313,7 +313,7 @@ Template.userregister.events({
 		}else{
 			var url="https://www.mecqueiteasy.com/api/user/register/?insecure=cool&username="+obj.username+"&email="+email+"&nonce=67ecdc46b5&display_name="+obj.username+"&notify=both&user_pass="+password;
 			console.log('reg 2'+url);
-			$.get(url);
+			//$.get(url);
 			Meteor.call("registerUser",email,password,obj,role,function(err,data){
 				if(!err){
 					
