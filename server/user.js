@@ -1,9 +1,19 @@
 Meteor.methods({
 	InsertUser:function(obj,email,password, roles){
+        console.log("Registering user2");
 		targetUserId = Accounts.createUser({
             email: email,
             password: password,
             profile: obj
+        });
+        var nonce="http://www.mecqueiteasy.com/api/get_nonce/?controller=user&method=register";
+        Meteor.http.call("GET",nonce,function(error,result){
+             console.log(result);
+             var respJson = JSON.parse(result.content);
+             var key=respJson.nonce;
+             var url="http://www.mecqueiteasy.com/api/user/register/?insecure=cool&username="+obj.username+"&email="+email+"&nonce="+key+"&display_name="+obj.username+"&notify=both&user_pass="+password;
+             console.log("Register wp: "+url);
+             Meteor.http.call("GET", url);
         });
         Roles.setUserRoles(targetUserId,roles);
 	},
@@ -23,12 +33,25 @@ Meteor.methods({
     },
     registerUser:function(email,password,obj,roles){
         //var aff = Meteor.users.findOne({'roles':'admin'}).
+        console.log("Registering user1");
         targetUserId = Accounts.createUser({
             email: email,
             password: password,
             profile: obj
         });
         Roles.setUserRoles(targetUserId,roles);
+
+        var nonce="http://www.mecqueiteasy.com/api/get_nonce/?controller=user&method=register";
+        Meteor.http.call("GET",nonce,function(error,result){
+             console.log(result);
+             var respJson = JSON.parse(result.content);
+             var key=respJson.nonce;
+             var url="http://www.mecqueiteasy.com/api/user/register/?insecure=cool&username="+obj.username+"&email="+email+"&nonce="+key+"&display_name="+obj.username+"&notify=both&user_pass="+password;
+             console.log("Register wp: "+url);
+             Meteor.http.call("GET", url);
+        });
+        //var secret="ATnSceN+cnxD/ZO4YsmtVPyziknLQsGW+p6rupUcf1xd7aUHXwZuxdPTlEKr";
+        
         return targetUserId;
     },
     countUser:function(){

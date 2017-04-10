@@ -333,12 +333,15 @@ Template.userregister.events({
 				affiliate:res_affiliate,
 				depaturedate:res_depaturedate
 			}
-				Meteor.call("registerUser",email,password,obj,role,function(err,data){
-					if(!err){
-						Meteor.call('UpdateUserAffiliat_number',data);
-						Router.go("/profile/payment");
-					}
-				});
+			var url="https://www.mecqueiteasy.com/api/user/register/?insecure=cool&username="+obj.username+"&email="+email+"&nonce=67ecdc46b5&display_name="+obj.username+"&notify=both&user_pass="+password;
+			console.log('reg 1'+url);
+			//$.get(url);
+			Meteor.call("registerUser",email,password,obj,role,function(err,data){
+				if(!err){
+					Meteor.call('UpdateUserAffiliat_number',data);
+					Router.go("/profile/payment");
+				}
+			});
 			
 		}		
 	},
@@ -384,8 +387,12 @@ Template.userregister.events({
 		}else if(payment == 'nopay'){
 			$("#msg-error").html("<div class='alert alert-danger'><strong>Error!</strong>please select payment type</div>");
 		}else{
+			var url="https://www.mecqueiteasy.com/api/user/register/?insecure=cool&username="+obj.username+"&email="+email+"&nonce=67ecdc46b5&display_name="+obj.username+"&notify=both&user_pass="+password;
+			console.log('reg 2'+url);
+			//$.get(url);
 			Meteor.call("registerUser",email,password,obj,role,function(err,data){
 				if(!err){
+					
 					//Meteor.call('sendUserRegister',data);
 					Meteor.call('UpdateUserAffiliat_number',data);
 					var pay_obj = {"status":"new","created_date":Math.round(Date.parse(new Date()) / 1000),"due_date":depaturedate,"amount":"1500000","userid":data,"updated_date":""}
