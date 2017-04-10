@@ -24,6 +24,7 @@ Template.adduser.events({
 	"click #btn-save": function(e){
 		e.preventDefault();
 		var obj = '';
+		var html = '';
 		var name = $("[name='name']").val();
 		var phone = $("[name='phone']").val();
 		var email = $("[name='email']").val();
@@ -40,24 +41,84 @@ Template.adduser.events({
 			var userType = $("[name='usertype']").val();
 			var numpayment = $("[name='numpayment']").val();					
 			var affiliate = $("[name='affiliate']").val();
-		
+		var phoneno = /^\d{10}$/;
+		var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
+		// if(userRoles == 'affiliate'){
+			
+		// }else if(userRoles == 'agency'){
+		// 	obj = {
+		// 		username:name,siret_num:siret_num,contact_name:contact_name,phone:phone,address:address,time:time
+		// 	}
+		// }
 		if(userRoles == 'affiliate'){
-			obj = {
-				username:name,familyname:familyname,dob:dob,phone:phone,type:userType,numpayment:numpayment,affiliate:affiliate
+			obj = {username:name,familyname:familyname,dob:dob,phone:phone,type:userType,numpayment:numpayment,affiliate:affiliate}
+			if(name == ""){
+				html += '<div class="alert alert-danger"><strong>Please Fill</strong> Username</div>';
+				$('#msg-error').html(html);
+			}else if(!email.match(mailformat)){
+				html += '<div class="alert alert-danger"><strong>Please Fill</strong> Email format (xxx@xxx.xxx)</div>';
+				$('#msg-error').html(html);
+			}else if(!phone.match(phoneno)){
+				html += '<div class="alert alert-danger"><strong>Please Fill</strong> phone number 10 character no text</div>';
+				$('#msg-error').html(html);
+			}
+			else if(familyname == ""){
+				html += '<div class="alert alert-danger"><strong>Please Fill</strong> Familyname</div>';
+				$('#msg-error').html(html);
+			}else if(dob == ""){
+				html += '<div class="alert alert-danger"><strong>Please Fill</strong> Date of birth (dob)</div>';
+				$('#msg-error').html(html);
+			}else if(userType == ""){
+				html += '<div class="alert alert-danger"><strong>Please Select</strong> User type</div>';
+				$('#msg-error').html(html);
+			}else if(numpayment == ""){
+				html += '<div class="alert alert-danger"><strong>Please Fill</strong> Number of payment</div>';
+				$('#msg-error').html(html);
+			}else if(password == ""){
+				html += '<div class="alert alert-danger"><strong>Please Fill</strong> password</div>';
+				$('#msg-error').html(html);
+			}else{
+				Meteor.call("InsertUser",obj, email, password, userRoles, function(res){
+					if(!res){
+						Router.go('/cpanel/user');			
+					}
+				});
 			}
 		}else if(userRoles == 'agency'){
-			obj = {
-				username:name,siret_num:siret_num,contact_name:contact_name,phone:phone,address:address,time:time
+			obj = {username:name,siret_num:siret_num,contact_name:contact_name,phone:phone,address:address,time:time}
+			if(name == ""){
+				html += '<div class="alert alert-danger"><strong>Please Fill</strong> Username</div>';
+				$('#msg-error').html(html);
+			}else if(!email.match(mailformat)){
+				html += '<div class="alert alert-danger"><strong>Please Fill</strong> Email format (xxx@xxx.xxx)</div>';
+				$('#msg-error').html(html);
+			}else if(!phone.match(phoneno)){
+				html += '<div class="alert alert-danger"><strong>Please Fill</strong> phone number 10 character no text</div>';
+				$('#msg-error').html(html);
+			}else if(siret_num == ""){
+				html += '<div class="alert alert-danger"><strong>Please Fill</strong> Siret Number</div>';
+				$('#msg-error').html(html);
+			}else if(contact_name == ""){
+				html += '<div class="alert alert-danger"><strong>Please Fill</strong> Contact name</div>';
+				$('#msg-error').html(html);
+			}else if(address == ""){
+				html += '<div class="alert alert-danger"><strong>Please Fill</strong> Address</div>';
+				$('#msg-error').html(html);
+			}else if(password == ""){
+				html += '<div class="alert alert-danger"><strong>Please Fill</strong> password</div>';
+				$('#msg-error').html(html);
+			}else{
+				Meteor.call("InsertUser",obj, email, password, userRoles, function(res){
+					if(!res){
+						Router.go('/cpanel/user');			
+					}
+				});
 			}
 		}
-		if(userRoles != 'none'){
-			Meteor.call("InsertUser",obj, email, password, userRoles, function(res){
-				if(!res){
-					//alert("insert section successfully!!!!!!!");
-					Router.go('/cpanel/user');			
-				}
-			});
-		}else{alert('select roles!!!')}
+		else{
+			html += '<div class="alert alert-danger"><strong>Please Select</strong> Roles</div>';
+			$('#msg-error').html(html);
+		}
 	},
 	"change #roles":function(e){
 		var roles = $('#roles option:selected').val();
@@ -239,8 +300,20 @@ Template.userregister.events({
 		var res_affiliate = Router.current().params.id;
 		var res = Meteor.users.findOne({'_id':res_affiliate});
 		if(typeof(res) == 'undefined'){
-			if(username==''||familyname==''||dob==''||phone==''||email==''||password==''){
-				$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill out the form</div>");
+			var phoneno = /^\d{10}$/;
+			var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
+			if(username == ''){
+				$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill username</div>");
+			}else if(familyname == ''){
+				$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill Familyname</div>");
+			}else if(dob == ''){
+				$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill Date of birth</div>");
+			}else if(!phone.match(phoneno)){
+				$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill phone number 10 character no text word</div>");
+			}else if(!email.match(mailformat)){
+				$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill email format</div>");
+			}else if(password == ''){
+				$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill password</div>");
 			}else{
 				$("#registerform").addClass("hidden");
 				$("#nextrgister").removeClass("hidden");
@@ -260,16 +333,13 @@ Template.userregister.events({
 				affiliate:res_affiliate,
 				depaturedate:res_depaturedate
 			}
-			if(username==''||familyname==''||dob==''||phone==''||email==''||password==''){
-				$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill out the form</div>");
-			}else{
 				Meteor.call("registerUser",email,password,obj,role,function(err,data){
 					if(!err){
 						Meteor.call('UpdateUserAffiliat_number',data);
 						Router.go("/profile/payment");
 					}
 				});
-			}
+			
 		}		
 	},
 	'click #btnregister':function(e){
@@ -305,8 +375,14 @@ Template.userregister.events({
 			depaturedate:depaturedate,
 			payment:payment
 		}
-		if(numpayment == 'choose' || depaturedate == '' || payment == 'nopay'){
-			$("#msg-error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill out the form</div>");
+		if(selecttype == 'pro'){
+			$("#msg-error").html("<div class='alert alert-danger'><strong>Error!</strong>please select service hajj or omrah</div>");
+		}else if(numpayment == 'choose'){
+			$("#msg-error").html("<div class='alert alert-danger'><strong>Error!</strong>please select number of payment</div>");
+		}else if(depaturedate == ''){
+			$("#msg-error").html("<div class='alert alert-danger'><strong>Error!</strong>please select depature date</div>");
+		}else if(payment == 'nopay'){
+			$("#msg-error").html("<div class='alert alert-danger'><strong>Error!</strong>please select payment type</div>");
 		}else{
 			Meteor.call("registerUser",email,password,obj,role,function(err,data){
 				if(!err){

@@ -13,11 +13,15 @@ Template.adminticket.onCreated(function bodyOnCreated() {
                 }
             })
     });
+    Session.set('TICKETSTATUS',undefined);
+    Session.set('SEARCHTICKET-AGENCY',undefined);
+    Session.set('SEARCHTICKET-CUSTOMER',undefined);
+    Session.set('SEARCHTICKET-ID',undefined);
 });
 
 Template.adminticket.helpers({
 	getallTicket:function () {
-        var val = Session.get('TICKETSTATUS');
+        var valstatus = Session.get('TICKETSTATUS');
         var agency = Session.get('SEARCHTICKET-AGENCY');
         var customer = Session.get('SEARCHTICKET-CUSTOMER');
         var tickId = Session.get('SEARCHTICKET-ID');
@@ -38,8 +42,43 @@ Template.adminticket.helpers({
         //         return ticket.find({});
         //     }
         // }
-        return ticket.find({});
-		
+        if(tickId){
+            return ticket.find({ '_id': { '$regex': tickId } });
+        }else if(valstatus){
+            if(valstatus == 'validated'){
+                return ticket.find({'status':valstatus});
+            }else if(valstatus == 'not-validated'){
+                return ticket.find({'status':valstatus});
+            }else if(valstatus == 'waiting-for-validation'){
+                return ticket.find({'status':valstatus});
+            }else{
+                return ticket.find({});
+            }
+        }
+        else if(agency){
+            var newArr = [];
+            var alltic = ticket.find({});
+            console.log('ticType==');console.log(typeof(alltic))
+            alltic.forEach(function(data){
+                var name = Meteor.users.findOne({'_id':data.agency});
+                if(name){
+                    var obj = {
+                        "_id" : data._id,
+                        "customer" : data.customer,
+                        "product" : data.product,
+                        "agency" : name.profile.username,
+                        "date" : data.date,
+                        "invoice" : data.invoice,
+                        "status" : data.status
+                    }
+                    newArr.push(obj);
+                } 
+            });
+            console.log('MYNEWARR===');console.log(newArr);console.log(typeof(newArr));
+            //return newArr;
+            return newArr.find({'status':'validated'});
+        }
+        return ticket.find({});		
 	},
     checkInvoice:function(invoice){
         if(invoice){
@@ -92,16 +131,17 @@ Template.adminticket.events({
         }
     
     },
-    "change #selstatus":function(e){
+    "click #selstatus":function(e){
         e.preventDefault();
-        var status=$("#selstatus").val();
-        Session.set("TICKETSTATUS",status);
+        var status=$("#choose-status option:selected").val();
+        //alert(status)
+        Session.set("TICKETSTATUS",status);Session.set('SEARCHTICKET-ID',undefined);
     },
     "click .btn-status":function(e){
         e.preventDefault();
         var id = this._id;
         var status = this.status;
-        if(confirm('Do you want to validated this invoice?')){
+        if(confirm('Do you want to validated this affiliate?')){
             Meteor.call('UPDATE_STATUS', id, status, function(err){
                 if(!err){
                     console.log('UPDATE_STATUS Successfully');
@@ -193,12 +233,15 @@ Template.adminticket.events({
         e.preventDefault();
         var val = $('[name="search-ticketid"]').val();
         Session.set('SEARCHTICKET-ID',val);
-        alert(val);
+        $('[name="search-ticketid"]').val('');
     },
     'click .btn-searchagency':function(e){
         e.preventDefault();
         var val = $('[name="search-agency"]').val();
-        alert(val);
+         Session.set('TICKETSTATUS',undefined);
+        Session.set('SEARCHTICKET-CUSTOMER',undefined);
+        Session.set('SEARCHTICKET-ID',undefined);
         Session.set('SEARCHTICKET-AGENCY',val);
+        $('[name="search-agency"]').val('');
     }
 });

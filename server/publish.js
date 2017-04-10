@@ -10,11 +10,11 @@ Meteor.publish('images', function (){
   return images.find({});
 });
 
-/*Meteor.publish('users', function (){ 
+Meteor.publish('Allusers', function (){ 
   return Meteor.users.find({});
 
 });
-*/
+
 
 Meteor.publish('allcategory', function (){ 
   return categories.find({});

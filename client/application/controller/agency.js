@@ -36,12 +36,32 @@ Template.agency.events({
         	status:'pending',
         	time:timestamp
 		}
-		
-		if(username == "" || email == "" || siret_num == "" || phone == "" || address == "" || contact_firstname == "" || contact_lastname == "" || password == ""){
-			html += '<div class="alert alert-danger">';
-			  	html += '<strong>Input Field!</strong> can not be empty.';
-			html += '</div>';
-			$('#msg-error').append(html);
+		var phoneno = /^\d{10}$/;
+		var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
+		if(username == ""){
+			html += '<div class="alert alert-danger"><strong>Please Fill</strong> Travel Agency name</div>';
+			$('#msg-error').html(html);
+		}else if(contact_firstname == ""){
+			html += '<div class="alert alert-danger"><strong>Please Fill</strong> Contact Firstname</div>';
+			$('#msg-error').html(html);
+		}else if(contact_lastname == ""){
+			html += '<div class="alert alert-danger"><strong>Please Fill</strong> Contact Lastname</div>';
+			$('#msg-error').html(html);
+		}else if(!email.match(mailformat)){
+			html += '<div class="alert alert-danger"><strong>Please Fill</strong> Email format (xxx@xxx.xxx)</div>';
+			$('#msg-error').html(html);
+		}else if(siret_num == ""){
+			html += '<div class="alert alert-danger"><strong>Please Fill</strong> Siret Number</div>';
+			$('#msg-error').html(html);
+		}else if(!phone.match(phoneno)){
+			html += '<div class="alert alert-danger"><strong>Please Fill</strong> Phone Number 10 Character no text</div>';
+			$('#msg-error').html(html);
+		}else if(address == ""){
+			html += '<div class="alert alert-danger"><strong>Please Fill</strong> Address</div>';
+			$('#msg-error').html(html);
+		}else if(password == ""){
+			html += '<div class="alert alert-danger"><strong>Please Fill</strong> Password</div>';
+			$('#msg-error').html(html);
 		}
 		else{
 			if($('.checkbox').is(':checked')){

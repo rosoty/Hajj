@@ -3,7 +3,7 @@
         <div class="panel-body">
 		    	<div class="row">
 		    		<div class="container" style="margin-top: 1%;">
-						<div class="col-sm-4">     
+						<div class="col-sm-3">     
 							<div class="row" style="margin-right: 0px">
 								<form role="form" id="form-buscar">
 									<div class="form-group">
@@ -19,12 +19,12 @@
 								</form>
 							</div>            
 						</div>
-						<div class="col-sm-4">     
+						<div class="col-sm-3">     
 							<div class="row" style="margin-right: 0px">
 								<form role="form" id="form-buscar">
 									<div class="form-group">
 										<div class="input-group">
-											<input id="1" class="form-control" type="text" name="search-firstname" placeholder="Search by First name..." required/>
+											<input id="1" class="form-control" type="text" name="search-affname" placeholder="by Affiliate name..." required/>
 											<span class="input-group-btn">
 												<button class="btn btn-success btn-searchcus" type="submit">
 													<i class="glyphicon glyphicon-search" aria-hidden="true"></i> Browse
@@ -35,28 +35,12 @@
 								</form>
 							</div>            
 						</div>
-						<div class="col-sm-4">     
+						<div class="col-sm-3">     
 							<div class="row" style="margin-right: 0px">
 								<form role="form" id="form-buscar">
 									<div class="form-group">
 										<div class="input-group">
-											<input id="1" class="form-control" type="text" name="search-lastname" placeholder="Search by Last name..." required/>
-											<span class="input-group-btn">
-												<button class="btn btn-success btn-searchcus" type="submit">
-													<i class="glyphicon glyphicon-search" aria-hidden="true"></i> Browse
-												</button>
-											</span>
-										</div>
-									</div>
-								</form>
-							</div>            
-						</div>
-						<div class="col-sm-4">     
-							<div class="row" style="margin-right: 0px">
-								<form role="form" id="form-buscar">
-									<div class="form-group">
-										<div class="input-group">
-											<input id="1" class="form-control" type="text" name="search-agency" placeholder="Search by Travel Agency..." required/>
+											<input id="1" class="form-control" type="text" name="search-agency" placeholder="by Travel Agency..." required/>
 											<span class="input-group-btn">
 												<button class="btn btn-success btn-searchagency" type="submit">
 													<i class="glyphicon glyphicon-search" aria-hidden="true"></i> Browse
@@ -67,18 +51,19 @@
 								</form>
 							</div>            
 						</div>
-						<div class="col-sm-4">     
+						<div class="col-sm-3">     
 							<div class="row" style="margin-right: 0px">
 									<div class="form-group">
 										<div class="input-group">
-											<select class="form-control" id="usertype">
-											    <option value="admin">Admin</option>
-											    <option value="agency">Agency</option>
-											    <option value="affiliate">Affiliate</option>
+											<select class="form-control" id="choose-status">
+												<option value="none">No Filter</option>
+											    <option value="validated">validated</option>
+											    <option value="waiting-for-validation">waiting-for-validation</option>
+											    <option value="not-validated">not-validated</option>
 											</select>
 
 											<span class="input-group-btn">
-												<button class="btn btn-success btn-searchcus" type="submit">
+												<button class="btn btn-success" type="submit" id="selstatus">
 													<i class="glyphicon glyphicon-search" aria-hidden="true"></i> Filter
 												</button>
 											</span>
@@ -99,7 +84,7 @@
 		                    <tr>
 		                    	<th style="width:1%">No</th>
 		                    	<th>Ticket ID</th>
-		                        <th>Customer Name</th>
+		                        <th>Affiliate Name</th>
 	                            <th>Agency Name</th>
 	                           <!--  <th>Upload Invoice</th> -->
 	                            <th>Invoice</th>
@@ -204,7 +189,7 @@
                              
                          
                     <div class="col-md-4"> 
-                        <img src="http://lorempixel.com/150/150/technics/" alt="teste" class="img-thumbnail">  
+                        <img src="http://www.nuba.space/dashboard/uploads/default-avatar.png" alt="teste" class="img-thumbnail">  
                     </div>
                     
                     <div class="clearfix"></div>
@@ -223,7 +208,7 @@
                         <span class="h3 text-muted"><strong>R$35,00</strong></span>
                     </div> -->
                     <div class="text-center col-md-12">
-                        <h3>Do you validate this invoice?</h3>
+                        <h3>Do you validate this affiliate?</h3>
                     </div>
                      <div class="text-center col-md-4">
                         <span class="h3 text-muted"><strong><a href="#" class="validate-status">Yes</a></strong></span>
@@ -282,7 +267,7 @@ width:100%;
        
 }
 #form-buscar >.form-group >.input-group > .input-group-btn > .btn .glyphicon{
- margin-right:12px;   
+ margin-right:0px;   
 }    
 
 
