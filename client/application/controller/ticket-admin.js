@@ -23,25 +23,10 @@ Template.adminticket.helpers({
 	getallTicket:function () {
         var valstatus = Session.get('TICKETSTATUS');
         var agency = Session.get('SEARCHTICKET-AGENCY');
-        var customer = Session.get('SEARCHTICKET-CUSTOMER');
+        var firstname = Session.get('SEARCHTICKET-FIRSTNAME');
+        var lastname = Session.get('SEARCHTICKET-LASTNAME');
         var tickId = Session.get('SEARCHTICKET-ID');
-        // if(agency){
-        //     return ticket.find({ 'name': { '$regex': agency } });
-        // }else if(customer){
-        //     return ticket.find({ 'customer': { '$regex': customer } });
-        // }else if(tickId){
-        //     return ticket.find({ '_id': { '$regex': tickId } });
-        // }else{
-        //     if(val == 'validated'){
-        //         return ticket.find({'status':val});
-        //     }else if(val == 'not-validated'){
-        //         return ticket.find({'status':val});
-        //     }else if(val == 'waiting-for-validation'){
-        //         return ticket.find({'status':val});
-        //     }else{
-        //         return ticket.find({});
-        //     }
-        // }
+        var seeall = Session.get('SEEALL');
         if(tickId){
             return ticket.find({ '_id': { '$regex': tickId } });
         }else if(valstatus){
@@ -56,29 +41,33 @@ Template.adminticket.helpers({
             }
         }
         else if(agency){
-            var newArr = [];
-            var alltic = ticket.find({});
-            console.log('ticType==');console.log(typeof(alltic))
-            alltic.forEach(function(data){
-                var name = Meteor.users.findOne({'_id':data.agency});
-                if(name){
-                    var obj = {
-                        "_id" : data._id,
-                        "customer" : data.customer,
-                        "product" : data.product,
-                        "agency" : name.profile.username,
-                        "date" : data.date,
-                        "invoice" : data.invoice,
-                        "status" : data.status
-                    }
-                    newArr.push(obj);
-                } 
-            });
-            console.log('MYNEWARR===');console.log(newArr);console.log(typeof(newArr));
-            //return newArr;
-            return newArr.find({'status':'validated'});
+            return ticket.find({'agency':agency});
+        }else if(firstname){
+            return ticket.find({'agency':firstname});
+        }else if(lastname){
+            return ticket.find({'agency':lastname});
+        }else{
+            return ticket.find({});
         }
-        return ticket.find({});		
+         // var newArr = [];
+            // var alltic = ticket.find({});
+            // console.log('ticType==');console.log(typeof(alltic))
+            // alltic.forEach(function(data){
+            //     var name = Meteor.users.findOne({'_id':data.agency});
+            //     if(name){
+            //         var obj = {
+            //             "_id" : data._id,
+            //             "customer" : data.customer,
+            //             "product" : data.product,
+            //             "agency" : name.profile.username,
+            //             "date" : data.date,
+            //             "invoice" : data.invoice,
+            //             "status" : data.status
+            //         }
+            //         newArr.push(obj);
+            //     } 
+            // });
+            // console.log('MYNEWARR===');console.log(newArr);console.log(typeof(newArr));
 	},
     checkInvoice:function(invoice){
         if(invoice){
@@ -102,6 +91,9 @@ Template.adminticket.helpers({
     },
     Iswait:function(status){
         if(status == 'waiting-for-validation'){return true}
+    },
+    GetAgencyname:function(){
+        return Meteor.users.find({'roles':'agency'});
     }
 });
 Template.adminticket.events({
@@ -223,11 +215,15 @@ Template.adminticket.events({
             if(!err){console.log('updateStaus Successfully');$('.close').click()}
         });
     },
-    'click .btn-searchcus':function(e){
+    'click .btn-searchfirst':function(e){
         e.preventDefault();
-        var val = $('[name="search-customer"]').val();
-        alert(val);
-        Session.set('SEARCHTICKET-CUSTOMER',val);
+        var val = $('#search-firstname option:selected').val();
+        Session.set('SEARCHTICKET-FIRSTNAME',val);
+    },
+    'click .btn-searchlast':function(e){
+        e.preventDefault();
+        var val = $('#search-lastname option:selected').val();
+        Session.set('SEARCHTICKET-LASTNAME',val);
     },
     'click .btn-searchid':function(e){
         e.preventDefault();
@@ -237,11 +233,19 @@ Template.adminticket.events({
     },
     'click .btn-searchagency':function(e){
         e.preventDefault();
-        var val = $('[name="search-agency"]').val();
+        var val = $('#search-agency option:selected').val();
          Session.set('TICKETSTATUS',undefined);
         Session.set('SEARCHTICKET-CUSTOMER',undefined);
         Session.set('SEARCHTICKET-ID',undefined);
         Session.set('SEARCHTICKET-AGENCY',val);
         $('[name="search-agency"]').val('');
+    },
+    'click #seeall':function(e){
+        e.preventDefault();
+        Session.set('TICKETSTATUS',undefined);
+        Session.set('SEARCHTICKET-FIRSTNAME',undefined);
+        Session.set('SEARCHTICKET-LASTNAME',undefined);
+        Session.set('SEARCHTICKET-ID',undefined);
+        Session.set('SEARCHTICKET-AGENCY',undefined);
     }
 });

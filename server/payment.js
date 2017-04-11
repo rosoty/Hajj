@@ -23,11 +23,13 @@ Meteor.methods({
             //console.log(err, charge);
         });
     },
-    'InsertPayment':function(obj,x){
-      console.log('amountID=='+x);
-      var num = amount.findOne({'_id':x}).paynum;
-        for(var i = 0; i<num; i++){
-             payment.insert(obj);
+    'InsertPayment':function(userid,depaturedate,num){
+      //console.log('amountID=='+num);
+      var mynum = amount.findOne({'_id':num});
+        var pay_obj = {"status":"new","created_date":Math.round(Date.parse(new Date()) / 1000),"due_date":depaturedate,"amount":mynum.amount,"userid":userid,"updated_date":""}
+        for(var i = 0; i < mynum.paynum; i++){
+            console.log('MYNUM=='+mynum.paynum);
+            payment.insert(pay_obj);
         }
     },
     RemovePayment:function(id){

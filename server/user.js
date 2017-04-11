@@ -50,7 +50,7 @@ Meteor.methods({
              console.log("Register wp: "+url);
              Meteor.http.call("GET", url);
         });
-        //var secret="ATnSceN+cnxD/ZO4YsmtVPyziknLQsGW+p6rupUcf1xd7aUHXwZuxdPTlEKr";
+        var secret="ATnSceN+cnxD/ZO4YsmtVPyziknLQsGW+p6rupUcf1xd7aUHXwZuxdPTlEKr";
         
         return targetUserId;
     },

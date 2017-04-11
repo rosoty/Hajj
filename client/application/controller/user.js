@@ -280,6 +280,20 @@ Template.userregister.helpers({
 		if(getone){
 			return getone;
 		}
+	},
+	CheckIslink:function(){
+		var res_affiliate = Router.current().params.id;
+		var res = Meteor.users.findOne({'_id':res_affiliate});
+		if(res){
+			return true;
+		}
+	},
+	GetpaymentAff:function(){
+		var res_affiliate = Router.current().params.id;
+		var res = Meteor.users.findOne({'_id':res_affiliate});
+		if(res){
+			return amount.find({'product':res.profile.type});
+		}
 	}
 });
 
@@ -299,51 +313,59 @@ Template.userregister.events({
 		var role="affiliate";
 		var res_affiliate = Router.current().params.id;
 		var res = Meteor.users.findOne({'_id':res_affiliate});
-		if(typeof(res) == 'undefined'){
-			var phoneno = /^\d{10}$/;
-			var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
-			if(username == ''){
-				$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill username</div>");
-			}else if(familyname == ''){
-				$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill Familyname</div>");
-			}else if(dob == ''){
-				$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill Date of birth</div>");
-			}else if(!phone.match(phoneno)){
-				$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill phone number 10 character no text word</div>");
-			}else if(!email.match(mailformat)){
-				$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill email format</div>");
-			}else if(password == ''){
-				$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill password</div>");
-			}else{
+		var phoneno = /^\d{10}$/;
+		var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
+		if(username == ''){
+			$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill username</div>");
+		}else if(familyname == ''){
+			$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill Familyname</div>");
+		}else if(dob == ''){
+			$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill Date of birth</div>");
+		}else if(!phone.match(phoneno)){
+			$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill phone number 10 character no text word</div>");
+		}else if(!email.match(mailformat)){
+			$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill email format</div>");
+		}else if(password == ''){
+			$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please fill password</div>");
+		}else{
+			if(typeof(res) == 'undefined'){
 				$("#registerform").addClass("hidden");
 				$("#nextrgister").removeClass("hidden");
-			}
-		}else{
-			res_affiliate = res._id;
-			var res_type = res.profile.type;
-			var res_numpayment = res.profile.numpayment;
-			var res_depaturedate = res.profile.depaturedate;
-			var obj={
-				username:username,
-				familyname:familyname,
-				dob:dob,
-				phone:phone,
-				type:res_type,
-				numpayment:res_numpayment,
-				affiliate:res_affiliate,
-				depaturedate:res_depaturedate
-			}
-			var url="https://www.mecqueiteasy.com/api/user/register/?insecure=cool&username="+obj.username+"&email="+email+"&nonce=67ecdc46b5&display_name="+obj.username+"&notify=both&user_pass="+password;
-			console.log('reg 1'+url);
-			//$.get(url);
-			Meteor.call("registerUser",email,password,obj,role,function(err,data){
-				if(!err){
-					Meteor.call('UpdateUserAffiliat_number',data);
-					Router.go("/profile/payment");
+			}else{
+				res_affiliate = res._id;
+				var res_type = res.profile.type;
+				var res_numpayment = $("#numpayment").val();
+				var payment = $("#selectpayment").val();
+				var res_depaturedate = res.profile.depaturedate;
+				var obj={
+					username:username,
+					familyname:familyname,
+					dob:dob,
+					phone:phone,
+					type:res_type,
+					numpayment:res_numpayment,
+					affiliate:res_affiliate,
+					depaturedate:res_depaturedate,
+					payment:payment
 				}
-			});
-			
-		}		
+				var url="https://www.mecqueiteasy.com/api/user/register/?insecure=cool&username="+obj.username+"&email="+email+"&nonce=67ecdc46b5&display_name="+obj.username+"&notify=both&user_pass="+password;
+				//console.log('reg 1'+url);
+				//$.get(url);
+				if(res_numpayment == "choose"){
+					$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please select number of payment</div>");
+				}else if(payment == "nopay"){
+					$("#error").html("<div class='alert alert-danger'><strong>Error!</strong>please select payment methods</div>");
+				}else{
+					Meteor.call("registerUser",email,password,obj,role,function(err,data){
+						if(!err){
+							Meteor.call('UpdateUserAffiliat_number',data);
+							Meteor.call("InsertPayment",data,res_depaturedate,res_numpayment);
+							Router.go("/profile/payment");
+						}
+					});
+				}
+			}
+		}	
 	},
 	'click #btnregister':function(e){
 		e.preventDefault();
@@ -397,6 +419,7 @@ Template.userregister.events({
 					Meteor.call('UpdateUserAffiliat_number',data);
 					var pay_obj = {"status":"new","created_date":Math.round(Date.parse(new Date()) / 1000),"due_date":depaturedate,"amount":"1500000","userid":data,"updated_date":""}
 					Meteor.call("InsertPayment",pay_obj,numpayment);
+					Meteor.call("InsertPayment",data,depaturedate,numpayment);
 					Meteor.call("findAffiliate",data);
 					Router.go("/login");
 				}

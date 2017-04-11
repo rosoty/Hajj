@@ -23,7 +23,8 @@
                             <tr class="btn-primary">
                                 <th style="width:1%">No</th>
                                 <th>Ticket ID</th>
-                                <th>Customer Name</th>
+                                <th>Firstname</th>
+                                <th>Lastname</th>
                                 <th>Agency Name</th>
                                 <th>Upload Invoice</th>
                                 <th>Invoice</th>
@@ -39,7 +40,8 @@
                                     <tr>
                                         <td>{{@index}}</td>
                                          <td class="info-view">{{_id}}</td>
-                                        <td>{{getUsername customer}}</td>
+                                        <td>{{getFirstname agency}}</td>
+                                        <td>{{getLastname agency}}</td>
                                         <td>{{getUsername agency}}</td>
                                         <td>
                                             <a class="btn btn-xs btn-labeled uploadinvoice" id="uploadinvoice" href="#"><span class="glyphicon"></span>browse</a>

@@ -37,6 +37,18 @@ Template.registerHelper('getUsername', function(userId){
 		return username.profile.username;
 	}
 });
+Template.registerHelper('getFirstname', function(userId){
+	var username = Meteor.users.findOne({'_id':userId,'roles':'agency'});
+	if(username){
+		return username.profile.contact_firstname;
+	}
+});
+Template.registerHelper('getLastname', function(userId){
+	var username = Meteor.users.findOne({'_id':userId,'roles':'agency'});
+	if(username){
+		return username.profile.contact_lastname;
+	}
+});
 Template.registerHelper('getProductname', function(id){
 	var proname = product.findOne({'_id':id});
 	if(proname){
@@ -61,8 +73,9 @@ Template.registerHelper('CountNumberInvite', function(){
 
 Template.registerHelper('Checkpayment', function(){
 	var id = Meteor.userId();	
-	var result = payment.find({'userid':id,'status':'new'}).count();
-	if(result == 0){
+	var result = payment.findOne({'userid':id,'status':'ready'});
+	console.log('Checkpayment=='+result); console.log(typeof(result))
+	if(result){
 		return true;
 	}else{
 		return false;

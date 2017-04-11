@@ -3,7 +3,7 @@
         <div class="panel-body">
 		    	<div class="row">
 		    		<div class="container" style="margin-top: 1%;">
-						<div class="col-sm-3">     
+						<div class="col-sm-4">     
 							<div class="row" style="margin-right: 0px">
 								<form role="form" id="form-buscar">
 									<div class="form-group">
@@ -11,7 +11,7 @@
 											<input id="1" class="form-control" type="text" name="search-ticketid" placeholder="Search by Ticket ID..." required/>
 											<span class="input-group-btn">
 												<button class="btn btn-success btn-searchid" type="submit">
-													<i class="glyphicon glyphicon-search" aria-hidden="true"></i> Browse
+													<i class="glyphicon" aria-hidden="true"></i> Browse
 												</button>
 											</span>
 										</div>
@@ -19,15 +19,21 @@
 								</form>
 							</div>            
 						</div>
-						<div class="col-sm-3">     
+						<div class="col-sm-4">     
 							<div class="row" style="margin-right: 0px">
 								<form role="form" id="form-buscar">
 									<div class="form-group">
 										<div class="input-group">
-											<input id="1" class="form-control" type="text" name="search-affname" placeholder="by Affiliate name..." required/>
+											<input id="1" class="form-control" type="hidden" name="search-affname1123" placeholder="by Firstname..." required/>
+											<select class="form-control" id="search-firstname">
+												<option value="nofirst">Select Firstname</option>
+												{{#each GetAgencyname}}
+											    	<option value="{{_id}}">{{profile.contact_firstname}}</option>
+												{{/each}}
+											</select>
 											<span class="input-group-btn">
-												<button class="btn btn-success btn-searchcus" type="submit">
-													<i class="glyphicon glyphicon-search" aria-hidden="true"></i> Browse
+												<button class="btn btn-success btn-searchfirst" type="submit">
+													<i class="glyphicon" aria-hidden="true"></i> Browse
 												</button>
 											</span>
 										</div>
@@ -35,15 +41,43 @@
 								</form>
 							</div>            
 						</div>
-						<div class="col-sm-3">     
+						<div class="col-sm-4">     
 							<div class="row" style="margin-right: 0px">
 								<form role="form" id="form-buscar">
 									<div class="form-group">
 										<div class="input-group">
-											<input id="1" class="form-control" type="text" name="search-agency" placeholder="by Travel Agency..." required/>
+											<input id="1" class="form-control" type="hidden"  placeholder="by Lastname..." required/>
+											<select class="form-control" id="search-lastname">
+												<option value="nofirst">Select Lastname</option>
+												{{#each GetAgencyname}}
+											    	<option value="{{_id}}">{{profile.contact_lasstname}}</option>
+												{{/each}}
+											</select>
+											<span class="input-group-btn">
+												<button class="btn btn-success btn-searchlast" type="submit">
+													<i class="glyphicon" aria-hidden="true"></i> Browse
+												</button>
+											</span>
+										</div>
+									</div>
+								</form>
+							</div>            
+						</div>
+						<div class="col-sm-4">     
+							<div class="row" style="margin-right: 0px">
+								<form role="form" id="form-buscar">
+									<div class="form-group">
+										<div class="input-group">
+											<input id="1" class="form-control" type="hidden" name="search-agency11" placeholder="by Travel Agency..." required/>
+											<select class="form-control" id="search-agency">
+												<option value="noagency">Select Agency</option>
+												{{#each GetAgencyname}}
+											    	<option value="{{_id}}">{{profile.username}}</option>
+												{{/each}}
+											</select>
 											<span class="input-group-btn">
 												<button class="btn btn-success btn-searchagency" type="submit">
-													<i class="glyphicon glyphicon-search" aria-hidden="true"></i> Browse
+													<i class="glyphicon" aria-hidden="true"></i> Browse
 												</button>
 											</span>
 										</div>
@@ -51,7 +85,7 @@
 								</form>
 							</div>            
 						</div>
-						<div class="col-sm-3">     
+						<div class="col-sm-4">     
 							<div class="row" style="margin-right: 0px">
 									<div class="form-group">
 										<div class="input-group">
@@ -64,10 +98,17 @@
 
 											<span class="input-group-btn">
 												<button class="btn btn-success" type="submit" id="selstatus">
-													<i class="glyphicon glyphicon-search" aria-hidden="true"></i> Filter
+													<i class="glyphicon" aria-hidden="true"></i> Filter
 												</button>
 											</span>
 										</div>
+									</div>
+							</div>            
+						</div>
+						<div class="col-sm-4">     
+							<div class="row" style="margin-right: 0px">
+									<div class="form-group">
+										<input type="button" class="btn-lg btn-primary" value="see all" id="seeall">
 									</div>
 							</div>            
 						</div>
@@ -84,8 +125,9 @@
 		                    <tr>
 		                    	<th style="width:1%">No</th>
 		                    	<th>Ticket ID</th>
-		                        <th>Affiliate Name</th>
-	                            <th>Agency Name</th>
+		                        <th>First Name</th>
+		                        <th>Last Name</th>
+	                            <th>Travel Agency's name</th>
 	                           <!--  <th>Upload Invoice</th> -->
 	                            <th>Invoice</th>
 	                            <th>Status</th>
@@ -100,7 +142,8 @@
 		                            <tr>
 		                            	<td>{{@index}}</td>
 		                            	 <td class="info-view">{{_id}}</td>
-		                                <td>{{getUsername customer}}</td>
+		                                <td>{{getFirstname agency}}</td>
+		                                <td>{{getLastname agency}}</td>
 		                                <td>{{getUsername agency}}</td>
 		                                {{#if checkInvoice invoice}}
 		                                <td><a href="#" class="btn btn-xs btn-labeled view-invoice">view</a>

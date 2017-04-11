@@ -115,7 +115,7 @@ Meteor.publish("GetAllPayment",function(){
     return [userpayment, listuser]
 });
 
-Meteor.publish("GetAmount",function(id){
+Meteor.publish("GetAmount",function(){
   return amount.find({});
 });
 
