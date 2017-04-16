@@ -30,9 +30,15 @@
 							</div>
 						</div>
 						<div class="row form-group">
-							<label class="col-sm-2 control-label">Contact Name</label>
+							<label class="col-sm-2 control-label">Contact Firstname</label>
 							<div class="col-sm-10">
-								<input type="text" name="contactname" class="form-control" id="" value="{{GetOne.profile.contact_name}}">
+								<input type="text" name="contact-firstname" class="form-control" id="" value="{{GetOne.profile.contact_firstname}}">
+							</div>
+						</div>
+						<div class="row form-group">
+							<label class="col-sm-2 control-label">Contact Lastname</label>
+							<div class="col-sm-10">
+								<input type="text" name="contact-lastname" class="form-control" id="" value="{{GetOne.profile.contact_lastname}}">
 							</div>
 						</div>
 						<div class="row form-group">
@@ -74,11 +80,31 @@
 									</div>
 							    </div>
 						</div>
+						<div class="row form-group" style="height: 130px">
+								<label class="col-sm-2 control-label" for="dob">Depature Date:</label>
+							    <div class="col-sm-10">
+							        <div class="input-group dobpicker" id="dobpicker">
+									    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+									    <input class="set-due-date form-control" id="departuredate" type="text" name="depaturedate" 
+									    value="{{GetOne.profile.depaturedate}}" />
+									</div>
+							    </div>
+						</div>
 						<div class="row form-group">
 								<div class="col-sm-2 control-label"><label>Phone</label></div>
 								<div class="col-sm-10">
 									<input type="text" name="phone" class="form-control" id="" value="{{GetOne.profile.phone}}">
 								</div>
+						</div>
+						<div class="row form-group">
+							<label class="col-sm-2 control-label">Payment methods</label>
+							<div class="col-sm-10">
+								<select class="form-control" name="payment">
+				            		<option value="{{GetOne.profile.payment}}" style="display:none">{{GetOne.profile.payment}}</option>
+				            		<option value="paypal">Paypal</option>
+				            		<option value="card">Card</option>
+				            	</select>
+							</div>
 						</div>
 									<input type="hidden" name="usertype" value="{{GetOne.profile.type}}">
 									<input type="hidden" name="numpayment" class="form-control" id="" value="{{GetOne.profile.numpayment}}">

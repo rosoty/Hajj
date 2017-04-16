@@ -38,6 +38,7 @@ Template.adduser.events({
 		// Affiliate Field
 			var familyname = $("[name='familyname']").val();
 			var dob = $("[name='dob']").val();
+				dob = Math.round(Date.parse(dob) / 1000);
 			var userType = $("[name='usertype']").val();
 			var numpayment = $("[name='numpayment']").val();					
 			var affiliate = $("[name='affiliate']").val();
@@ -172,6 +173,9 @@ Template.useredit.onRendered(function(){
 	this.$('#dobpicker').datetimepicker({
     	format:'YYYY/MM/DD'
     });
+    this.$('#departuredate').datetimepicker({
+    	format:'YYYY'
+    });
 })
 Template.useredit.events({
 	"click #btn-update": function(e){
@@ -192,13 +196,15 @@ Template.useredit.events({
 			var familyname = $("[name='familyname']").val();
 			var dob1 = $("[name='dob']").val();
 			var	dob = Math.round(Date.parse(dob1) / 1000);
+			var depaturedate = $("[name='depaturedate']").val();
+			var payment = $("[name='payment'] option:selected").val();
 			var userType = $("[name='usertype']").val();
 			var numpayment = $("[name='numpayment']").val();					
 			var affiliate = $("[name='affiliate']").val();
 		
 		if(userRoles == 'affiliate'){
 			obj = {
-				username:name,familyname:familyname,dob:dob,phone:phone,type:userType,numpayment:numpayment,affiliate:affiliate
+				username:name,familyname:familyname,dob:dob,phone:phone,type:userType,depaturedate:depaturedate,payment:payment,numpayment:numpayment,affiliate:affiliate
 			}
 		}else if(userRoles == 'agency'){
 			obj = {
@@ -216,6 +222,7 @@ Template.useredit.events({
 });	
 Template.useredit.helpers({
 	IstypeAgency:function(type){
+		console.log('MYTYPE=='+type);
 		if(type == "agency"){return true}
 	},
 	IstypeAffiliate:function(type){
@@ -307,6 +314,7 @@ Template.userregister.events({
 		var username=$("#firstname").val();
 		var familyname=$("#familyname").val();
 		var dob=$("#dob").val();
+			dob = Math.round(Date.parse(dob) / 1000);
 		var phone=$("#phone").val();
 		var email=$("#email").val();
 		var password=$("#pwd").val();
@@ -372,6 +380,7 @@ Template.userregister.events({
 		var username=$("#firstname").val();
 		var familyname=$("#familyname").val();
 		var dob=$("#dob").val();
+			dob = Math.round(Date.parse(dob) / 1000);
 		var phone=$("#phone").val();
 		var email=$("#email").val();
 		var password=$("#pwd").val();
@@ -573,6 +582,7 @@ Template.editprofile.events({
 		var username=$("#username").val();
 		var familyname=$("#familyname").val();
 		var dob=$("#dob").val();
+			dob = Math.round(Date.parse(dob) / 1000);
 		var phone=$("#phone").val();
 		var email=$("#email").val();
 		var numpayment=$("#numpayment").val();
