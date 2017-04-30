@@ -5,7 +5,8 @@ Meteor.methods({
         //check(stripeToken, String);
         var Stripe = StripeAPI('sk_test_pJ0uHKsMcrAwaoCicVAkBctd');
         var amountPayment=payment.find({"_id":paymentId})[0];
-
+        console.log(paymentId);
+        console.log(amountPayment);
         Stripe.charges.create({
             source: stripeToken,
             amount: amountPayment, 

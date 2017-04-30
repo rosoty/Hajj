@@ -40,7 +40,7 @@ Template.pay.events({
 	'click button': function(e) {
       e.preventDefault();
       var paymentId=$("#paymentId").val();
-      var amountPayment=payment.find({"_id":paymentId})[0];
+      var amountPayment=$("#amount").val();
       console.log(paymentId);
       console.log(amountPayment);
       StripeCheckout.open({
