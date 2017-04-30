@@ -4,10 +4,11 @@ Meteor.methods({
     'chargeCard': function(stripeToken,paymentId) {
         //check(stripeToken, String);
         var Stripe = StripeAPI('sk_test_pJ0uHKsMcrAwaoCicVAkBctd');
+        var amountPayment=payment.find({"_id":paymentId})[0];
 
         Stripe.charges.create({
             source: stripeToken,
-            amount: 5000, 
+            amount: amountPayment, 
             currency: 'eur'
         }, function(err, charge) {
             if(err){
@@ -15,6 +16,7 @@ Meteor.methods({
             }
             else if(charge.status=="succeeded"){
                 console.log("DJIB SUCCESS");
+                payment.update({'_id':paymentId},{$set:{"status":"Paid"}});
                 //Update payement collection
             }
             else{
@@ -23,13 +25,11 @@ Meteor.methods({
             //console.log(err, charge);
         });
     },
-    'InsertPayment':function(userid,depaturedate,num){
-      //console.log('amountID=='+num);
-      var mynum = amount.findOne({'_id':num});
-        var pay_obj = {"status":"new","created_date":Math.round(Date.parse(new Date()) / 1000),"due_date":depaturedate,"amount":mynum.amount,"userid":userid,"updated_date":""}
-        for(var i = 0; i < mynum.paynum; i++){
-            console.log('MYNUM=='+mynum.paynum);
-            payment.insert(pay_obj);
+    'InsertPayment':function(obj,x){
+      console.log('amountID=='+x);
+      var num = amount.findOne({'_id':x}).paynum;
+        for(var i = 0; i<num; i++){
+             payment.insert(obj);
         }
     },
     RemovePayment:function(id){

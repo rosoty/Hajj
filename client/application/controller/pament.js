@@ -39,10 +39,13 @@ Template.pay.helpers({
 Template.pay.events({
 	'click button': function(e) {
       e.preventDefault();
-      paymentId='abc';  //Replace by payment
+      var paymentId=$("#paymentId").val();
+      var amountPayment=payment.find({"_id":paymentId})[0];
+      console.log(paymentId);
+      console.log(amountPayment);
       StripeCheckout.open({
         key: 'pk_test_njC2z064KCYm0e0kjilPA26o',
-        amount: 5000, // this is equivalent to $50
+        amount: amountPayment, // this is equivalent to $50
         name: 'Mecque it easy',
         description: 'Cotisation MIE',
         panelLabel: 'Payer',
