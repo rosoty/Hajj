@@ -17,7 +17,7 @@ Meteor.methods({
             }
             else if(charge.status=="succeeded"){
                 console.log("DJIB SUCCESS");
-                return 1;
+                //return 1;
                 payment.update({'_id':paymentId},{$set:{"status":"Paid"}});
                 //Update payement collection
             }
