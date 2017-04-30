@@ -7,24 +7,31 @@ Meteor.methods({
         var amountPayment=payment.findOne({"_id":paymentId}).amount;
         console.log(paymentId);
         console.log(amountPayment);
-        Stripe.charges.create({
+        var stripeCharge=Stripe.charges.create({
             source: stripeToken,
             amount: amountPayment, 
             currency: 'eur'
         }, function(err, charge) {
             if(err){
-
+                return 0;
             }
             else if(charge.status=="succeeded"){
                 console.log("DJIB SUCCESS");
-                payment.update({'_id':paymentId},{$set:{"status":"Paid"}});
+                return 1;
+                //payment.update({'_id':paymentId},{$set:{"status":"Paid"}});
                 //Update payement collection
             }
             else{
+
                 console.log("DJIB FAILED");
+                return 0
             }
             //console.log(err, charge);
         });
+        console.log(stripeCharge);
+        if(stripeCharge==1){
+          payment.update({'_id':paymentId},{$set:{"status":"Paid"}});
+        }
     },
     'InsertPayment':function(obj,x){
       console.log('amountID=='+x);
