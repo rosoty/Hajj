@@ -12,6 +12,15 @@ Template.inviteuser.helpers({
 		});
 		return result;
 	},
+	statusacquired:function(id){
+		var listPayment=payment.find({"status":"new","userid":id});
+		if(listPayment.count()==0)
+			return "Fully acquired";
+		else
+			return "Not fully acquired";
+
+
+	},
 	countinvite:function(){
 		var id = Meteor.userId();	
 		var num = Meteor.users.find({'profile.affiliate':id}).count();

@@ -7,6 +7,8 @@ Meteor.methods({
         var amountPayment=Number(payment.findOne({"_id":paymentId}).amount);
         console.log(paymentId);
         console.log(amountPayment);
+        var userId=payment.findOne({"_id":paymentId}).userid;
+        //var userCurrent=Meteor.users.findOne({'_id':userid});
         var stripeCharge=Stripe.charges.create({
             source: stripeToken,
             amount: amountPayment, 
@@ -19,6 +21,9 @@ Meteor.methods({
                 console.log("DJIB SUCCESS");
                 //return 1;
                 payment.update({'_id':paymentId},{$set:{"status":"Paid"}});
+                if(payment.find({"userid":userId,"status":"new"}).count()==0){
+                  Meteor.users.update({_id:userId},{$set: {"acquired":"full"}});
+                }
                 //Update payement collection
             }
             else{
