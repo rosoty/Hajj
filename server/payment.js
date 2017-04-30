@@ -11,7 +11,7 @@ Meteor.methods({
             source: stripeToken,
             amount: amountPayment, 
             currency: 'eur'
-        }, Meteor.bindEnvironment(function (err, res) function(err, charge) {
+        }, Meteor.bindEnvironment(function(err, charge) {
             if(err){
                 return 0;
             }
