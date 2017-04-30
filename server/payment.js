@@ -11,14 +11,14 @@ Meteor.methods({
             source: stripeToken,
             amount: amountPayment, 
             currency: 'eur'
-        }, function(err, charge) {
+        }, Meteor.bindEnvironment(function (err, res) function(err, charge) {
             if(err){
                 return 0;
             }
             else if(charge.status=="succeeded"){
                 console.log("DJIB SUCCESS");
                 return 1;
-                //payment.update({'_id':paymentId},{$set:{"status":"Paid"}});
+                payment.update({'_id':paymentId},{$set:{"status":"Paid"}});
                 //Update payement collection
             }
             else{
@@ -27,11 +27,8 @@ Meteor.methods({
                 return 0
             }
             //console.log(err, charge);
-        });
-        console.log(stripeCharge);
-        if(stripeCharge==1){
-          payment.update({'_id':paymentId},{$set:{"status":"Paid"}});
-        }
+        }, function () { console.log('Failed to bind environment'); }));
+
     },
     'InsertPayment':function(obj,x){
       console.log('amountID=='+x);
