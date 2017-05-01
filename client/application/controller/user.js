@@ -368,7 +368,7 @@ Template.userregister.events({
 						if(!err){
 							Meteor.call('UpdateUserAffiliat_number',data);
 							Meteor.call("InsertPayment",data,res_depaturedate,res_numpayment);
-							Router.go("/profile/payment");
+							Router.go("/login");
 						}
 					});
 				}
