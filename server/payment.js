@@ -37,8 +37,29 @@ Meteor.methods({
     },
     'InsertPayment':function(obj,x){
       console.log('amountID=='+x);
+      var today = new Date();
+      var dd = today.getDate();
+      var mm = today.getMonth()+1; //January is 0!
+      mm=mm+1;
+      var yyyy = today.getFullYear();
+
+      if(dd<10) {
+          dd='0'+dd;
+      }
+
       var num = amount.findOne({'_id':x}).paynum;
-        for(var i = 0; i<num; i++){
+      for(var i = 0; i<num; i++){
+              if(mm<10) {
+                  today = dd+'/'+'0'+mm+'/'+yyyy;
+              }else{
+                today = dd+'/'+mm+'/'+yyyy;
+              }
+              obj.["due_date"]=today;
+              mm=mm+1;
+              if(mm>12){
+                mm=1;
+                yyyy=yyyy+1;
+              }
              payment.insert(obj);
         }
     },
