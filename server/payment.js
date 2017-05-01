@@ -1,6 +1,20 @@
 
 
 Meteor.methods({
+    'getPaymentStatus' : function(randomid){
+        var rid=payment.find({"_id":randomid});
+        if(rid.count()>0){
+          rid=rid[0].status;
+          if(rid=='Paid')
+            return 'false';
+          else
+            return 'true';
+          console.log('rid');
+          console.log(rid);
+        }else{
+          return 'true';
+        }
+    },
     'chargeCard': function(stripeToken,paymentId) {
         //check(stripeToken, String);
         var Stripe = StripeAPI('sk_test_pJ0uHKsMcrAwaoCicVAkBctd');

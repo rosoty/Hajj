@@ -267,18 +267,13 @@ Template.userregister.onRendered(function() {
 
 Template.userregister.helpers({
 	getPaymentStatus: function(){
-		var rid=payment.find({"_id":Session.get('SessionRandomId')});
-		if(rid.count()>0){
-			rid=rid[0].status;
-			if(rid=='Paid')
-				return 'false';
-			else
-				return 'true';
-			console.log('rid');
-			console.log(rid);
-		}else{
-			return 'true';
-		}	
+		Meteor.call('getPaymentStatus',Session.get('SessionRandomId'),function(err,ret){
+			Session.set('paymentStatus',ret);
+		});
+		return Session.get('paymentStatus');	
+	},
+	paymentStatus: function(){
+		return Session.get('paymentStatus');
 	},
 	Getpayment:function(){
 		var product = Session.get('HAJJ-DATE');
@@ -347,13 +342,10 @@ Template.userregister.events({
           stripeToken = res.id;
           console.info(res);
           Meteor.call('chargeCard', stripeToken,Session.get('SessionRandomId'),function(err,ret){
-          	var rid=payment.find({"_id":Session.get('SessionRandomId')});
-		if(rid.count()>0){
-			rid=rid[0].status;
-			if(status=='Paid'){
-				console.log('Paid');
-				$("#btnregister").attr('disabled','false');
-			}
+          	Meteor.call('getPaymentStatus',Session.get('SessionRandomId'),function(err,ret){
+			Session.set('paymentStatus',ret);
+		});
+
 				
 			
 		}	
