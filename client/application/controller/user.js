@@ -366,9 +366,14 @@ Template.userregister.events({
 				}else{
 					Meteor.call("registerUser",email,password,obj,role,function(err,data){
 						if(!err){
+							var payamount = amount.findOne({'_id':res_numpayment});
+							var amountdudate = payamount.amount / payamount.paynum;
+							//var montly_amounts = parseInt(result.amount) / parseInt(result.paynum); 
+								amountdudate = amountdudate.toFixed(2);
+							var pay_obj = {"status":"new","created_date":Math.round(Date.parse(new Date()) / 1000),"due_date":res_depaturedate,"amount":amountdudate,"userid":data,"updated_date":""}
 							Meteor.call('UpdateUserAffiliat_number',data);
-							Meteor.call("InsertPayment",data,res_depaturedate,res_numpayment);
-							Router.go("/profile/payment");
+							Meteor.call("InsertPayment",pay_obj,res_numpayment);
+							Router.go("/login");
 						}
 					});
 				}
@@ -425,10 +430,13 @@ Template.userregister.events({
 				if(!err){
 					
 					//Meteor.call('sendUserRegister',data);
+					var payamount = amount.findOne({'_id':numpayment});
+					var amountdudate = payamount.amount / payamount.paynum;
+						amountdudate = amountdudate.toFixed(2);
 					Meteor.call('UpdateUserAffiliat_number',data);
-					var pay_obj = {"status":"new","created_date":Math.round(Date.parse(new Date()) / 1000),"due_date":depaturedate,"amount":"1500000","userid":data,"updated_date":""}
+					var pay_obj = {"status":"new","created_date":Math.round(Date.parse(new Date()) / 1000),"due_date":depaturedate,"amount":amountdudate,"userid":data,"updated_date":""}
 					Meteor.call("InsertPayment",pay_obj,numpayment);
-					Meteor.call("InsertPayment",data,depaturedate,numpayment);
+					//Meteor.call("InsertPayment",data,depaturedate,numpayment);
 					Meteor.call("findAffiliate",data);
 					Router.go("/login");
 				}
