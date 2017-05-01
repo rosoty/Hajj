@@ -344,14 +344,14 @@ Template.userregister.events({
           Meteor.call('chargeCard', stripeToken,Session.get('SessionRandomId'),function(err,ret){
           	Meteor.call('getPaymentStatus',Session.get('SessionRandomId'),function(err,ret){
 			Session.set('paymentStatus',ret);
-		});
+			});
 
-				
+		});	
 			
 		}	
-          });
-        }
-      });
+     });
+       
+     
     },
 	'click #btnnext':function(e){
 		e.preventDefault();
