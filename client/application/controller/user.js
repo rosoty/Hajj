@@ -254,11 +254,7 @@ Template.signin.events({
 
 Template.userregister.onRendered(function() {
 	Session.set('SessionRandomId',Random.id());
-	paymentId=Session.get('SessionRandomId');
-	newPayment={"_id":paymentId, "status":"new","created_date":"now","due_date":"now","amount":amountPayment,"userid":"none","updated_date":""};
-      console.log("inserting payment");
-      console.log(newPayment);
-      Meteor.call("insertFirstPayment",newPayment);
+
     this.$('.datetimepicker').datetimepicker({
     	format:'YYYY/MM/DD'
     });
@@ -513,6 +509,13 @@ Template.userregister.events({
 	},
 	"change #numpayment":function(e){
 		e.preventDefault();
+		Session.set('SessionRandomId',Random.id());
+		paymentId=Session.get('SessionRandomId');
+		newPayment={"_id":paymentId, "status":"new","created_date":"now","due_date":"now","amount":amountPayment,"userid":"none","updated_date":""};
+      console.log("inserting payment");
+      console.log(newPayment);
+      Meteor.call("insertFirstPayment",newPayment);
+
 		var val = $('[name="numpayment"] option:selected').val();
 		var result = amount.findOne({'_id':val});
 		var montly_amounts = parseInt(result.amount) / parseInt(result.paynum); 
