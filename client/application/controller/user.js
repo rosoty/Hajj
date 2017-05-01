@@ -270,7 +270,7 @@ Template.userregister.helpers({
 		var rid=payment.find({"_id":Session.get('SessionRandomId')});
 		if(rid.count()>0){
 			rid=rid[0].status;
-			if(status=='Paid')
+			if(rid=='Paid')
 				return 'false';
 			else
 				return 'true';
