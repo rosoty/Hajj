@@ -107,14 +107,15 @@ Meteor.publish("GetPayment",function(id){
 });
 
 Meteor.publish("GetPaymentProfile",function(id){
-  userPayment=payment.find({'userid':id});
+  //userPayment=payment.find({'userid':id});
   var uAffiliate = Meteor.users.find({'profile.affiliate':id});
     var userArr = [];
     uAffiliate.forEach(function(val){
       userArr.push(val._id);
     });
+  userArr.push(id);
   affiliatePayment=payment.find({"userid":{$in:userArr}});
-  return [affiliatePayment,userPayment];
+  return affiliatePayment;
 });
 
 
