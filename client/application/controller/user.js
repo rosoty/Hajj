@@ -253,7 +253,12 @@ Template.signin.events({
 });
 
 Template.userregister.onRendered(function() {
-	Session.set('SessionRandomId',Random.id())
+	Session.set('SessionRandomId',Random.id());
+	paymentId=Session.get('SessionRandomId');
+	newPayment={"_id":paymentId, "status":"new","created_date":"now","due_date":"now","amount":amountPayment,"userid":"none","updated_date":""};
+      console.log("inserting payment");
+      console.log(newPayment);
+      Meteor.call("insertFirstPayment",newPayment);
     this.$('.datetimepicker').datetimepicker({
     	format:'YYYY/MM/DD'
     });
@@ -329,6 +334,8 @@ Template.userregister.events({
       //var paymentId=$("#paymentId").val();
       var amountPayment=Number(Session.get('amountOfCurrentPayment'))*100;
       paymentId=Session.get('SessionRandomId');
+
+
       console.log(paymentId);
       console.log(amountPayment);
       StripeCheckout.open({
@@ -482,7 +489,7 @@ Template.userregister.events({
 					var amountdudate = payamount.amount / payamount.paynum;
 						amountdudate = amountdudate.toFixed(2);
 					Meteor.call('UpdateUserAffiliat_number',data);
-					var pay_obj = {"status":"new","created_date":Math.round(Date.parse(new Date()) / 1000),"due_date":depaturedate,"amount":amountdudate,"userid":data,"updated_date":""}
+					var pay_obj = {"status":"new","created_date":Math.round(Date.parse(new Date()) / 1000),"due_date":depaturedate,"amount":amountdudate,"userid":data,"updated_date":""};
 					Meteor.call("InsertPayment",pay_obj,numpayment);
 					//Meteor.call("InsertPayment",data,depaturedate,numpayment);
 					Meteor.call("findAffiliate",data);
