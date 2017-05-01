@@ -105,6 +105,19 @@ Meteor.publish("UserRegisterAffiliate",function(){
 Meteor.publish("GetPayment",function(id){
   return payment.find({'userid':id});
 });
+
+Meteor.publish("GetPaymentProfile",function(id){
+  userPayment=payment.find({'userid':id});
+  var uAffiliate = Meteor.users.find({'profile.affiliate':id});
+    var userArr = [];
+    uAffiliate.forEach(function(val){
+      userArr.push(val._id);
+    });
+  affiliatePayment=payment.find({"userid":{$in:userArr}});
+  return [affiliatePayment,userPayment];
+});
+
+
 Meteor.publish("GetAllPayment",function(){
     var userpayment = payment.find({});
     var userArr = [];
