@@ -274,6 +274,8 @@ Template.userregister.helpers({
 				return 'false';
 			else
 				return 'true';
+			console.log('rid');
+			console.log(rid);
 		}else{
 			return 'true';
 		}	
