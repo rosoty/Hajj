@@ -16,8 +16,8 @@ Meteor.methods({
             currency: 'eur'
         }, Meteor.bindEnvironment(function(err, charge) {
           console.log("Payment processor...")
-          console.log(err);
-          console.log(charge);
+          //console.log(err);
+          //console.log(charge);
             if(err){
                 return 0;
             }

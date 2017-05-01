@@ -61,7 +61,7 @@ Template.pay.events({
 
 Template.paymentlist.helpers({
 	paid :function(id){
-		if(payment.findOne({"_id":id}).count()>0 && payment.findOne({"_id":id}).status=='Paid'){
+		if(payment.find({"_id":id}).count()>0 && payment.findOne({"_id":id}).status=='Paid'){
 			return true;
 		}else{
 			return false;
