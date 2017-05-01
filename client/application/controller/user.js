@@ -328,6 +328,7 @@ Template.userregister.events({
       e.preventDefault();
       //var paymentId=$("#paymentId").val();
       var amountPayment=Number(Session.get('amountOfCurrentPayment'));
+      paymentId=Session.get('SessionRandomId');
       console.log(paymentId);
       console.log(amountPayment);
       StripeCheckout.open({
@@ -385,6 +386,7 @@ Template.userregister.events({
 			if(typeof(res) == 'undefined'){
 				$("#registerform").addClass("hidden");
 				$("#nextrgister").removeClass("hidden");
+				
 			}else{
 				res_affiliate = res._id;
 				var res_type = res.profile.type;
