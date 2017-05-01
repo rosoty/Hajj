@@ -5,6 +5,7 @@ Meteor.methods({
         //check(stripeToken, String);
         var Stripe = StripeAPI('sk_test_pJ0uHKsMcrAwaoCicVAkBctd');
         var amountPayment=Number(payment.findOne({"_id":paymentId}).amount);
+        console.log("Processing payment...");
         console.log(paymentId);
         console.log(amountPayment);
         var userId=payment.findOne({"_id":paymentId}).userid;
@@ -14,6 +15,9 @@ Meteor.methods({
             amount: amountPayment, 
             currency: 'eur'
         }, Meteor.bindEnvironment(function(err, charge) {
+          console.log("Payment processor...")
+          console.log(err);
+          console.log(charge);
             if(err){
                 return 0;
             }
