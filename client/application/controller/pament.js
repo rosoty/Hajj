@@ -60,6 +60,13 @@ Template.pay.events({
 });
 
 Template.paymentlist.helpers({
+	paid :function(id){
+		if(payment.findOne({"_id":id}).count()>0 && payment.findOne({"_id":id}).status=='Paid'){
+			return true;
+		}else{
+			return false;
+		}
+	},
 	getPaymentlist:function(){
 		var user = Meteor.userId();
 		//var num = payment.find({'userid':user}).count();
