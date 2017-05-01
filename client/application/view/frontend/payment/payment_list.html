@@ -31,7 +31,7 @@
                                             <td>{{getHumanDate created_date}}</td>
                                            <td>{{due_date}}</td>
                                             <td>{{status}}</td>
-                                            <td>{{> pay}}</td>
+                                            <td>{{> pay paymentId=_id amount=amount}}</td>
                                         </tr>
                                            
                                     {{/each}}

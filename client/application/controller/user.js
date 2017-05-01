@@ -475,7 +475,7 @@ Template.profile.helpers({
 	},
 	GenerateButton:function(){
 		var id = Meteor.userId();	
-		var result = Meteor.users.find({'profile.affiliate':id, 'roles':'affiliate'}).count();
+		var result = Meteor.users.find({'profile.affiliate':id, 'roles':'affiliate','acquired':'full'}).count();
 		console.log('MY RESULT COUNT== '+result);
 		var tic = ticket.findOne({'customer':id});
 		var num = Meteor.user();

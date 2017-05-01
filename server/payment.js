@@ -4,32 +4,42 @@ Meteor.methods({
     'chargeCard': function(stripeToken,paymentId) {
         //check(stripeToken, String);
         var Stripe = StripeAPI('sk_test_pJ0uHKsMcrAwaoCicVAkBctd');
-
-        Stripe.charges.create({
+        var amountPayment=Number(payment.findOne({"_id":paymentId}).amount);
+        console.log(paymentId);
+        console.log(amountPayment);
+        var userId=payment.findOne({"_id":paymentId}).userid;
+        //var userCurrent=Meteor.users.findOne({'_id':userid});
+        var stripeCharge=Stripe.charges.create({
             source: stripeToken,
-            amount: 5000, 
+            amount: amountPayment, 
             currency: 'eur'
-        }, function(err, charge) {
+        }, Meteor.bindEnvironment(function(err, charge) {
             if(err){
-
+                return 0;
             }
             else if(charge.status=="succeeded"){
                 console.log("DJIB SUCCESS");
+                //return 1;
+                payment.update({'_id':paymentId},{$set:{"status":"Paid"}});
+                if(payment.find({"userid":userId,"status":"new"}).count()==0){
+                  Meteor.users.update({_id:userId},{$set: {"acquired":"full"}});
+                }
                 //Update payement collection
             }
             else{
+
                 console.log("DJIB FAILED");
+                return 0
             }
             //console.log(err, charge);
-        });
+        }, function () { console.log('Failed to bind environment'); }));
+
     },
-    'InsertPayment':function(userid,depaturedate,num){
-      //console.log('amountID=='+num);
-      var mynum = amount.findOne({'_id':num});
-        var pay_obj = {"status":"new","created_date":Math.round(Date.parse(new Date()) / 1000),"due_date":depaturedate,"amount":mynum.amount,"userid":userid,"updated_date":""}
-        for(var i = 0; i < mynum.paynum; i++){
-            console.log('MYNUM=='+mynum.paynum);
-            payment.insert(pay_obj);
+    'InsertPayment':function(obj,x){
+      console.log('amountID=='+x);
+      var num = amount.findOne({'_id':x}).paynum;
+        for(var i = 0; i<num; i++){
+             payment.insert(obj);
         }
     },
     RemovePayment:function(id){
