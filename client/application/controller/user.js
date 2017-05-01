@@ -509,12 +509,7 @@ Template.userregister.events({
 	},
 	"change #numpayment":function(e){
 		e.preventDefault();
-		Session.set('SessionRandomId',Random.id());
-		paymentId=Session.get('SessionRandomId');
-		newPayment={"_id":paymentId, "status":"new","created_date":"now","due_date":"now","amount":amountPayment,"userid":"none","updated_date":""};
-      console.log("inserting payment");
-      console.log(newPayment);
-      Meteor.call("insertFirstPayment",newPayment);
+		
 
 		var val = $('[name="numpayment"] option:selected').val();
 		var result = amount.findOne({'_id':val});
@@ -531,6 +526,13 @@ Template.userregister.events({
 	            html += '<input type="text" class="form-control" disabled value="'+montly+'" style="color:red;font-weight: bold;border:#000 2px solid">';
 	        html += '</div>';
 			$('#show-amount').html(html);
+		amountPayment=montly_amounts;
+			Session.set('SessionRandomId',Random.id());
+		paymentId=Session.get('SessionRandomId');
+		newPayment={"_id":paymentId, "status":"new","created_date":"now","due_date":"now","amount":amountPayment,"userid":"none","updated_date":""};
+      console.log("inserting payment");
+      console.log(newPayment);
+      Meteor.call("insertFirstPayment",newPayment);
 
 	}
 });
