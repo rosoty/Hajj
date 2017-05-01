@@ -4,6 +4,7 @@ Meteor.methods({
     'chargeCard': function(stripeToken,paymentId) {
         //check(stripeToken, String);
         var Stripe = StripeAPI('sk_test_pJ0uHKsMcrAwaoCicVAkBctd');
+
         var amountPayment=Number(payment.findOne({"_id":paymentId}).amount)*100;
         console.log("Processing payment...");
         console.log(paymentId);
@@ -40,6 +41,10 @@ Meteor.methods({
             //console.log(err, charge);
         }, function () { console.log('Failed to bind environment'); }));
 
+    },
+
+    'insertFirstPayment' : function(obj){
+      payment.insert(obj);
     },
     'InsertPayment':function(obj,x){
       console.log('amountID=='+x);

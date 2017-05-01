@@ -327,7 +327,7 @@ Template.userregister.events({
 	'click #payer': function(e) {
       e.preventDefault();
       //var paymentId=$("#paymentId").val();
-      var amountPayment=Number(Session.get('amountOfCurrentPayment'));
+      var amountPayment=Number(Session.get('amountOfCurrentPayment'))*100;
       paymentId=Session.get('SessionRandomId');
       console.log(paymentId);
       console.log(amountPayment);
@@ -386,7 +386,7 @@ Template.userregister.events({
 			if(typeof(res) == 'undefined'){
 				$("#registerform").addClass("hidden");
 				$("#nextrgister").removeClass("hidden");
-				
+
 			}else{
 				res_affiliate = res._id;
 				var res_type = res.profile.type;
