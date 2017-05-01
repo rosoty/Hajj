@@ -54,7 +54,7 @@ Meteor.methods({
               }else{
                 today = dd+'/'+mm+'/'+yyyy;
               }
-              obj.["due_date"]=today;
+              obj["due_date"]=today;
               mm=mm+1;
               if(mm>12){
                 mm=1;
