@@ -254,7 +254,7 @@ Template.signin.events({
 
 Template.userregister.onRendered(function() {
 	Session.set('SessionRandomId',Random.id());
-
+	Session.set('paymentStatus','true');
     this.$('.datetimepicker').datetimepicker({
     	format:'YYYY/MM/DD'
     });
@@ -384,6 +384,7 @@ Template.userregister.events({
 				$("#registerform").addClass("hidden");
 				$("#nextrgister").removeClass("hidden");
 
+			
 			}else{
 				res_affiliate = res._id;
 				var res_type = res.profile.type;
