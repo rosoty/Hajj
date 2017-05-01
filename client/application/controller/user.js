@@ -253,6 +253,7 @@ Template.signin.events({
 });
 
 Template.userregister.onRendered(function() {
+	Session.set('SessionRandomId',Random.id())
     this.$('.datetimepicker').datetimepicker({
     	format:'YYYY/MM/DD'
     });
@@ -261,7 +262,21 @@ Template.userregister.onRendered(function() {
     });
 });
 
+
+
 Template.userregister.helpers({
+	getPaymentStatus: function(){
+		var rid=payment.find({"_id":Session.get('SessionRandomId')});
+		if(rid.count()>0){
+			rid=rid[0].status;
+			if(status=='Paid')
+				return 'false';
+			else
+				return 'true';
+		}else{
+			return 'true';
+		}	
+	},
 	Getpayment:function(){
 		var product = Session.get('HAJJ-DATE');
 		if(product){
@@ -309,6 +324,37 @@ Template.userregister.events({
 		e.preventDefault();
 		 $('#registerform').validate();
 	},*/
+	'click #payer': function(e) {
+      e.preventDefault();
+      //var paymentId=$("#paymentId").val();
+      var amountPayment=Number(Session.get('amountOfCurrentPayment'));
+      console.log(paymentId);
+      console.log(amountPayment);
+      StripeCheckout.open({
+        key: 'pk_test_njC2z064KCYm0e0kjilPA26o',
+        amount: amountPayment, // this is equivalent to $50
+        name: 'Mecque it easy',
+        description: 'Cotisation MIE',
+        panelLabel: 'Payer',
+        currency: 'eur',
+        token: function(res) {
+          stripeToken = res.id;
+          console.info(res);
+          Meteor.call('chargeCard', stripeToken,Session.get('SessionRandomId'),function(err,ret){
+          	var rid=payment.find({"_id":Session.get('SessionRandomId')});
+		if(rid.count()>0){
+			rid=rid[0].status;
+			if(status=='Paid'){
+				console.log('Paid');
+				$("#btnregister").attr('disabled','false');
+			}
+				
+			
+		}	
+          });
+        }
+      });
+    },
 	'click #btnnext':function(e){
 		e.preventDefault();
 		var username=$("#firstname").val();
@@ -462,6 +508,7 @@ Template.userregister.events({
 		var result = amount.findOne({'_id':val});
 		var montly_amounts = parseInt(result.amount) / parseInt(result.paynum); 
 		var montly = montly_amounts.toFixed(2);
+		Session.set('amountOfCurrentPayment',montly_amounts);
 		var html = '';
 			html += '<label class="control-label col-sm-2"  for="sel1">Total amount </label>';
 		    html += '<div class="col-sm-10 btn btn-default image-preview-input">';
@@ -472,6 +519,7 @@ Template.userregister.events({
 	            html += '<input type="text" class="form-control" disabled value="'+montly+'" style="color:red;font-weight: bold;border:#000 2px solid">';
 	        html += '</div>';
 			$('#show-amount').html(html);
+
 	}
 });
 

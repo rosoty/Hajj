@@ -59,6 +59,44 @@ Template.pay.events({
     }
 });
 
+
+Template.payregister.events({
+	'click button': function(e) {
+      e.preventDefault();
+      //var paymentId=$("#paymentId").val();
+      var amountPayment=Number(Session.get('amountOfCurrentPayment'));
+      console.log(paymentId);
+      console.log(amountPayment);
+      StripeCheckout.open({
+        key: 'pk_test_njC2z064KCYm0e0kjilPA26o',
+        amount: amountPayment, // this is equivalent to $50
+        name: 'Mecque it easy',
+        description: 'Cotisation MIE',
+        panelLabel: 'Payer',
+        currency: 'eur',
+        token: function(res) {
+          stripeToken = res.id;
+          console.info(res);
+          Meteor.call('chargeCard', stripeToken,"none");
+        }
+      });
+    }
+});
+
+Template.payregister.helpers({
+	getPaymentStatus: function(){
+		var rid=payment.find({"_id":Session.get('SessionRandomId')});
+		if(rid.count()>0){
+			rid=rid[0].status;
+			if(status=='Paid')
+				return 'false';
+			else
+				return 'true';
+		}	
+	}
+
+});
+
 Template.paymentlist.helpers({
 	paid :function(id){
 		if(payment.find({"_id":id}).count()>0 && payment.findOne({"_id":id}).status=='Paid'){
