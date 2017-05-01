@@ -4,10 +4,12 @@ Meteor.methods({
     'chargeCard': function(stripeToken,paymentId) {
         //check(stripeToken, String);
         var Stripe = StripeAPI('sk_test_pJ0uHKsMcrAwaoCicVAkBctd');
-
+        console.log(paymentId);
+        if(payment.find({"_id":paymentId}).count()==0)
+          return;
         var amountPayment=Number(payment.findOne({"_id":paymentId}).amount)*100;
         console.log("Processing payment...");
-        console.log(paymentId);
+        
         console.log(amountPayment);
         
 
