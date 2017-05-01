@@ -46,7 +46,7 @@ Meteor.methods({
     },
 
     'insertFirstPayment' : function(obj){
-      console.log("Payment inserted..."):
+      console.log("Payment inserted...");
       payment.insert(obj);
     },
     'InsertPayment':function(obj,x){
