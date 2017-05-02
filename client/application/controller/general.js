@@ -73,9 +73,10 @@ Template.registerHelper('CountNumberInvite', function(){
 
 Template.registerHelper('Checkpayment', function(){
 	var id = Meteor.userId();	
-	var result = payment.findOne({'userid':id,'status':'Paid'});
+	var result = payment.find({'userid':id,'status':'Paid'}).count();
+	var countpay = payment.find({'userid':id}).count();
 	console.log('Checkpayment=='+result); console.log(typeof(result))
-	if(result){
+	if(result == countpay){
 		return true;
 	}else{
 		return false;

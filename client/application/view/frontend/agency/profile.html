@@ -256,25 +256,22 @@
 					</div>
 					<div class="profile-usermenu">
 						<ul class="nav">
-							{{#if Checkpayment}}
+							{{#if isInRole 'affiliate'}}
 								<li class="active">
 									<a href="/user/profile">
 									<i class="glyphicon glyphicon-home"></i>
 									<span class="hidden-xs">Personal Info</span> </a>
 								</li>
 								<li>
+									<a href="/profile/payment">
+									<i class="glyphicon glyphicon-user"></i>
+									<span class="hidden-xs">Payments</span> </a>
+								</li>
+								<li>
 									<a href="/user/password">
 									<i class="glyphicon glyphicon-user"></i>
 									<span class="hidden-xs">Change Password</span> </a>
 								</li>
-							{{else}}
-								{{#if isInRole 'affiliate'}}
-									<li>
-										<a href="/profile/payment">
-										<i class="glyphicon glyphicon-user"></i>
-										<span class="hidden-xs">Payments</span> </a>
-									</li>
-								{{/if}}
 							{{/if}}
 							{{#if isInRole 'agency'}}
 								<li class="active">
@@ -391,7 +388,11 @@
 	        <h4 class="heading"><strong>Invite </strong> User ( {{CountNumberInvite}} Invited)<span></span></h4>   
 	        <table class="table table-hover">
 			    <tbody id="data-count">
-			    	{{{countinvite}}}	
+			    	{{#if Checkpayment}}
+			    		{{{countinvite}}}	
+			    	{{else}}
+			    		<p style="color:red;font-size:16px">!!! Please complete your payment before invite other affiliator</p>
+			    	{{/if}}
 			    </tbody>
 			</table>
 		{{else}}
