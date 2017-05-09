@@ -76,7 +76,7 @@ Meteor.methods({
       }
 
       var num = amount.findOne({'_id':x}).paynum;
-      for(var i = 0; i<num; i++){
+      for(var i = 0; i<num-1; i++){
               if(mm<10) {
                   today = dd+'/'+'0'+mm+'/'+yyyy;
               }else{
