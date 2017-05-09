@@ -587,6 +587,15 @@ Template.profile.helpers({
 		}else{
 			return false;
 		}
+	},
+	Isbooked:function(id){
+		var user = Meteor.userId();
+		var res = ticket.findOne({'customer':user,'product':id});
+		if(res){
+			return true
+		}else{
+			return false
+		}
 	}
 });
 Template.profile.onRendered(function(){

@@ -32,7 +32,7 @@
 		                           	 {{/if}}
 		                        </p>
 		                        {{#if Checkpayment}}
-		                        <input type="button" name="ticket" value="Generate Ticket" class="pull-right btn-lg btn-success" data-toggle="modal" data-target="#product-options">
+		                        	<input type="button" name="ticket" value="Generate Ticket" class="pull-right btn-lg btn-success" data-toggle="modal" data-target="#product-options">
 		                        {{/if}}
 		                    </div>
 		                </div>
@@ -207,7 +207,13 @@
 						        	<td>{{type}}</td>
 						        	<td>{{getHumanDate date_of_departure}}</td>
 						        	<td>{{getHumanDate date_of_return}}</td>
-						        	<td><input type="button" name="book" value="Book" class="btn-success btn-sm booking"></td>
+						        	<td>
+							        	{{#if Isbooked _id}}
+							        		<input type="button" name="booked" value="Booked" class="btn-danger btn-sm">
+							        	{{else}}
+							        		<input type="button" name="book" value="Booking" class="btn-success btn-sm booking">
+							        	{{/if}}
+						        	</td>
 						      	</tr>
 						    {{/each}}
 						{{else}}
@@ -388,50 +394,45 @@
 	        <h4 class="heading"><strong>Invite </strong> User ( {{CountNumberInvite}} Invited)<span></span></h4>   
 	        <table class="table table-hover">
 			    <tbody id="data-count">
-			    	{{#if Checkpayment}}
-			    		{{{countinvite}}}	
-			    	{{else}}
-			    		<p style="color:red;font-size:16px">!!! Please complete your payment before invite other affiliator</p>
-			    	{{/if}}
+			    	{{{countinvite}}}	
 			    </tbody>
 			</table>
-		{{else}}
+		{{/if}}
 			<h4 class="heading"><strong>My </strong> Ticket<span></span></h4> 
 			<table class="table table-hover">
-                <thead>
-                    <tr class="btn-primary">
-                    	<th width="100px">Ticket ID</th>
-                        <th>Agency Name</th>
-                        <th>Product</th>
-                        <th>date</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-             
-                <tbody>
-                    {{#if getallTicket}}
-                        {{#each getallTicket}}
-                            <tr>
-                            	<td width="100px">{{_id}}</td>
-                                <td>{{getUsername agency}}</td>
-                                <td>{{getProductname product}}</td>
-                                <td>{{getHumanDate date}}</td>
-                                <td class="btn-default btn-sm">{{status}}</td>
-                            </tr>
-                        {{/each}}
-                    {{else}}
-                        <tr>
-                        	<td colspan="5">
-                            <div class="alert alert-danger">
-                                <strong>Please Order Ticket !!!</strong>
-                            </div>
-                            </td>
-                        </tr>
-                    {{/if}}
-                </tbody>
-                
-            </table>
-		{{/if}}
+	            <thead>
+	                <tr class="btn-primary">
+	                	<th width="100px">Ticket ID</th>
+	                    <th>Agency Name</th>
+	                    <th>Product</th>
+	                    <th>date</th>
+	                    <th>Status</th>
+	                </tr>
+	            </thead>
+	         
+	            <tbody>
+	                {{#if getallTicket}}
+	                    {{#each getallTicket}}
+	                        <tr>
+	                        	<td width="100px">{{_id}}</td>
+	                            <td>{{getUsername agency}}</td>
+	                            <td>{{getProductname product}}</td>
+	                            <td>{{getHumanDate date}}</td>
+	                            <td class="btn-default btn-sm">{{status}}</td>
+	                        </tr>
+	                    {{/each}}
+	                {{else}}
+	                    <tr>
+	                    	<td colspan="5">
+	                        <div class="alert alert-danger">
+	                            <strong>Please Order Ticket !!!</strong>
+	                        </div>
+	                        </td>
+	                    </tr>
+	                {{/if}}
+	            </tbody>
+	            
+	        </table>
     </div>	            
 	<div class="form_main col-md-4 col-sm-5 col-xs-7">
         <h4 class="heading"><strong>My </strong> Affiliates<span></span></h4>   
