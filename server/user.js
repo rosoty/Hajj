@@ -11,7 +11,8 @@ Meteor.methods({
              console.log(result);
              var respJson = JSON.parse(result.content);
              var key=respJson.nonce;
-             var url="http://www.mecqueiteasy.com/api/user/register/?insecure=cool&username="+obj.username+"&email="+email+"&nonce="+key+"&display_name="+obj.username+"&notify=both&user_pass="+password;
+             var username=obj.username+'.'+obj.familyname;
+             var url="http://www.mecqueiteasy.com/api/user/register/?insecure=cool&username="+username+"&email="+email+"&nonce="+key+"&display_name="+obj.username+"&notify=both&user_pass="+password;
              console.log("Register wp: "+url);
              Meteor.http.call("GET", url);
         });
