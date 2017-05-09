@@ -565,6 +565,9 @@ Template.profile.helpers({
 			});
 			return result;
 		}
+		// console.log('MYTPE=='+type);
+		// var result = product.find({'type':type});
+		// return result;
 	},
 	getagencyname:function(id){
 		return Meteor.users.findOne({'_id':id}).profile.username;
