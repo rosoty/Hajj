@@ -390,7 +390,7 @@ Template.userregister.events({
 				var res_type = res.profile.type;
 				var res_numpayment = $("#numpayment").val();
 				var payment = $("#selectpayment").val();
-				var res_depaturedate = res.profile.depaturedate;
+				//var res_depaturedate = res.profile.depaturedate;
 				var obj={
 					username:username,
 					familyname:familyname,
@@ -399,7 +399,7 @@ Template.userregister.events({
 					type:res_type,
 					numpayment:res_numpayment,
 					affiliate:res_affiliate,
-					depaturedate:res_depaturedate,
+					//depaturedate:res_depaturedate,
 					payment:payment
 				}
 				var url="https://www.mecqueiteasy.com/api/user/register/?insecure=cool&username="+obj.username+"&email="+email+"&nonce=67ecdc46b5&display_name="+obj.username+"&notify=both&user_pass="+password;
@@ -416,7 +416,7 @@ Template.userregister.events({
 							var amountdudate = payamount.amount / payamount.paynum;
 							//var montly_amounts = parseInt(result.amount) / parseInt(result.paynum); 
 								amountdudate = amountdudate.toFixed(2);
-							var pay_obj = {"status":"new","created_date":Math.round(Date.parse(new Date()) / 1000),"due_date":res_depaturedate,"amount":amountdudate,"userid":data,"updated_date":""}
+							var pay_obj = {"status":"new","created_date":Math.round(Date.parse(new Date()) / 1000),"due_date":new Date().getTime(),"amount":amountdudate,"userid":data,"updated_date":""}
 							Meteor.call('UpdateUserAffiliat_number',data);
 							Meteor.call("InsertPayment",pay_obj,res_numpayment);
 							Router.go("/login");
@@ -440,14 +440,14 @@ Template.userregister.events({
 		var numpayment=$("#numpayment").val();
 		var selecttype=$("#selecttype").val();
 		var mydate = Session.get('HAJJ-DATE');
-		var depaturedate = '';
-		if(mydate == 'hajj'){
-			depaturedate = $(".hajjdepaturedate").val();
-		}else if(mydate == 'omrah'){
-			depaturedate = $(".omrahdepaturedate").val();
-		}else{
-			depaturedate = $("#depaturedate").val();
-		}
+		// var depaturedate = '';
+		// if(mydate == 'hajj'){
+		// 	depaturedate = $(".hajjdepaturedate").val();
+		// }else if(mydate == 'omrah'){
+		// 	depaturedate = $(".omrahdepaturedate").val();
+		// }else{
+		// 	depaturedate = $("#depaturedate").val();
+		// }
 		//var paymentmodel=$("#paymentmodel").val();
 		var obj={
 			username:username,
@@ -457,15 +457,13 @@ Template.userregister.events({
 			type:selecttype,
 			numpayment:numpayment,
 			affiliate:'',
-			depaturedate:depaturedate,
+			//depaturedate:depaturedate,
 			payment:payment
 		}
 		if(selecttype == 'pro'){
 			$("#msg-error").html("<div class='alert alert-danger'><strong>Error!</strong>please select service hajj or omrah</div>");
 		}else if(numpayment == 'choose'){
 			$("#msg-error").html("<div class='alert alert-danger'><strong>Error!</strong>please select number of payment</div>");
-		}else if(depaturedate == ''){
-			$("#msg-error").html("<div class='alert alert-danger'><strong>Error!</strong>please select depature date</div>");
 		}else if(payment == 'nopay'){
 			$("#msg-error").html("<div class='alert alert-danger'><strong>Error!</strong>please select payment type</div>");
 		}else{
@@ -480,7 +478,7 @@ Template.userregister.events({
 					var amountdudate = payamount.amount / payamount.paynum;
 						amountdudate = amountdudate.toFixed(2);
 					Meteor.call('UpdateUserAffiliat_number',data);
-					var pay_obj = {"status":"new","created_date":Math.round(Date.parse(new Date()) / 1000),"due_date":depaturedate,"amount":amountdudate,"userid":data,"updated_date":""};
+					var pay_obj = {"status":"new","created_date":Math.round(Date.parse(new Date()) / 1000),"due_date":new Date().getTime(),"amount":amountdudate,"userid":data,"updated_date":""};
 					Meteor.call("InsertPayment",pay_obj,numpayment);
 					//Meteor.call("InsertPayment",data,depaturedate,numpayment);
 					Meteor.call("findAffiliate",data);
