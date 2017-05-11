@@ -96,6 +96,16 @@ Meteor.methods({
     },
     UpdatePayment:function(obj,id){
         payment.update({'_id':id},{$set:obj});
+    },
+    Checkpayment:function(){
+         var user = Meteor.users.findOne({'_id':Meteor.userId(),'roles':'affiliate'})
+        var result = payment.find({'userid':user._id,'status':'Paid'}).count();
+        var countpay = payment.find({'userid':user._id}).count();
+        if(result == countpay){
+            return true;
+        }else{
+            return false;
+        }
     }
 });
 /*

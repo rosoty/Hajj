@@ -71,16 +71,13 @@ Template.registerHelper('CountNumberInvite', function(){
 	return Meteor.users.find({'profile.affiliate':id}).count();
 });
 
-Template.registerHelper('Checkpayment', function(){
-	var user = Meteor.users.findOne({'_id':Meteor.userId(),'roles':'affiliate'})
-	//console.log('USER==='+user._id);console.log(user)
-	var result = payment.find({'userid':user._id,'status':'Paid'}).count();
-	//console.log('PAYCOUNT=='+result);
-	var countpay = payment.find({'userid':user._id}).count();
-	//console.log('Checkpayment=='+countpay); console.log(typeof(countpay))
-	if(result == countpay){
-		return true;
-	}else{
-		return false;
-	}
-});
+// Template.registerHelper('Checkpayment', function(){
+// 	var user = Meteor.users.findOne({'_id':Meteor.userId(),'roles':'affiliate'})
+// 	var result = payment.find({'userid':user._id,'status':'Paid'}).count();
+// 	var countpay = payment.find({'userid':user._id}).count();
+// 	if(result == countpay){
+// 		return true;
+// 	}else{
+// 		return false;
+// 	}
+// });

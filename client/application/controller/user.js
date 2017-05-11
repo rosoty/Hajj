@@ -529,7 +529,6 @@ Template.userregister.events({
 
 	}
 });
-
 Template.profile.helpers({
 	getProfileEdit:function(){
 		var id=Meteor.userId();
@@ -594,10 +593,21 @@ Template.profile.helpers({
 		}else{
 			return false
 		}
+	},
+	Checkpayment:function(){
+		Meteor.call('Checkpayment',function(err,data){
+			if(!err){
+				Session.set('Mypayment',data);
+			}
+		});
+		if(Session.get('Mypayment') === true)
+			return true
+		else
+			return false
 	}
 });
 Template.profile.onRendered(function(){
-    
+    Session.set('Mypayment','');
 });
 Template.profile.events({
 	"click .booking":function(e){
